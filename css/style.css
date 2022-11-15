@@ -19,8 +19,8 @@ h1, h1 a {
   text-transform: uppercase;
   padding: 0px;
   margin: 15px 0 0 0;
-
 }
+
 h2 {
   text-transform: uppercase;
   font-size: 1.1rem;
@@ -29,18 +29,42 @@ h2 {
   padding: 0px;
   margin: 0px
 }
-
-a {
-  color: #444;
-  text-decoration: none;
-}
 .intro-img img {
   float: left;
   padding: 10px;
   width: 65px;
   height: 65px;
 }
+@media only screen and (max-width: 600px) {
+  h1, h1 a {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    padding: 0px;
+    margin: 15px 0 0 0;
+  
+  }
+  h2 {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #777;
+    font-weight: 500;
+    padding: 0px;
+    margin: 0px
+  }
+  .intro-img img {
+    float: left;
+    padding: 10px;
+    width: 45px;
+    height: 45px;
+  }
+}
 
+a {
+  color: #444;
+  text-decoration: none;
+}
 .cam, .uae {
   width: 100%;
   height: auto;
@@ -97,13 +121,15 @@ info {
 padding: 10px;
 }
 
-main h3, main p {
-  margin: 2px;
-  padding: 5px 10px;
+main h3 {
+  margin: 5px 2px;
+  padding: 5px 8px;
 }
 
 main p {
   display: table;
+  margin: 5px 2px;
+  padding: 5px 10px;
   font-size: 1rem;
   color: #eee;
   background-color: #333;
