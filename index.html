@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 
+<style>
+  div.scrollmenu {
+    background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  }
+  
+  div.scrollmenu a:hover {
+    background-color: #777;
+  }
+  </style>
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Sean's surf report</title>
+    <title>Sean's Ocean Report</title>
     <meta
       name="description"
       content="A simple HTML5 Template for new projects."
@@ -38,17 +58,18 @@
   <body>
     <header>
       <h1><a href="index.html">Sean's surf report</a></h1>
-
-      <nav>
-        <a href="kite-beach.html">Kite Beach Centre, UAQ</a>
-        <a href="sandy-beach.html">Tim's Reef, Fujairah</a>
-        <a href="#">Mikoko, UAQ</a>
-        <a href="#">Blue Ocean Sports, Jebel Ali</a>
-      </nav>
+      <div class="scrollmenu">
+        <a href="spot_01_kbc.html">Kite Beach Center, UAQ</a>
+        <a href="#news">Tim's Reef, Fujairah</a>
+        <a href="#contact">Mikoko, UAQ</a>
+        <a href="#about">Blue Ocean Sports, Jebel Ali</a>
+        <a href="#support">Abu Dhabi</a>
+        <a href="#blog">Ras Al Khaimah</a>
+      </div>
     </header>
 
     <main>
-      <img src="img/uae.jpg" class="uae" />
+    <p>Insert info about the website in this section</p>
     </main>
 
     <footer>Peace</footer>

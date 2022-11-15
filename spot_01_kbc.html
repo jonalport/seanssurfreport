@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<style>
+  div.scrollmenu {
+    background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+  }
+  
+  div.scrollmenu a:hover {
+    background-color: #777;
+  }
+  h2 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 20px;
+  }
+  </style>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Sean's surf report</title>
+    <meta
+      name="description"
+      content="A simple HTML5 Template for new projects."
+    />
+
+    <meta property="og:title" content="A Basic HTML5 Template" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://www.sitepoint.com/a-basic-html5-template/"
+    />
+    <meta
+      property="og:description"
+      content="A simple HTML5 Template for new projects."
+    />
+    <meta property="og:image" content="image.png" />
+
+    <!-- <link rel="icon" href="/favicon.ico"> -->
+    <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
+
+    <link rel="stylesheet" href="css/styles.css?v=1.0" />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  </head>
+
+  <body>
+    <header>
+      <h1><a href="index.html">Sean's Surf Report</a></h1>
+      <h2>Choose your spot</h2>
+      <div class="scrollmenu">
+        <a href="spot_01_kbc.html">Kite Beach Center, UAQ</a>
+        <a href="#news">Tim's Reef, Fujairah</a>
+        <a href="#contact">Mikoko, UAQ</a>
+        <a href="#about">Blue Ocean Sports, Jebel Ali</a>
+        <a href="#support">Abu Dhabi</a>
+        <a href="#blog">Ras Al Khaimah</a>
+      </div>
+    </header>
+
+    <main>
+      <h2>Kite Beach Center, UAQ</h1>
+        <p>Live Webcam</p>
+      <img
+        src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg"
+        class="cam"
+      />
+<p>Live Wind</p>
+      <div style="max-width: 100%;"><script id="wglive_2146_1617178001640">
+        (function (window, document) {
+          var loader = function () {
+            var arg = ["spot=2146","uid=wglive_2146_1617178001640","direct=1","wj=knots","tj=c","avg_min=0","gsize=300","msize=400","m=3","show=n,g,c"];
+            var script = document.createElement("script");
+            var tag = document.getElementsByTagName("script")[0];
+            script.src = "https://www.windguru.cz/js/wglive.php?"+(arg.join("&"));
+            tag.parentNode.insertBefore(script, tag);
+          };
+          window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+        })(window, document);
+        </script></div>
+       <p>Forecast</p> 
+       <script id="wg_fwdg_687932_100_1617177954510">
+        (function (window, document) {
+          var loader = function () {
+            var arg = ["s=687932" ,"m=100","mw=84","uid=wg_fwdg_687932_100_1617177954510" ,"wj=knots" ,"tj=c" ,"waj=m" ,"odh=0" ,"doh=24" ,"fhours=240" ,"hrsm=2" ,"vt=forecasts" ,"lng=en" ,"idbs=1" ,"p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
+            var script = document.createElement("script");
+            var tag = document.getElementsByTagName("script")[0];
+            script.src = "https://www.windguru.cz/js/widget.php?"+(arg.join("&"));
+            tag.parentNode.insertBefore(script, tag);
+          };
+          window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+        })(window, document);
+        </script>
+        <p>Windy Map</p>
+        <iframe width=100% height="400" src="https://embed.windy.com/embed2.html?lat=25.205&lon=55.415&detailLat=25.357&detailLon=55.405&width=650&height=300&zoom=7&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=kt&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+    </main>
+    <footer>Peace</footer>
+    <!-- <script src="js/scripts.js"></script> -->
+  </body>
+</html>
