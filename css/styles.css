@@ -1,0 +1,57 @@
+body {
+  font-family: Roboto;
+  width: 80vw;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: 1rem;
+  color: #444;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h1 a {
+  text-decoration: none;
+}
+
+a {
+  color: #444;
+  text-decoration: none;
+}
+
+header {
+  padding: 2%;
+  border-bottom: 1px solid #eee;
+}
+
+.cam, .uae {
+  width: 100%;
+  height: auto;
+  margin-bottom: 2%;
+}
+
+nav a {
+  margin-right: 1%;
+}
+
+main {
+  padding: 2%;
+}
+
+footer {
+  padding: 2%;
+  margin-top: auto;
+  border-top: 1px solid #eee;
+}
