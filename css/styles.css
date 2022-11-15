@@ -11,15 +11,25 @@ body {
   font-weight: 400;
 }
 
-h1 {
+h1, h1 a {
   font-size: 1.8rem;
   font-weight: 900;
+  color: white;
   text-transform: uppercase;
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+
 }
 
 h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  color: #777;
+  font-weight: 500;
+  padding-left: 8px;
+  padding-bottom: 5px;
 }
 
 h1 a {
@@ -54,4 +64,84 @@ footer {
   padding: 2%;
   margin-top: auto;
   border-top: 1px solid #eee;
+}
+
+div.scrollmenu {
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 22px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+h2 {
+  margin: 5px;
+  font-weight: 300px;
+  font-size: 18px;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+
+#main_navbar {
+  background-color: #333;
+}
+
+#navbar {
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+#navbar a {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+#navbar a:hover {
+  background-color: #87b280;
+  color: black;
+}
+
+#navbar a.active {
+  background-color: #ddd
+  color: white;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+
+info {
+padding: 10px;
+font-size: 
 }
