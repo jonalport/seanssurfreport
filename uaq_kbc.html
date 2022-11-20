@@ -3,37 +3,24 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/style.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
-<div id ="main_navbar">
-  <dix class="intro-img"><img src="img/logo.jpg" alt="logo"></dix>  
-  <h1><a href="index.html">Sean's Surf Report</a></h1>
-    <h2>Swipe to choose your spot</h2>
-<div id="navbar">
-  <a class="active" href="#01_kbc">Kite Beach Center, UAQ</a>
-      <a href="02_tims.html">Tim's Reef, Fujairah</a>
-      <a href="03_mikoko.html">Mikoko, UAQ</a>
-      <a href="04_blue.html">Blue Ocean Sports, Jebel Ali</a>
-      <a href="#support">Abu Dhabi</a>
-      <a href="#blog">Ras Al Khaimah</a>
-       <a href="#about">Blue Ocean Sports, Jebel Ali</a>
-      <a href="#support">Abu Dhabi</a>
-      <a href="#blog">Ras Al Khaimah</a>
-      <a href="#about">Blue Ocean Sports, Jebel Ali</a>
-      <a href="#support">Abu Dhabi</a>
-      <a href="#blog">Ras Al Khaimah</a>
-</div>
+    <!--Navigation bar-->
+<div id="nav-placeholder">
+
 </div>
 
-
-
-
-
-
-    <main>
+<script>
+$(function(){
+  $("#nav-placeholder").load("header.html");
+});
+</script>
+<!--end of Navigation bar-->
+    <div id="content">
       <h3>Kite Beach Center, UAQ</h3>
         <p>Live Webcam</p>
-      <img
+        <img
         src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg"
         class="cam"
       />
@@ -65,22 +52,8 @@
         </script>
         <p>Windy Map</p>
         <iframe width=100% height="400" src="https://embed.windy.com/embed2.html?lat=25.205&lon=55.415&detailLat=25.357&detailLon=55.405&width=650&height=300&zoom=7&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=kt&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
-    </main>
+      </div>
     <footer>Peace</footer>
     <!-- <script src="js/scripts.js"></script> -->
   </body>
-  <script>
-    window.onscroll = function() {myFunction()};
-    
-    var main_navbar = document.getElementById("main_navbar");
-    var sticky = main_navbar.offsetTop;
-    
-    function myFunction() {
-      if (window.pageYOffset >= sticky) {
-        main_navbar.classList.add("sticky")
-      } else {
-        main_navbar.classList.remove("sticky");
-      }
-    }
-    </script>
 </html>
