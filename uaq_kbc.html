@@ -18,17 +18,20 @@ $(function(){
 </script>
 <!--end of Navigation bar-->
     <div id="content">
+      <div class="titles">
       <h3>Kite Beach Center, UAQ</h3>
-        <p>Live Webcam</p>
+      <p><a href="https://www.kitebeachcenter.ae">Website</a></p></div>
+        <p class="sections">Live Webcam</p>
         <img
         src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg"
         class="cam"
       />
-<p>Live Wind</p>
+<p class="sections">Live Wind</p>
+
       <div style="max-width: 100%;"><script id="wglive_2146_1617178001640">
         (function (window, document) {
           var loader = function () {
-            var arg = ["spot=2146","uid=wglive_2146_1617178001640","direct=1","wj=knots","tj=c","avg_min=0","gsize=300","msize=400","m=3","show=n,g,c"];
+            var arg = ["spot=2146","uid=wglive_2146_1617178001640","direct=1","wj=knots","tj=c","avg_min=0","gsize=250","msize=300","m=3","show=n,g,c"];
             var script = document.createElement("script");
             var tag = document.getElementsByTagName("script")[0];
             script.src = "https://www.windguru.cz/js/wglive.php?"+(arg.join("&"));
@@ -37,7 +40,7 @@ $(function(){
           window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
         })(window, document);
         </script></div>
-       <p>Forecast</p> 
+       <p class="sections">Forecast</p>
        <script id="wg_fwdg_687932_100_1617177954510">
         (function (window, document) {
           var loader = function () {
@@ -50,10 +53,18 @@ $(function(){
           window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
         })(window, document);
         </script>
-        <p>Windy Map</p>
-        <iframe width=100% height="400" src="https://embed.windy.com/embed2.html?lat=25.205&lon=55.415&detailLat=25.357&detailLon=55.405&width=650&height=300&zoom=7&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=kt&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+        <p class="sections">Windy Map</p>
+        <iframe width=100% height="350" src="https://embed.windy.com/embed2.html?lat=25.205&lon=55.415&detailLat=25.357&detailLon=55.405&width=650&height=300&zoom=7&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=kt&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
       </div>
-    <footer>Peace</footer>
     <!-- <script src="js/scripts.js"></script> -->
+    <!--Footer bar-->
+    <div id="footer-placeholder">
+    </div>
+    <script>
+    $(function(){
+      $("#footer-placeholder").load("footer.html");
+    });
+    </script>
+    <!--end of Footer bar-->
   </body>
-</html>
+    </html>
