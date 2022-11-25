@@ -173,11 +173,20 @@ hr.line {
 }
 
 
-@media all and (max-width: 600px) {
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
     
     #content {
         width: 96%;
         margin: 0 auto;
+    }
+    .intro-img img {
+        padding: 10px;
+        width: 50px;
+        height: 50px;
     }
     h1, h1 a {
         font-size: 1.2rem;
