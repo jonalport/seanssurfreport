@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/style.css">
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-</head>
-<body>
-    <!--Navigation bar-->
-<div id="nav-placeholder">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+  </head>
 
-</div>
+  <body>
+    <header id="header"></header>
 
-<script>
-$(function(){
-  $("#nav-placeholder").load("header.html");
-});
-</script>
-<!--end of Navigation bar-->
-<div id="content">
-  <p>This is the home page</p>
-</div>
+    <main id="map"></main>
+
+    <footer>Footer</footer>
+
+    <script>
+      $(function () {
+        $("header").load('header.html');
+
+        mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYWxwb3J0IiwiYSI6ImNsYnIxdXp3NDBweXUzcG51Ynh6a3Z3OHQifQ.bfgvjzRscLynsRItEcXdlA';
+
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/light-v11',
+          center: [-96, 37.8],
+          zoom: 3,
+        });
+      });
+    </script>
+  </body>
+</html>

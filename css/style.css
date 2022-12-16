@@ -8,6 +8,28 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex-grow: 1;
+    background: yellow;
+    position: relative;
+}
+header {
+    background-color: #222;
+    display: flex;
+    flex-direction: row;
+    padding: 1%
+}
+nav {
+    background-color: pink;
+    display: flex;
+}
+.logo {
+    width: 25%;
+    height: auto;
+    display: block;
 }
 #content {
     width: 80%;
@@ -83,12 +105,12 @@ p a {
 .titles p {
     margin: 0;
 }
-
+/*
 .navbar_02 {
     margin-left: auto;
     overflow: hidden;
 }
-.navbar_02 a { 
+.navbar_02 a {
     float: right;
     font-size: 16px;
     color: white;
@@ -99,12 +121,13 @@ p a {
 .navbar_02 a:hover, .dropdown:hover .dropbtn {
     background-color: #87b280;
 }
+*/
 .dropdown {
     float: right;
     overflow: hidden;
 }
 .dropdown .dropbtn {
-    font-size: 16px;  
+    font-size: 16px;
     border: none;
     outline: none;
     color: white;
@@ -135,6 +158,7 @@ p a {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+/*
 ul.menu {
     list-style-type: none;
     margin: 5 10px;
@@ -152,33 +176,36 @@ ul.menu {
     margin: 0px;
     color: #444;
   }
+*/
 p.photo {
     font-size: 12px;
     text-align: center;
     margin: 0;
-    margin-bottom: 20px;    
+    margin-bottom: 20px;
     padding: 0;
 }
 hr.line {
     width: 35%;
     border-top: 1px dotted #777;
 }
-.footer {
+footer {
     text-align: center;
     padding: 20px 0;
     font-size: 14px;
+    background-color: #222;
+    color: white;
 }
-.footer p {
+footer p {
     padding: 10px 0;
 }
 
 
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 812px)
   and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: portrait) { 
-    
+  and (orientation: portrait) {
+
     #content {
         width: 96%;
         margin: 0 auto;
