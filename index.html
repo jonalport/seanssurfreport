@@ -2,24 +2,49 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="css/style.css" />
+
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
-    <header id="header"></header>
+    <div id="head"></div>
 
     <main id="map"></main>
 
-    <footer>Footer</footer>
+    <footer>
+      <script
+        type="text/javascript"
+        src="https://www.freevisitorcounters.com/auth.php?id=09f15be5f6f465ea7d783133d27c6224720f11b3"
+      ></script>
+
+      <script
+        type="text/javascript"
+        src="https://www.freevisitorcounters.com/en/home/counter/988740/t/5"
+      ></script>
+    </footer>
 
     <script>
       $(function () {
-        $("header").load('header.html');
+        $('#head').load('header2.html');
 
-        mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYWxwb3J0IiwiYSI6ImNsYnIxdXp3NDBweXUzcG51Ynh6a3Z3OHQifQ.bfgvjzRscLynsRItEcXdlA';
+        mapboxgl.accessToken =
+          'pk.eyJ1Ijoiam9uYWxwb3J0IiwiYSI6ImNsYnIxdXp3NDBweXUzcG51Ynh6a3Z3OHQifQ.bfgvjzRscLynsRItEcXdlA';
 
         const map = new mapboxgl.Map({
           container: 'map',
