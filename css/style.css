@@ -12,36 +12,42 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 main {
   flex-grow: 1;
   background: yellow;
   position: relative;
 }
+
 header {
   background-color: #222;
   padding: 1% 0;
 }
+
 header .content {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
-.logo--link {
-  flex-grow: 1;
-}
+
+
 .header__link {
   margin-left: 1%;
   color: #ddd;
   font-size: 1.2rem;
   transition: all 200ms ease-in-out;
 }
+
 .header__link:hover {
   color: #fff;
 }
+
 nav {
   background: #ddd;
   padding: 1% 0;
 }
+
 nav a {
   font-weight: 700;
   text-transform: uppercase;
@@ -49,51 +55,83 @@ nav a {
   font-size: 0.9rem;
   transition: all 200ms ease-in-out;
 }
+
 nav a:hover {
   color: #000;
 }
+
 .content {
   width: 90%;
   max-width: 2400px;
   margin: 0 auto;
 }
-#nav {
-  /* background-color: pink; */
-  /* display: flex; */
+
+@media (min-width: 480px) {
+  .logo--link {
+    width: 55%;
+    padding: 0rem;
+    margin: auto;
+  }
 }
+
+@media (min-width: 780px) {
+  .logo--link {
+    margin: 0;
+    width: 35%;
+    padding: 0rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo--link {
+    width: 25%;
+  }
+}
+
+
 .logo {
-  width: 25%;
+  width: 100%;
+  padding: 1rem;
   height: auto;
   display: block;
+  max-width: 100%;
 }
+
+
 #content {
   width: 80%;
   margin: 0 auto;
 }
+
 #content h3,
 p {
   text-align: center;
 }
+
 .cam,
 .uae {
   width: 100%;
   height: auto;
 }
+
 .flex-master {
   width: 100%;
   background-color: #333;
 }
+
 .flex-container {
   width: 80%;
   margin: 0 auto;
   display: flex;
   align-items: center;
 }
+
 .intro-img img {
   padding: 20px;
   width: 60px;
   height: 60px;
 }
+
 h1,
 h1 a {
   font-size: 1.6rem;
@@ -104,6 +142,7 @@ h1 a {
   margin-top: -2px;
   padding: 0;
 }
+
 h2 {
   font-size: 1rem;
   color: #777;
@@ -111,11 +150,25 @@ h2 {
   padding: 0;
   margin: 0;
 }
+
+h3 {
+  font-size: 1.25rem;
+  display: inline-block;
+  color: white;
+  background: black;
+  padding: 0.2rem 2rem;
+  font-weight: 100;
+  margin: 0;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
 p {
   font-size: 0.9rem;
   margin: 15px 0;
   padding: 0;
 }
+
 .sections {
   margin: 5px auto;
   margin-top: 20px;
@@ -124,25 +177,31 @@ p {
   color: white;
   background-color: #333;
 }
+
 a {
   color: #444;
   text-decoration: none;
 }
+
 p a {
   margin: 0;
   text-decoration: underline;
   color: #87b280;
 }
+
 .titles {
   margin: 25px 0;
 }
+
 .titles h3 {
   margin: 0;
   padding: 0;
 }
+
 .titles p {
   margin: 0;
 }
+
 /*
 .navbar_02 {
     margin-left: auto;
@@ -164,6 +223,7 @@ p a {
   float: right;
   overflow: hidden;
 }
+
 .dropdown .dropbtn {
   font-size: 16px;
   border: none;
@@ -174,6 +234,7 @@ p a {
   font-family: inherit;
   margin: 0;
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -182,6 +243,7 @@ p a {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
+
 .dropdown-content a {
   float: none;
   color: black;
@@ -190,12 +252,15 @@ p a {
   display: block;
   text-align: left;
 }
+
 .dropdown-content a:hover {
   background-color: #ddd;
 }
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
 /*
 ul.menu {
     list-style-type: none;
@@ -222,10 +287,12 @@ p.photo {
   margin-bottom: 20px;
   padding: 0;
 }
+
 hr.line {
   width: 35%;
   border-top: 1px dotted #777;
 }
+
 footer {
   text-align: center;
   padding: 20px 0;
@@ -233,6 +300,7 @@ footer {
   background-color: #222;
   color: white;
 }
+
 footer p {
   padding: 10px 0;
 }
@@ -244,11 +312,13 @@ footer p {
     width: 96%;
     margin: 0 auto;
   }
+
   .intro-img img {
     padding: 10px;
     width: 50px;
     height: 50px;
   }
+
   h1,
   h1 a {
     font-size: 1.2rem;
@@ -259,6 +329,7 @@ footer p {
     margin-top: -2px;
     padding: 0;
   }
+
   h2 {
     font-size: 0.7rem;
     color: #777;
@@ -266,6 +337,7 @@ footer p {
     padding: 0;
     margin: 0;
   }
+
   .flex-container {
     width: 100%;
     margin: 0 auto;
