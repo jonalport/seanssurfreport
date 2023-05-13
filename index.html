@@ -30,7 +30,7 @@
         <div class="row row-cols-1 row-cols-lg-2 g-sm-6 g-4 ">
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1">Kite Beach Center, UAQ</h2>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm is-loading">
               <img class="object-fit-cover card-img-top"
                 src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg" height="225" />
               <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
@@ -54,7 +54,7 @@
           </div>
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Blue Ocean Sports, Jebel Ali</h2>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm is-loading">
               <img class="object-fit-cover card-img-top"
                 src="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg" height="225" />
               <div class="card-body">
@@ -77,7 +77,7 @@
           </div>
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Sandy Beach Hotel, Dibba</h2>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm is-loading">
               <img class="object-fit-cover card-img-top"
                 src="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg" height="225" />
               <div class="card-body">
@@ -101,7 +101,7 @@
 
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Mikoko, Umm Al Quwain</h2>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm is-loading">
               <img class="object-fit-cover card-img-top"
                 src="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg" height="225" />
               <div class="card-body">
@@ -128,9 +128,10 @@
         <div style="margin-top: 4rem; max-width: 90%;">
           <p> It would be amazing to have these types of weather stations around the UAE. If you have any suggestions or
             want to
-            contribute to this project, you can reach me on seanocaster@gmail.com or instagram @foilandwater</p>
+            contribute to this project, you can reach me on <a
+              href="mailto:seanocaster@gmail.com">seanocaster@gmail.com</a> or instagram <a
+              href="https://www.instagram.com/foilandwater/">@foilandwater</a></p>
         </div>
-
 
       </div>
     </div>
@@ -285,7 +286,7 @@
               <div class="area mikoko">
                 <div class="cam viewtype">
                   <h3>Web Cam</h3>
-                  <img src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg" class="cam" />
+                  <img src="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg" class="cam" />
                 </div>
                 <div class="wind viewtype">
                   <h3>Live Wind</h3>
@@ -323,48 +324,6 @@
                 </div>
               </div>
 
-
-              <!------- Mikoko, Umm Al Quwain------>
-              <div class="area mikoko">
-                <div class="cam viewtype">
-                  <h3>Web Cam</h3>
-                  <img src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg" class="cam" />
-                </div>
-                <div class="wind viewtype">
-                  <h3>Live Wind</h3>
-                  <div style="max-width: 100%;">
-                    <script id="wglive_3190_1661748269789">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["spot=3190", "uid=wglive_3190_1661748269789", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=300", "msize=400", "m=3", "show=n,g,c"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-                <div class="forecast viewtype">
-                  <h3>Forecast</h3>
-                  <div>
-                    <script id="wg_fwdg_1088106_100_1661748419897">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["s=687932", "m=100", "mw=84", "uid=wg_fwdg_1088106_100_1661748419897", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -405,10 +364,36 @@
 
     function setModalContent(areaName, type) {
       $('.area').hide();
-      $(`.${areaName}`).show();
+      $(`.${areaName}`).fadeIn(200);
+
       const container = $(`#data-modal`);
       const scrollTo = $(`.${areaName} .${type}`);
-      container.scrollTop(scrollTo.offset().top - container.offset().top + container.scrollTop());
+      let spinner = container.find('.spinner');
+      if (!spinner.length) {
+        // create a new spinner if one doesn't exist
+        spinner = $('<div>').addClass('spinner');
+        container.append(spinner);
+      }
+      spinner.show();
+
+      setTimeout(() => {
+        spinner.hide();
+        $(`.${areaName}`).fadeIn();
+        container.animate({
+          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+        }, 500);
+      }, 500);
+    }
+
+    function imageLoader() {
+      const $img = $('.card img');
+      // $img.css('display', 'none');
+      $img.on('load', () => {
+        const $card = $(this).closest('.card.is-loading');
+        $card.removeClass('is-loading');
+        $card.find('.card-body').css('visibility', 'visible');
+        $(this).css('display', 'block');
+      });
     }
 
     function menuItemClick(area, tp) {
@@ -417,6 +402,10 @@
     }
 
     window.menuItemClick = menuItemClick;
+
+    $(document).ready(function () {
+      imageLoader()
+    });
 
   </script>
 

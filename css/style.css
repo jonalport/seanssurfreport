@@ -15,7 +15,6 @@ body {
 
 main {
   flex-grow: 1;
-  background: yellow;
   position: relative;
 }
 
@@ -202,6 +201,15 @@ p a {
   margin: 0;
 }
 
+.sub-header {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--bs-heading-color, inherit);
+  font-size: 1.25rem;
+}
+
 /*
 .navbar_02 {
     margin-left: auto;
@@ -261,6 +269,34 @@ p a {
   display: block;
 }
 
+
+
+
+/** Loading Skeleton */
+
+.card.is-loading .card-img-top {
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  animation: shine 1.5s linear infinite;
+}
+
+.card.is-loading .card-img-top {
+  height: 200px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+
+
 /*
 ul.menu {
     list-style-type: none;
@@ -285,7 +321,12 @@ p.photo {
   text-align: center;
   margin: 0;
   margin-bottom: 20px;
+  margin-top: 0.5rem;
   padding: 0;
+}
+
+.pic:not(:first-child) {
+  margin-top: 1rem;
 }
 
 hr.line {
