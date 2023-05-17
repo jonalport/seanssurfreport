@@ -31,15 +31,23 @@
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1">Kite Beach Center, UAQ</h2>
             <div class="card shadow-sm is-loading">
-              <img class="object-fit-cover card-img-top"
-                src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg" height="225" />
-              <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
+              <a href="#" onclick="menuItemClick('uaq', 'cam')">
+                <img class="object-fit-cover card-img-top"
+                  src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg" height="225" />
+                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                    <path
+                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                  </svg></button>
+              </a>
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button onclick="setModalContent('uaq', 'cam')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">WebCam</button>
+                      data-bs-target="#data-modal">Camera</button>
                     <button onclick="setModalContent('uaq', 'wind')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
                       Wind</button>
@@ -55,14 +63,23 @@
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Blue Ocean Sports, Jebel Ali</h2>
             <div class="card shadow-sm is-loading">
-              <img class="object-fit-cover card-img-top"
-                src="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg" height="225" />
+              <a href="#" onclick="menuItemClick('blueOcean', 'cam')">
+                <img class="object-fit-cover card-img-top"
+                  src="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg" height="225" />
+                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                    <path
+                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                  </svg></button>
+              </a>
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button onclick="setModalContent('blueOcean', 'cam')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">WebCam</button>
+                      data-bs-target="#data-modal">Camera</button>
                     <button onclick="setModalContent('blueOcean', 'wind')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
                       Wind</button>
@@ -78,14 +95,24 @@
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Sandy Beach Hotel, Dibba</h2>
             <div class="card shadow-sm is-loading">
-              <img class="object-fit-cover card-img-top"
-                src="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg" height="225" />
+              <a href="#" onclick="menuItemClick('sandyBeach', 'cam')">
+                <img class="object-fit-cover card-img-top"
+                  src="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg" height="225" />
+                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                    <path
+                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                  </svg></button>
+              </a>
+
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button onclick="setModalContent('sandyBeach', 'cam')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">WebCam</button>
+                      data-bs-target="#data-modal">Camera</button>
                     <button onclick="setModalContent('sandyBeach', 'wind')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
                       Wind</button>
@@ -102,14 +129,23 @@
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Mikoko, Umm Al Quwain</h2>
             <div class="card shadow-sm is-loading">
-              <img class="object-fit-cover card-img-top"
-                src="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg" height="225" />
+              <a href="#" onclick="menuItemClick('mikoko', 'cam')">
+                <img class="object-fit-cover card-img-top"
+                  src="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg" height="225" />
+                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                    <path
+                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                  </svg></button>
+              </a>
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button onclick="setModalContent('mikoko', 'cam')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">WebCam</button>
+                      data-bs-target="#data-modal">Camera</button>
                     <button onclick="setModalContent('mikoko', 'wind')" type="button"
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
                       Wind</button>
@@ -343,23 +379,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-  <script>
-    $(function () {
-      $('#head').load('menu.html');
-
-      mapboxgl.accessToken =
-        'pk.eyJ1Ijoiam9uYWxwb3J0IiwiYSI6ImNsYnIxdXp3NDBweXUzcG51Ynh6a3Z3OHQifQ.bfgvjzRscLynsRItEcXdlA';
-
-      // const map = new mapboxgl.Map({
-      //   container: 'map',
-      //   style: 'mapbox://styles/mapbox/light-v11',
-      //   center: [-96, 37.8],
-      //   zoom: 3,
-      // });
-    });
-  </script>
 
   <script>
+
+
+    function handleButtonRefreshClick(event) {
+      event.stopPropagation(); // Prevent the click event from propagating to the <a> tag
+      refreshImages();
+    }
 
 
     function setModalContent(areaName, type) {
@@ -368,16 +395,9 @@
 
       const container = $(`#data-modal`);
       const scrollTo = $(`.${areaName} .${type}`);
-      let spinner = container.find('.spinner');
-      if (!spinner.length) {
-        // create a new spinner if one doesn't exist
-        spinner = $('<div>').addClass('spinner');
-        container.append(spinner);
-      }
-      spinner.show();
 
+      //
       setTimeout(() => {
-        spinner.hide();
         $(`.${areaName}`).fadeIn();
         container.animate({
           scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
@@ -385,15 +405,38 @@
       }, 500);
     }
 
+
+    function refreshImages() {
+      const $img = $('.card img').add('.area img');
+      $img.each(function () {
+        loadNewImage(this); // Fetch a new image for each image element every minute
+      });
+    }
+
+    function loadNewImage(im) {
+      const $currentImg = $(im);
+      $currentImg.closest('.card').addClass('.is-loading');
+      $currentImg.css('opacity', '0.3');
+      $currentImg.attr('src', $currentImg[0].src); // Replace 'your_image_url_here' with the URL to fetch the new image
+      $currentImg.on('load', () => setTimeout(() => $currentImg.css('opacity', '1'), 1000))
+    };
+
     function imageLoader() {
-      const $img = $('.card img');
-      // $img.css('display', 'none');
+      const $img = $('.card img').add('.area img');
+      // on image load first time
       $img.on('load', () => {
         const $card = $(this).closest('.card.is-loading');
         $card.removeClass('is-loading');
         $card.find('.card-body').css('visibility', 'visible');
         $(this).css('display', 'block');
       });
+
+      imageTimer = setInterval(() => {
+        $img.each(function () {
+          loadNewImage(this); // Fetch a new image for each image element every minute
+        });
+      }, 60000);
+
     }
 
     function menuItemClick(area, tp) {
@@ -404,6 +447,7 @@
     window.menuItemClick = menuItemClick;
 
     $(document).ready(function () {
+      $('#head').load('menu.html');
       imageLoader()
     });
 
