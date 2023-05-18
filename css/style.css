@@ -62,6 +62,11 @@ nav a:hover {
   color: var(--primary);
 }
 
+.nav-link:hover {
+  color: var(--secondary_blue);
+  transition: all 0.2s;
+}
+
 .content {
   width: 90%;
   max-width: 2400px;
