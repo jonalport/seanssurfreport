@@ -20,7 +20,38 @@
 </head>
 
 <body>
-  <div id="head" style="position:relative;"></div>
+  <header>
+    <div class="content">
+      <a href="/" class="logo--link"><img class="logo" src="img/logo.png" alt="Sean's surf report" /></a>
+      <div class="p-2"></div>
+    </div>
+  </header>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <button class="navbar-toggler m-auto mt-4 mb-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center" style="width:100%">
+          <li class="nav-item">
+            <a class="nav-link btn" onclick="menuItemClick('uaq', 'cam')">Kite Beach Center, UAQ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn" onclick="menuItemClick('mikoko', 'cam')">Mikoko, UAQ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn" onclick="menuItemClick('blueOcean', 'cam')">Blue Ocean Sports, JA</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn" onclick="menuItemClick('sandyBeach', 'cam')">Sandy Beach Hotel</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
   <main id="map" style="min-height:85vh; position: relative;">
 
 
@@ -55,7 +86,9 @@
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                       data-bs-target="#data-modal">Forecast</button>
                   </div>
-                  <h2 class="text-body-primary fw-bold d-none d-sm-block">Kite Beach Center, UAQ</h2>
+                  <a href="https://kitebeachcenter.ae/" target="_blank" rel="noopener noreferrer">
+                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Kite Beach Center, UAQ</h2>
+                  </a>
                 </div>
               </div>
             </div>
@@ -87,7 +120,9 @@
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                       data-bs-target="#data-modal">Forecast</button>
                   </div>
-                  <h2 class="text-body-primary fw-bold d-none d-sm-block">Blue Ocean Sports, Jebel Ali</h2>
+                  <a href="https://www.blue-ocean-sports.com/" target="_blank" rel="noopener noreferrer">
+                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Blue Ocean Sports, Jebel Ali</h2>
+                  </a>
                 </div>
               </div>
             </div>
@@ -120,7 +155,9 @@
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                       data-bs-target="#data-modal">Forecast</button>
                   </div>
+
                   <h2 class="text-body-primary fw-bold d-none d-sm-block">Sandy Beach Hotel, Dibba</h2>
+
                 </div>
               </div>
             </div>
@@ -153,7 +190,9 @@
                       class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                       data-bs-target="#data-modal">Forecast</button>
                   </div>
-                  <h2 class="text-body-primary fw-bold d-none d-sm-block">Mikoko, Umm Al Quwain</h2>
+                  <a href="https://www.instagram.com/mikoko.uaq/" target="_blank" rel="noopener noreferrer">
+                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Mikoko, Umm Al Quwain</h2>
+                  </a>
                 </div>
               </div>
             </div>
@@ -166,7 +205,9 @@
             want to
             contribute to this project, you can reach me on <a
               href="mailto:seanocaster@gmail.com">seanocaster@gmail.com</a> or instagram <a
-              href="https://www.instagram.com/foilandwater/">@foilandwater</a></p>
+              href="https://www.instagram.com/foilandwater/">@foilandwater.</a></p>
+          <p> A special thanks to <a href="https://www.instagram.com/jonalport/">Jon Alport</a> and <a
+              href="https://www.instagram.com/devkylo/">Kylo</a> for helping develop this website.</p>
         </div>
 
       </div>
@@ -194,8 +235,15 @@
               <!------- Kite Beach Center, UAQ ------>
               <div class="area uaq">
                 <div class="cam viewtype">
-                  <h3>Web Cam</h3>
+                  <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg" class="cam" />
+                  <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
+                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                      <path
+                        d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                    </svg></button>
                 </div>
                 <div class="wind viewtype">
                   <h3>Wind</h3>
@@ -236,7 +284,7 @@
               <!------- Blue Ocean Sports, Jebel Ali------>
               <div class="area blueOcean">
                 <div class="cam viewtype">
-                  <h3>Web Cam</h3>
+                  <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg" class="cam" />
                 </div>
                 <div class="wind viewtype">
@@ -279,7 +327,7 @@
               <!------- Sandy Beach Hotel, Dibba------>
               <div class="area sandyBeach">
                 <div class="cam viewtype">
-                  <h3>Web Cam</h3>
+                  <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg" class="cam" />
                 </div>
                 <div class="wind viewtype">
@@ -323,7 +371,7 @@
               <!------- Mikoko, Umm Al Quwain------>
               <div class="area mikoko">
                 <div class="cam viewtype">
-                  <h3>Web Cam</h3>
+                  <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg" class="cam" />
                 </div>
                 <div class="wind viewtype">
@@ -447,7 +495,7 @@
     window.menuItemClick = menuItemClick;
 
     $(document).ready(function () {
-      $('#head').load('menu.html');
+      // $('#head').load('menu.html');
       imageLoader()
     });
 
