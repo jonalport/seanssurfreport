@@ -484,10 +484,11 @@
     }
 
     function loadNewImage(im) {
+      const timestamp = new Date().getTime(); // Generate a unique timestamp
       const $currentImg = $(im);
       $currentImg.closest('.card').addClass('.is-loading');
       $currentImg.css('opacity', '0.3');
-      $currentImg.attr('src', $currentImg[0].src); // Replace 'your_image_url_here' with the URL to fetch the new image
+      $currentImg.attr('src', $currentImg[0].src + `?timestamp=${timestamp}`); // Replace 'your_image_url_here' with the URL to fetch the new image
       $currentImg.on('load', () => setTimeout(() => $currentImg.css('opacity', '1'), 1000))
     };
 
