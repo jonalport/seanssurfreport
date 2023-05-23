@@ -372,6 +372,18 @@ hr.line {
   border-top: 1px dotted #777;
 }
 
+
+
+.bottom-text {
+  margin-top: 4rem;
+}
+
+@media(min-width: 780px) {
+  .bottom-text {
+    max-width: 90%;
+  }
+}
+
 footer {
   text-align: center;
   padding: 20px 0;
