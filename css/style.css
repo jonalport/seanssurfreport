@@ -11,90 +11,134 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  --primary: black;
+  --secondary_blue: #5d5dff;
+  --secondary_gray: #6d757d;
 }
+
 main {
   flex-grow: 1;
-  background: yellow;
   position: relative;
 }
+
 header {
   background-color: #222;
   padding: 1% 0;
 }
+
 header .content {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
-.logo--link {
-  flex-grow: 1;
-}
+
+
 .header__link {
   margin-left: 1%;
   color: #ddd;
   font-size: 1.2rem;
   transition: all 200ms ease-in-out;
 }
+
 .header__link:hover {
   color: #fff;
 }
+
 nav {
   background: #ddd;
   padding: 1% 0;
 }
+
 nav a {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05rem;
   font-size: 0.9rem;
-  margin-right: 2%;
   transition: all 200ms ease-in-out;
 }
+
 nav a:hover {
-  color: #000;
+  color: var(--primary);
 }
+
+.nav-link:hover {
+  color: var(--secondary_blue);
+  transition: all 0.2s;
+}
+
 .content {
   width: 90%;
   max-width: 2400px;
   margin: 0 auto;
 }
-#nav {
-  /* background-color: pink; */
-  /* display: flex; */
+
+@media (min-width: 480px) {
+  .logo--link {
+    width: 55%;
+    padding: 0rem;
+    margin: auto;
+  }
 }
+
+@media (min-width: 780px) {
+  .logo--link {
+    margin: 0;
+    width: 35%;
+    padding: 0rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo--link {
+    width: 25%;
+  }
+}
+
+
 .logo {
-  width: 25%;
+  width: 100%;
+  padding: 1rem;
   height: auto;
   display: block;
+  max-width: 100%;
 }
+
+
 #content {
   width: 80%;
   margin: 0 auto;
 }
+
 #content h3,
 p {
   text-align: center;
 }
+
 .cam,
 .uae {
   width: 100%;
   height: auto;
 }
+
 .flex-master {
   width: 100%;
   background-color: #333;
 }
+
 .flex-container {
   width: 80%;
   margin: 0 auto;
   display: flex;
   align-items: center;
 }
+
 .intro-img img {
   padding: 20px;
   width: 60px;
   height: 60px;
 }
+
 h1,
 h1 a {
   font-size: 1.6rem;
@@ -105,6 +149,7 @@ h1 a {
   margin-top: -2px;
   padding: 0;
 }
+
 h2 {
   font-size: 1rem;
   color: #777;
@@ -112,11 +157,24 @@ h2 {
   padding: 0;
   margin: 0;
 }
+
+h3 {
+  font-size: 1.25rem;
+  display: inline-block;
+  color: white;
+  background: var(--primary);
+  padding: 0.2rem 2rem;
+  font-weight: 100;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
 p {
   font-size: 0.9rem;
   margin: 15px 0;
   padding: 0;
 }
+
 .sections {
   margin: 5px auto;
   margin-top: 20px;
@@ -125,46 +183,46 @@ p {
   color: white;
   background-color: #333;
 }
+
 a {
   color: #444;
   text-decoration: none;
 }
+
 p a {
   margin: 0;
   text-decoration: underline;
   color: #87b280;
 }
+
 .titles {
   margin: 25px 0;
 }
+
 .titles h3 {
   margin: 0;
   padding: 0;
 }
+
 .titles p {
   margin: 0;
 }
-/*
-.navbar_02 {
-    margin-left: auto;
-    overflow: hidden;
+
+.sub-header {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--bs-heading-color, inherit);
+  font-size: 1.25rem;
 }
-.navbar_02 a {
-    float: right;
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-.navbar_02 a:hover, .dropdown:hover .dropbtn {
-    background-color: #87b280;
-}
-*/
+
+
 .dropdown {
   float: right;
   overflow: hidden;
 }
+
 .dropdown .dropbtn {
   font-size: 16px;
   border: none;
@@ -175,6 +233,7 @@ p a {
   font-family: inherit;
   margin: 0;
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -183,50 +242,148 @@ p a {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
+
 .dropdown-content a {
   float: none;
-  color: black;
+  color: var(--primary);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   text-align: left;
 }
+
 .dropdown-content a:hover {
   background-color: #ddd;
 }
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
-/*
-ul.menu {
-    list-style-type: none;
-    margin: 5 10px;
-    padding: 5px;
-    font-size: 20px;
+
+.viewtype {
+  margin-bottom: 1.5rem;
+}
+
+/** Card links */
+.card-body a:hover>h2 {
+  color: #5d5dff;
+  transition: all 0.2s;
+}
+
+/** Card images */
+
+.card-img-top {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.card-img-top:hover {
+  filter: brightness(1.3);
+}
+
+.viewtype {
+  position: relative;
+}
+
+.viewtype img {
+  margin-bottom: 1rem;
+}
+
+/** image refresh button */
+
+.card a {
+  position: relative;
+}
+
+.refresh {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  padding: 2px 10px;
+  background: var(--primary);
+  ;
+  color: white
+}
+
+
+.cam .refresh {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  top: 60px;
+  right: 15px;
+  padding: 2px 10px;
+  background: var(--primary);
+  color: white
+}
+
+.refresh:hover {
+  color: white;
+  background-color: var(--secondary_gray);
+}
+
+
+a:hover .refresh,
+.cam:hover .refresh {
+  display: inline-block;
+  /* Show the button when hovering over the <a> tag */
+}
+
+/** Loading Skeleton */
+
+.card.is-loading .card-img-top {
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  animation: shine 1.5s linear infinite;
+}
+
+.card.is-loading .card-img-top {
+  height: 200px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
   }
-  .L2_heading {
-    display: table;
-    font-weight: 900;
-    margin: 5px 5px;
-    color: #87b280;
-  }
-  .nav_list {
-    font-weight: 300;
-    margin: 0px;
-    color: #444;
-  }
-*/
+}
+
+
 p.photo {
   font-size: 12px;
   text-align: center;
   margin: 0;
   margin-bottom: 20px;
+  margin-top: 0.5rem;
   padding: 0;
 }
+
+.pic:not(:first-child) {
+  margin-top: 1rem;
+}
+
 hr.line {
   width: 35%;
   border-top: 1px dotted #777;
 }
+
+
+
+.bottom-text {
+  margin-top: 4rem;
+}
+
+@media(min-width: 780px) {
+  .bottom-text {
+    max-width: 90%;
+  }
+}
+
 footer {
   text-align: center;
   padding: 20px 0;
@@ -234,20 +391,25 @@ footer {
   background-color: #222;
   color: white;
 }
+
 footer p {
   padding: 10px 0;
 }
+
+
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
   #content {
     width: 96%;
     margin: 0 auto;
   }
+
   .intro-img img {
     padding: 10px;
     width: 50px;
     height: 50px;
   }
+
   h1,
   h1 a {
     font-size: 1.2rem;
@@ -258,6 +420,7 @@ footer p {
     margin-top: -2px;
     padding: 0;
   }
+
   h2 {
     font-size: 0.7rem;
     color: #777;
@@ -265,6 +428,7 @@ footer p {
     padding: 0;
     margin: 0;
   }
+
   .flex-container {
     width: 100%;
     margin: 0 auto;
