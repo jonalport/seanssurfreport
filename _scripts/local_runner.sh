@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# 1. clone seanssurfreport repo
-# 2. run appropriate script, eg: ./seanssurfreport/_scripts/kbc.sh
+# Example for KBC
 
-# Public key from webcam server needs to be added to github
+git clone --depth=1 git@github.com:jonalport/seanssurfreport.git
+./seanssurfreport/_scripts/kbc.sh
 
-echo "This runs on local server"
+echo "Running KBC script from local server"
