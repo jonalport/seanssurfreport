@@ -36,4 +36,4 @@ sleep 5
 
 # Upload the file
 
-# scp -i ~/.ssh/id_rsa /home/pi/pictures/picture.jpg root@138.68.168.120:/var/www/vhosts/seanssurfreport.com/httpdocs/wp-content/uploads/from_kbc/
+scp -i ~/.ssh/id_rsa /home/pi/pictures/picture.jpg root@138.68.168.120:/var/www/vhosts/seanssurfreport.com/httpdocs/wp-content/uploads/from_kbc/
