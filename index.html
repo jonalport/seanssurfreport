@@ -39,13 +39,16 @@
             <a class="nav-link btn" onclick="menuItemClick('uaq', 'cam')">Kite Beach Center, UAQ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn" onclick="menuItemClick('mikoko', 'cam')">Mikoko, UAQ</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link btn" onclick="menuItemClick('blueOcean', 'cam')">Blue Ocean Sports, JA</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link btn" onclick="menuItemClick('dosc', 'cam')">Dubai Offshore Sailing Club</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link btn" onclick="menuItemClick('sandyBeach', 'cam')">Sandy Beach Hotel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn" onclick="menuItemClick('mikoko', 'cam')">Mikoko, UAQ</a>
           </li>
 
         </ul>
@@ -59,6 +62,7 @@
       <div class="container">
 
         <div id="cards-grid" class="row row-cols-1 row-cols-lg-2 g-sm-6 g-4 ">
+          <!------ KBC ------>
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1">Kite Beach Center, UAQ</h2>
             <div class="card shadow-sm is-loading">
@@ -93,6 +97,7 @@
               </div>
             </div>
           </div>
+          <!------ Blue Ocean Sports ------>
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Blue Ocean Sports, Jebel Ali</h2>
             <div class="card shadow-sm is-loading">
@@ -128,6 +133,42 @@
               </div>
             </div>
           </div>
+          <!------ DOSC ------>
+          <div class="col">
+            <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Dubai Offshore Sailing Club</h2>
+            <div class="card shadow-sm is-loading">
+              <a href="#" onclick="menuItemClick('dosc', 'cam')">
+                <img class="object-fit-cover card-img-top"
+                  src="https://seanssurfreport.com/wp-content/uploads/from_dosc/picture_temp.jpg" height="225" />
+                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                    <path
+                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                  </svg></button>
+              </a>
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button onclick="setModalContent('dosc', 'cam')" type="button"
+                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                      data-bs-target="#data-modal">Camera</button>
+                    <button onclick="setModalContent('dosc', 'wind')" type="button"
+                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
+                      Wind</button>
+                    <button onclick="setModalContent('dosc', 'forecast')" type="button"
+                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                      data-bs-target="#data-modal">Forecast</button>
+                  </div>
+                  <a href="https://www.instagram.com/mikoko.uaq/" target="_blank" rel="noopener noreferrer">
+                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Dubai Offshore Sailing Club</h2>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!------ Sandy Beach Hotel ------>
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Sandy Beach Hotel, Dibba</h2>
             <div class="card shadow-sm is-loading">
@@ -163,7 +204,7 @@
               </div>
             </div>
           </div>
-
+          <!------ Mikoko ------>
           <div class="col">
             <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Mikoko, Umm Al Quwain</h2>
             <div class="card shadow-sm is-loading">
@@ -224,17 +265,19 @@
 
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title">Kite Beach Center, UAQ</h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+          
           <div class="modal-body" id="modalBody">
 
 
             <div style="max-width: 100%;">
 
               <!------- Kite Beach Center, UAQ ------>
+              
               <div class="area uaq">
+                <div class="modal-header">
+                  <h2 class="modal-title">Kite Beach Center, UAQ</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="cam viewtype">
                   <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg" class="cam" />
@@ -284,6 +327,10 @@
 
               <!------- Blue Ocean Sports, Jebel Ali------>
               <div class="area blueOcean">
+                <div class="modal-header">
+                  <h2 class="modal-title">Blue Ocean Sports, Jebel Ali</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="cam viewtype">
                   <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg" class="cam" />
@@ -331,9 +378,47 @@
                 </div>
               </div>
 
+              <!------- Dubai Offshore Sailing Club ------>
+              <div class="area dosc">
+                <div class="modal-header">
+                  <h2 class="modal-title">Dubai Offshore Sailing Club</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="cam viewtype">
+                    <h3>Camera</h3>
+                    <!-- ADD WEBCAM SRC URL BELOW -->
+                    <img src="https://seanssurfreport.com/wp-content/uploads/from_dosc/picture_temp.jpg" class="cam" />
+                    <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="wind viewtype">
+                    <h3>Wind</h3>
+                    <div style="max-width: 100%;">
+            
+                    <!-- ADD WIND IFRAME SCRIPT HERE -->
+            
+                    </div>
+                </div>
+                <h3>Forecast</h3>
+                <div class="forecast viewtype">
+                    <div>
+                    <!-- ADD WIND FORECAST SCRIPT HERE -->
+                    </div>
+                </div>
+            </div>
 
               <!------- Sandy Beach Hotel, Dibba------>
               <div class="area sandyBeach">
+                <div class="modal-header">
+                  <h2 class="modal-title">Sandy Beach Hotel, Dibba</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="cam viewtype">
                   <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg" class="cam" />
@@ -385,6 +470,10 @@
 
               <!------- Mikoko, Umm Al Quwain------>
               <div class="area mikoko">
+                <div class="modal-header">
+                  <h2 class="modal-title">Mikoko, UAQ</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="cam viewtype">
                   <h3>Camera</h3>
                   <img src="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg" class="cam" />
