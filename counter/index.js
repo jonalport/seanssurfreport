@@ -4,11 +4,17 @@ template.innerHTML = `
   <style>
     .retro-counter {
       font-family: monospace;
-      font-size: 24px;
+      font-size: 20px;
+    }
+
+    @media(max-width: 680px){
+      .retro-counter {
+        font-size: 18px;
+      }
     }
   </style>
   <div class="retro-counter">
-    Page Hits: <span id="counter">Loading...</span>
+    Total Visits: <span id="counter">Loading...</span>
   </div>
 `;
 

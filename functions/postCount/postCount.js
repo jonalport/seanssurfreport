@@ -6,7 +6,8 @@ exports.handler = async function(event, context) {
     const allowedDomains = [
         'https://seanssurfreport.netlify.app',
         'https://seanssurfreport.com',
-        'http://127.0.0.1:5500/index.html'
+        'http://127.0.0.1:5500/index.html',
+        'https://v2.seanssurfreport.com'
     ];
 
     if (allowedDomains.some(domain => location.includes(domain))) {
