@@ -269,6 +269,20 @@ p a {
   max-height: 420px !important
 }
 
+.uaq .wind iframe {
+  max-height: 380px !important
+}
+
+
+@media (max-width: 780px){
+  .wind iframe {
+    max-height: 380px !important
+  }
+  .uaq .wind iframe {
+    max-height: 330px !important
+  }
+  
+}
 
 
 /** Card links */
