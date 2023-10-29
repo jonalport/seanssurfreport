@@ -275,8 +275,12 @@ p a {
 
 
 @media (max-width: 780px){
-  .wind iframe, .forecast iframe {
+  .wind iframe {
     max-height: 380px !important
+  }
+
+  .forecast iframe {
+    max-height: 330px !important
   }
   .uaq .wind iframe, .mikoko .wind iframe {
     max-height: 330px !important
