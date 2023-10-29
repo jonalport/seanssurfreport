@@ -9,11 +9,8 @@ exports.handler = async function(event, context) {
         'http://127.0.0.1:5500/index.html'
     ];
 
-    console.log('Check domains')
-
     if (allowedDomains.some(domain => location.includes(domain))) {
 
-        console.log('IS ALLOWED')
         const options = {
             method: 'GET',
             headers: {
@@ -26,8 +23,6 @@ exports.handler = async function(event, context) {
             // UPDATE COUNT
             const fetched = await fetch(url, options);
             const result = await fetched.json();
-
-            console.log(result)
             
 
             return {
@@ -38,9 +33,10 @@ exports.handler = async function(event, context) {
                     'Access-Control-Allow-Credentials': true,
                 },
                 body: JSON.stringify({
-                    count: result.count,
+                    count: result.data,
                 }),
             };
+
         } catch (e) {
             console.error(e);
             return {
