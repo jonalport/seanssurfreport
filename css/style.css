@@ -264,11 +264,11 @@ p a {
   margin-bottom: 1.5rem;
 }
 
-@media (max-width: 680px){
-  .wind iframe {
-    max-height: 350px !important
-  }
+
+.wind iframe {
+  max-height: 350px !important
 }
+
 
 
 /** Card links */
