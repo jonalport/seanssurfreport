@@ -24,13 +24,13 @@ exports.handler = async function(event, context) {
             // UPDATE COUNT
             const fetched = await fetch(url, options);
             const result = await fetched.json();
-            
+            console.log(result)
 
             return {
                 statusCode: 200,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': location,
+                    'Access-Control-Allow-Origin': location.replace(/\/$/, ''),
                     'Access-Control-Allow-Credentials': true,
                 },
                 body: JSON.stringify({
@@ -44,7 +44,7 @@ exports.handler = async function(event, context) {
                 statusCode: 500,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': location,
+                    'Access-Control-Allow-Origin': location.replace(/\/$/, ''),
                     'Access-Control-Allow-Credentials': true,
                 },
             };
