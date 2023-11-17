@@ -405,6 +405,7 @@ hr.line {
 @media(min-width: 780px) {
   .bottom-text {
     max-width: 90%;
+    margin: auto;
   }
 }
 
