@@ -116,6 +116,12 @@ p {
   text-align: center;
 }
 
+@media (max-width: 480px){
+  .lead {
+    font-size: 1rem!important;
+  }
+}
+
 .nav-row {
   background: var(--secondary_lightgray);
   overflow-x: scroll;
@@ -205,7 +211,6 @@ h3 {
 }
 
 p {
-  font-size: 0.9rem;
   margin: 15px 0;
   padding: 0;
 }
