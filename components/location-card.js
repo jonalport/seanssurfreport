@@ -122,11 +122,7 @@ class LocationCard extends HTMLElement {
         }
         
         
-        .card:hover .refresh,
-        .cam:hover .refresh {
-          display: inline-block;
-        }
-        
+
         /** Loading Skeleton */
         
         .card.is-loading .card-img-top {
@@ -157,7 +153,7 @@ class LocationCard extends HTMLElement {
 
           <a role="button" href="#" id="card" class="">
             <div class="card shadow-sm">
-                <img id="thumbnail" class="object-fit-cover card-img-top" src="${imageUrl}" height="225" />
+                <img id="thumbnail" class="object-fit-cover card-img-top" src="${imageUrl}"  />
                 <button id="refreshButton" class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
