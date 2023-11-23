@@ -1,3 +1,11 @@
 {
-    "liveServer.settings.port": 5501
+  "liveServer.settings.port": 5501,
+  // These are all my auto-save configs
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  }
 }

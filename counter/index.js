@@ -1,5 +1,5 @@
 // Define the template for the web component
-const template = document.createElement('template');
+const template = document.createElement("template");
 template.innerHTML = `
   <style>
     .retro-counter {
@@ -23,22 +23,24 @@ class PageHitCounter extends HTMLElement {
     super();
 
     // Create a shadow DOM
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     // Get the serverUrl attribute value
-    this.serverUrl = this.getAttribute('server-url');
+    this.serverUrl = this.getAttribute("server-url");
 
     // Fetch the page hit count from the server
     this.fetchHitCount();
   }
 
-  validateOrigin(){
+  validateOrigin() {
     const location = window.location.href;
     if (!location) return false;
-    return (location.includes('seanssurfreport.netlify.app') ||
-    location.includes('seanssurfreport.com') ||
-    location.includes('http://127.0.0.1:5500/index.html'))
+    return (
+      location.includes("seanssurfreport.netlify.app") ||
+      location.includes("seanssurfreport.com") ||
+      location.includes("http://127.0.0.1:5500/index.html")
+    );
   }
 
   fetchHitCount() {
@@ -46,23 +48,23 @@ class PageHitCounter extends HTMLElement {
     fetch(this.serverUrl)
       .then((response) => response.json())
       .then((data) => {
-        const counterElement = this.shadowRoot.getElementById('counter');
+        const counterElement = this.shadowRoot.getElementById("counter");
         if (counterElement) {
           counterElement.textContent = `🏄‍♀️ ${data.count} 🏄‍♂️`;
         }
       })
       .catch((error) => {
-        console.error('Error fetching page hit count:', error);
+        console.error("Error fetching page hit count:", error);
       });
   }
 
   // Observe changes to the 'serverUrl' attribute
   static get observedAttributes() {
-    return ['server-url'];
+    return ["server-url"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'server-url' && oldValue !== newValue) {
+    if (name === "server-url" && oldValue !== newValue) {
       this.serverUrl = newValue;
       this.fetchHitCount();
     }
@@ -70,4 +72,4 @@ class PageHitCounter extends HTMLElement {
 }
 
 // Define the custom element
-customElements.define('page-hit-counter', PageHitCounter);
+customElements.define("page-hit-counter", PageHitCounter);

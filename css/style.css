@@ -14,6 +14,7 @@ body {
   --primary: black;
   --secondary_blue: #5d5dff;
   --secondary_gray: #6d757d;
+  --secondary_lightgray: #c8d1db;
 }
 
 main {
@@ -45,10 +46,10 @@ header .content {
   color: #fff;
 }
 
-nav {
+/* nav {
   background: #ddd;
   padding: 1% 0;
-}
+} */
 
 nav a {
   font-weight: 700;
@@ -115,6 +116,39 @@ p {
   text-align: center;
 }
 
+.nav-row {
+  background: var(--secondary_lightgray);
+  overflow-x: scroll;
+}
+
+.nav-row-inner {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.nav-row-inner li {
+  list-style: none;
+  position: block;
+}
+
+.nav-row-inner a {
+  text-decoration: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background-color: #5d5dff;
+  color: #fff;
+  padding: 8px;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 .cam,
 .uae {
   width: 100%;
@@ -139,14 +173,12 @@ p {
   height: 60px;
 }
 
-h1,
-h1 a {  
+ a {  
   color: white;
   margin: 0;
   margin-top: -2px;
   padding: 0;
 }
-
 
 
 h1 {
@@ -438,8 +470,7 @@ footer p {
     height: 50px;
   }
 
-  h1,
-  h1 a {
+ a {
     font-size: 1.2rem;
     font-weight: 900;
     color: white;
