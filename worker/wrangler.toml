@@ -1,0 +1,31 @@
+name = "worker"
+main = "src/index.ts"
+compatibility_date = "2023-10-30"
+
+workers_dev = true
+
+
+r2_buckets  = [
+	{ binding = "PICTURE_BUCKET", bucket_name = "pictures", preview_bucket_name =  "BUCKET-LOCALIN" }
+]
+kv_namespaces = [
+  { binding = "surfreport", id = "c49f396c288043359e4c8c434f82afaf", preview_id = "664224caf86746e7adb2352582568172" },
+]
+
+
+[env.kyles]
+r2_buckets  = [
+	{ binding = "PICTURE_BUCKET", bucket_name = "images", preview_bucket_name =  "BUCKET-LOCALIN" }
+]
+kv_namespaces = [
+  { binding = "surfreport", id = "3b2fa08fa23345ad8c8750fe33d1e293", preview_id = "664224caf86746e7adb2352582568172" },
+]
+
+
+
+# Bind another Worker service. Use this binding to call another Worker without network overhead.
+# Docs: https://developers.cloudflare.com/workers/platform/services
+# [[services]]
+# binding = "MY_SERVICE"
+# service = "my-service"
+
