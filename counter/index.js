@@ -33,18 +33,8 @@ class PageHitCounter extends HTMLElement {
     this.fetchHitCount();
   }
 
-  validateOrigin() {
-    const location = window.location.href;
-    if (!location) return false;
-    return (
-      location.includes("seanssurfreport.netlify.app") ||
-      location.includes("seanssurfreport.com") ||
-      location.includes("http://127.0.0.1:5500/index.html")
-    );
-  }
-
   fetchHitCount() {
-    if (!this.serverUrl || !this.validateOrigin()) return;
+    if (!this.serverUrl) return;
     fetch(this.serverUrl)
       .then((response) => response.json())
       .then((data) => {
