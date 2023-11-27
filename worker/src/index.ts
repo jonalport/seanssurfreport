@@ -28,6 +28,14 @@ export default {
 		headers.set('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
 		headers.set('Access-Control-Allow-Credentials', 'true');
 
+		function stationIsDown(uploadedDate: Date, expiryMinutes: number){
+			const uploadedTime = uploadedDate.getTime();
+			const currentTime = Date.now();
+			const timeDifferenceInMilliseconds = currentTime - uploadedTime;
+			const timeDifferenceInMinutes = timeDifferenceInMilliseconds / (1000 * 60); // Convert milliseconds to minutes
+
+			return timeDifferenceInMinutes > expiryMinutes
+		}
 		
 		switch (request.method) {
 			case 'OPTIONS':
@@ -57,16 +65,17 @@ export default {
 					return new Response(JSON.stringify({count: newCount}), { headers });
 				}
 				// fetching an image
-				const object = await env.PICTURE_BUCKET.get(key);
+				let object = await env.PICTURE_BUCKET.get(key);
+
+				// if image date is old, show station down
+				if (object && stationIsDown(object.uploaded, 30)) object = await env.PICTURE_BUCKET.get('stationDown');
 		
-				if (object === null) {
-					return new Response('No image found', { status: 404 });
-				}
-		
+				if (object === null) return new Response('No image found', { status: 404 });
+				
 				object.writeHttpMetadata(headers);
 				headers.set('etag', object.httpEtag);
 		
-				return new Response(object.body, {headers});
+				return new Response(object.body, { headers });
 
 		
 			default:
@@ -80,4 +89,5 @@ export default {
 		
 	},
 };
+
 
