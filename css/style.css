@@ -201,13 +201,16 @@ h2 {
 
 h3 {
   font-size: 1.25rem;
-  display: inline-block;
+  display: block;
   color: white;
   background: var(--primary);
   padding: 0.2rem 2rem;
   font-weight: 100;
-  margin: 0;
+  text-align: center;
+  width: 150px;
+  margin: auto;
   margin-bottom: 1rem;
+
 }
 
 p {
@@ -303,7 +306,6 @@ p a {
 .viewtype {
   margin-bottom: 1.5rem;
 }
-
 
 .wind iframe {
   max-height: 420px !important

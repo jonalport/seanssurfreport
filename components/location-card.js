@@ -57,7 +57,14 @@ class LocationCard extends HTMLElement {
         
         .card-img-top {
           transition: transform 0.3s ease, filter 0.3s ease;
-          max-height: 100px; /* Set the maximum height to 150px */
+          height: 100px; 
+        }
+
+        @media (max-width: 680px){
+          .card-img-top {
+  
+            height: 80px;
+          }
         }
         
         .card-img-top:hover {

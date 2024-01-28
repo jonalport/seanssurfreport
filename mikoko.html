@@ -14,46 +14,19 @@
 	<link rel="stylesheet" href="../css/style.css" />
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
+	<script type="module" src="./components/logo-header.js"> </script>
+	<script type="module" src="./components/top-navigation.js"> </script>
 	<script type="module" src="./components/location-card.js"> </script>
-	<script type="module" src="./components/custom-modal.js"> </script>
+	<script type="module" src="./components/page-hit-counter.js"> </script>
+	<script type="module" src="./components/footer-pagecount.js"> </script>
 
 </head>
 
 <body>
 	<!-- <a href="#main-content" class="skip-link">Skip to main content</a> -->
-	<header>
-		<div class="content d-flex justify-content-center">
-			<a href="/" class="logo--link"><img class="logo" src="img/logo.png" alt="Sean's surf report" /></a>
 
-		</div>
-	</header>
-	<nav class="w-100 nav-row py-2 position-sticky fixed-top">
-
-		<ul class="nav-row-inner d-flex justify-content-md-center py-3">
-
-			<li><location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg"
-					title="Kite Beach Center, UAQ" link-url="https://kitebeachcenter.ae/" emitdata="uaq">
-				</location-card></li>
-
-			<li><location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg"
-					title="Blue Ocean Sports, Jebel Ali" link-url="https://www.blue-ocean-sports.com/"
-					emitdata="oceanSports">
-				</location-card></li>
-
-			<li><location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_dosc/picture.jpg"
-					title="Dubai Offshore Sailing Club" link-url="https://www.instagram.com/mikoko.uaq/" emitdata="uaq">
-				</location-card></li>
-
-			<li><location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg"
-					title="Sandy Beach Hotel, Dibba" link-url="https://www.instagram.com/mikoko.uaq/" emitdata="sandy">
-				</location-card></li>
-
-			<li><location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg"
-					title="Mikiko, Umm Al Quwain" link-url="https://www.instagram.com/mikoko.uaq/" emitdata="mikoko">
-				</location-card></li>
-
-		</ul>
-	</nav>
+	<logo-header></logo-header>
+	<top-navigation></top-navigation>
 	<main class="pb-5 " style="position: relative">
 		<div class="container-xxl p-4">
 			<div class="row g-5">
@@ -72,10 +45,6 @@
 									little over an hour's
 									drive from Dubai. This spot thrives on North East winds, with decent swell during
 									the winter months.
-								</p>
-								<p>
-
-									<a href="#" class="btn btn-secondary mx-2 my-2">Learn more</a>
 								</p>
 							</div>
 						</div>
@@ -97,8 +66,8 @@
 
 
 						<div class="p-12 m-8">
+							<h3>Wind</h3>
 							<div class="wind viewtype shadow">
-								<h3>Wind</h3>
 								<div style="max-width: 100%;">
 									<script id="wglive_3190_1661748269789">
 										(function (window, document) {
@@ -136,71 +105,7 @@
 					</section>
 
 
-					<!------- Kite Beach Center ------>
-					<section class="area uaq">
-						<div class="text-center">
-							<div class="container pt-4 pb-5">
-								<h1 class="fw-light">Kite Beach Center, UAQ</h1>
-								<p class="lead text-muted text-xs text-md-lg">Discover Kite Beach Center, nestled in
-									Umm Al Quwain, a
-									little over an hour's drive from Dubai. This spot thrives on North East winds, with
-									decent swell during the winter months.</p>
-								<p>
-									<a href="#" class="btn btn-secondary mx-2 my-2">Learn more</a>
-								</p>
-							</div>
-						</div>
 
-						<div class="cam viewtype">
-							<img src="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg"
-								class="cam" />
-							<button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-									xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-									class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-									<path fill-rule="evenodd"
-										d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-									<path
-										d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-								</svg></button>
-						</div>
-
-						<div class="p-12 m-8">
-							<div class="wind viewtype shadow">
-								<h3>Wind</h3>
-								<div style="max-width: 100%;">
-									<script id="wglive_2146_1617178001640">
-										(function (window, document) {
-											var loader = function () {
-												var arg = ["spot=2146", "uid=wglive_2146_1617178001640", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"];
-												var script = document.createElement("script");
-												var tag = document.getElementsByTagName("script")[0];
-												script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-												tag.parentNode.insertBefore(script, tag);
-											};
-											window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-										})(window, document);
-									</script>
-								</div>
-							</div>
-							<h3 class="mt-5">Forecast</h3>
-							<div class="forecast viewtype shadow">
-								<div>
-									<script id="wg_fwdg_687932_100_1617177954510">
-										(function (window, document) {
-											var loader = function () {
-												var arg = ["s=687932", "m=100", "mw=84", "uid=wg_fwdg_687932_100_1617177954510", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-												var script = document.createElement("script");
-												var tag = document.getElementsByTagName("script")[0];
-												script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-												tag.parentNode.insertBefore(script, tag);
-											};
-											window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-										})(window, document);
-									</script>
-								</div>
-							</div>
-						</div>
-					</section>
 
 				</div>
 			</div>
@@ -214,43 +119,16 @@
 
 	</main>
 
-	<custom-modal></custom-modal>
 
 
+	<footer-pagecount></footer-pagecount>
 
-	<footer>
-		<div class="bottom-text" style="max-width: 800px">
-			<p> It would be amazing to have these types of weather stations around the UAE. If you have any suggestions
-				or
-				want to
-				contribute to this project, you can reach me on <a
-					href="mailto:seanocaster@gmail.com">seanocaster@gmail.com</a>
-				or instagram <a href="https://www.instagram.com/foilandwater/">@foilandwater.</a></p>
-			<p> A special thanks to <a href="https://www.instagram.com/jonalport/">Jon Alport</a> and <a
-					href="https://thegreatsync.com/">Kylo</a> for helping develop this website.</p>
-		</div>
-	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 		crossorigin="anonymous"></script>
 
-	<script>
 
-		$('.area').hide();
-		$(`.uaq`).fadeIn(200);
-
-		function handleImageClick(areaName) {
-			$('.area').hide();
-			$(`.${areaName}`).fadeIn(200);
-		}
-
-		window.addEventListener('cardClick', (e) => {
-			console.log(e)
-			handleImageClick(e.detail)
-		})
-
-	</script>
 
 </body>
 
