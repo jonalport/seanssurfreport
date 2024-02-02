@@ -79,6 +79,12 @@ hr.line {
   border-top: 1px dotted #777;
 }
 
+.widget {
+  bottom: 4rem; 
+  left: 2rem; 
+  width: 13%
+}
+
 
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
