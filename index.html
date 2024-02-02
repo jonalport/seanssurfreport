@@ -14,7 +14,12 @@
   <link rel="stylesheet" href="css/style.css" />
 
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="./counter/index.js"> </script>
+  <script type="module" src="./components/logo-header.js"> </script>
+  <script type="module" src="./components/nav-location-card.js"> </script>
+  <script type="module" src="./components/top-navigation.js"> </script>
+  <script type="module" src="./components/location-card.js"> </script>
+  <script type="module" src="./components/page-hit-counter.js"> </script>
+  <script type="module" src="./components/footer-pagecount.js"> </script>
 </head>
 
 <body>
@@ -24,37 +29,8 @@
 
     </div>
   </header>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <button class="navbar-toggler m-auto mt-4 mb-0" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center" style="width:100%">
-          <li class="nav-item">
-            <a class="nav-link btn" onclick="menuItemClick('uaq', 'cam')">Kite Beach Center</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn" onclick="menuItemClick('blueOcean', 'cam')">Blue Ocean Sports</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn" onclick="menuItemClick('dosc', 'cam')">Dubai Offshore Sailing Club</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn" onclick="menuItemClick('sandyBeach', 'cam')">Sandy Beach Hotel</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn" onclick="menuItemClick('mikoko', 'cam')">Mikoko</a>
-          </li>
 
-        </ul>
-      </div>
-    </div>
-  </nav>
   <main style="position: relative;">
-
 
     <div class="album py-4 py-md-5 bg-body-tertiary">
       <div class="container">
@@ -62,574 +38,49 @@
         <div id="cards-grid" class="row row-cols-1 row-cols-lg-2 g-sm-6 g-4 ">
           <!------ KBC ------>
           <div class="col">
-            <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1">Kite Beach Center, UAQ</h2>
-            <div class="card shadow-sm is-loading">
-              <a href="#" onclick="menuItemClick('uaq', 'cam')">
-                <img class="object-fit-cover card-img-top" src="https://worker.seanssurfreport.workers.dev/kbc"
-                  height="225" />
-                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                    <path
-                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                  </svg></button>
-              </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button onclick="setModalContent('uaq', 'cam')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Camera</button>
-                    <button onclick="setModalContent('uaq', 'wind')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
-                      Wind</button>
-                    <button onclick="setModalContent('uaq', 'forecast')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Forecast</button>
-                  </div>
-                  <a href="https://kitebeachcenter.ae/" target="_blank" rel="noopener noreferrer">
-                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Kite Beach Center, UAQ</h2>
-                  </a>
-                </div>
-              </div>
-            </div>
+            <location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg"
+              title="Kite Beach Center, UAQ" link-url="/kite-beach-center.html" hide-refresh="true">
+            </location-card>
           </div>
           <!------ Blue Ocean Sports ------>
           <div class="col">
-            <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Blue Ocean Sports, Jebel Ali</h2>
-            <div class="card shadow-sm is-loading">
-              <a href="#" onclick="menuItemClick('blueOcean', 'cam')">
-                <img class="object-fit-cover card-img-top" src="https://worker.seanssurfreport.workers.dev/bos"
-                  height="225" />
-
-                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                    <path
-                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                  </svg></button>
-              </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button onclick="setModalContent('blueOcean', 'cam')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Camera</button>
-                    <button onclick="setModalContent('blueOcean', 'wind')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
-                      Wind</button>
-                    <button onclick="setModalContent('blueOcean', 'forecast')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Forecast</button>
-                  </div>
-                  <a href="https://www.blue-ocean-sports.com/" target="_blank" rel="noopener noreferrer">
-                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Blue Ocean Sports, Jebel Ali</h2>
-                  </a>
-                </div>
-              </div>
-            </div>
+            <location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg"
+              title="Blue Ocean Sports, Jebel Ali" link-url="/blue-ocean-sports.html" hide-refresh="true">
+            </location-card>
           </div>
           <!------ DOSC ------>
           <div class="col">
-            <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Dubai Offshore Sailing Club</h2>
-            <div class="card shadow-sm is-loading">
-              <a href="#" onclick="menuItemClick('dosc', 'cam')">
-                <img class="object-fit-cover card-img-top"
-                  src="https://seanssurfreport.com/wp-content/uploads/from_dosc/picture.jpg" height="225" />
-                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                    <path
-                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                  </svg></button>
-              </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button onclick="setModalContent('dosc', 'cam')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Camera</button>
-                    <button onclick="setModalContent('dosc', 'wind')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
-                      Wind</button>
-                    <button onclick="setModalContent('dosc', 'forecast')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Forecast</button>
-                  </div>
-                  <a href="https://www.instagram.com/mikoko.uaq/" target="_blank" rel="noopener noreferrer">
-                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Dubai Offshore Sailing Club</h2>
-                  </a>
-                </div>
-              </div>
-            </div>
+            <location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_dosc/picture.jpg"
+              title="Dubai Offshore Sailing Club" link-url="/dubai-offshore-sailing-club.html" hide-refresh="true">
+            </location-card>
           </div>
           <!------ Sandy Beach Hotel ------>
           <div class="col">
-            <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Sandy Beach Hotel, Dibba</h2>
-            <div class="card shadow-sm is-loading">
-              <a href="#" onclick="menuItemClick('sandyBeach', 'cam')">
-                <img class="object-fit-cover card-img-top" src="https://worker.seanssurfreport.workers.dev/sandy"
-                  height="225" />
-                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                    <path
-                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                  </svg></button>
-              </a>
-
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button onclick="setModalContent('sandyBeach', 'cam')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Camera</button>
-                    <button onclick="setModalContent('sandyBeach', 'wind')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
-                      Wind</button>
-                    <button onclick="setModalContent('sandyBeach', 'forecast')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Forecast</button>
-                  </div>
-
-                  <h2 class="text-body-primary fw-bold d-none d-sm-block">Sandy Beach Hotel, Dibba</h2>
-
-                </div>
-              </div>
-            </div>
+            <location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg"
+              title="Sandy Beach Hotel, Dibba" link-url="/sandy-beach-hotel.html" hide-refresh="true">
+            </location-card>
           </div>
           <!------ Mikoko ------>
           <div class="col">
-            <h2 class="text-body-primary fw-bold d-sm-none mb-2 ml-1 mt-2">Mikoko, Umm Al Quwain</h2>
-            <div class="card shadow-sm is-loading">
-              <a href="#" onclick="menuItemClick('mikoko', 'cam')">
-                <img class="object-fit-cover card-img-top" src="https://worker.seanssurfreport.workers.dev/mikoko"
-                  height="225" />
-                <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                    <path
-                      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                  </svg></button>
-              </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button onclick="setModalContent('mikoko', 'cam')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Camera</button>
-                    <button onclick="setModalContent('mikoko', 'wind')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#data-modal">Live
-                      Wind</button>
-                    <button onclick="setModalContent('mikoko', 'forecast')" type="button"
-                      class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                      data-bs-target="#data-modal">Forecast</button>
-                  </div>
-                  <a href="https://www.instagram.com/mikoko.uaq/" target="_blank" rel="noopener noreferrer">
-                    <h2 class="text-body-primary fw-bold d-none d-sm-block">Mikoko, Umm Al Quwain</h2>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="bottom-text mt-5">
-          <p> It would be amazing to have these types of weather stations around the UAE. If you have any suggestions or
-            want to
-            contribute to this project, you can reach me on <a
-              href="mailto:seanocaster@gmail.com">seanocaster@gmail.com</a> or instagram <a
-              href="https://www.instagram.com/foilandwater/">@foilandwater.</a></p>
-          <p> A special thanks to <a href="https://www.instagram.com/jonalport/">Jon Alport</a> and <a
-              href="https://thegreatsync.com/">Kylo</a> for helping develop this website.</p>
-        </div>
-
-      </div>
-    </div>
-
-
-
-
-    <!-- Modal popup-->
-
-
-    <div class="modal" id="data-modal">
-
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-
-          <div class="modal-body" id="modalBody">
-
-
-            <div style="max-width: 100%;">
-
-              <!------- Kite Beach Center, UAQ ------>
-
-              <div class="area uaq">
-                <div class="modal-header">
-                  <h2 class="modal-title">Kite Beach Center, UAQ</h2>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="cam viewtype">
-                  <h3>Camera</h3>
-                  <img src="https://worker.seanssurfreport.workers.dev/kbc" class="cam" />
-                  <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                      <path
-                        d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                    </svg></button>
-                </div>
-                <div class="wind viewtype">
-                  <h3>Wind</h3>
-                  <div style="max-width: 100%;">
-                    <script id="wglive_2146_1617178001640">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["spot=2146", "uid=wglive_2146_1617178001640", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-                <h3>Forecast</h3>
-                <div class="forecast viewtype">
-                  <div>
-                    <script id="wg_fwdg_687932_100_1617177954510">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["s=687932", "m=100", "mw=84", "uid=wg_fwdg_687932_100_1617177954510", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-              </div>
-
-              <!------- Blue Ocean Sports, Jebel Ali------>
-              <div class="area blueOcean">
-                <div class="modal-header">
-                  <h2 class="modal-title">Blue Ocean Sports, Jebel Ali</h2>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="cam viewtype">
-                  <h3>Camera</h3>
-                  <img src="https://worker.seanssurfreport.workers.dev/bos" class="cam" />
-                  <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                      <path
-                        d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                    </svg></button>
-                </div>
-                <div class="wind viewtype">
-                  <h3>Live Wind</h3>
-                  <div style="max-width: 100%;">
-                    <script id="wglive_3568_1668852175054">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["spot=3568", "uid=wglive_3568_1668852175054", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=300", "msize=400", "m=3", "show=n,g,c"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-                <div class="forecast viewtype">
-                  <h3>Forecast</h3>
-                  <div>
-                    <script id="wg_fwdg_1136989_3_1668852348455">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["s= 1136989", "m=100", "mw=84", "uid=wg_fwdg_1136989_3_1668852348455", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-              </div>
-
-              <!------- Dubai Offshore Sailing Club ------>
-              <div class="area dosc">
-                <div class="modal-header">
-                  <h2 class="modal-title">Dubai Offshore Sailing Club</h2>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="cam viewtype">
-                  <h3>Camera</h3>
-                  <!-- ADD WEBCAM SRC URL BELOW -->
-                  <img src="https://seanssurfreport.com/wp-content/uploads/from_dosc/picture.jpg" class="cam" />
-                  <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                      <path
-                        d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                    </svg>
-                  </button>
-                </div>
-                <div class="wind viewtype">
-                  <h3>Wind</h3>
-                  <div style="max-width: 100%;">
-                    <script id="wglive_4065_1700490610879">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["spot=4065", "uid=wglive_4065_1700490610879", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=300", "msize=350", "m=3", "show=n,g,c"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-                <h3>Forecast</h3>
-                <div class="forecast viewtype">
-                  <div>
-                    <script id="wg_fwdg_546850_100_1700490995772">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["s= 546850", "m=100", "mw=84", "uid=wg_fwdg_546850_100_1700490995772", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-              </div>
-
-              <!------- Sandy Beach Hotel, Dibba------>
-              <div class="area sandyBeach">
-                <div class="modal-header">
-                  <h2 class="modal-title">Sandy Beach Hotel, Dibba</h2>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="cam viewtype">
-                  <h3>Camera</h3>
-                  <img src="https://worker.seanssurfreport.workers.dev/sandy" class="cam" />
-                  <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                      <path
-                        d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                    </svg></button>
-                </div>
-                <div class="wind viewtype">
-                  <h3>Live Wind</h3>
-                  <div style="max-width: 100%;">
-                    <script id="wglive_2014_1617178111305">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["spot=2014", "uid=wglive_2014_1617178111305", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=300", "msize=400", "m=3", "show=n,g,c"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-                <div class="forecast viewtype">
-                  <h3>Forecast</h3>
-                  <div>
-                    <script id="wg_fwdg_875305_3_1617178214856">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["s=875305", "m=3", "mw=84", "uid=wg_fwdg_875305_3_1617178214856", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=3", "vt=forecasts", "lng=en", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMP,APCP1s,RATING"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <!------- Mikoko, Umm Al Quwain------>
-              <div class="area mikoko">
-                <div class="modal-header">
-                  <h2 class="modal-title">Mikoko, UAQ</h2>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="cam viewtype">
-                  <h3>Camera</h3>
-                  <img src="https://worker.seanssurfreport.workers.dev/mikoko" class="cam" />
-                  <button class="refresh btn btn-sm" onclick="handleButtonRefreshClick(event)"><svg
-                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                      <path
-                        d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                    </svg></button>
-                </div>
-                <div class="wind viewtype">
-                  <h3>Live Wind</h3>
-                  <div style="max-width: 100%;">
-                    <script id="wglive_3190_1661748269789">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["spot=3190", "uid=wglive_3190_1661748269789", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=300", "msize=400", "m=3", "show=n,g,c"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-                <div class="forecast viewtype">
-                  <h3>Forecast</h3>
-                  <div>
-                    <script id="wg_fwdg_1088106_100_1661748419897">
-                      (function (window, document) {
-                        var loader = function () {
-                          var arg = ["s=687932", "m=100", "mw=84", "uid=wg_fwdg_1088106_100_1661748419897", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-                          var script = document.createElement("script");
-                          var tag = document.getElementsByTagName("script")[0];
-                          script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                          tag.parentNode.insertBefore(script, tag);
-                        };
-                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                      })(window, document);
-                    </script>
-                  </div>
-                </div>
-              </div>
-
-
-
-            </div>
+            <location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg"
+              title="Mikiko, Umm Al Quwain" link-url="/mikoko.html" hide-refresh="true">
+            </location-card>
           </div>
         </div>
       </div>
     </div>
+
+    <footer-pagecount></footer-pagecount>
 
   </main>
 
 
 
-  <footer>
-    <page-hit-counter server-url="https://worker.seanssurfreport.workers.dev/pageCount"></page-hit-counter>
-  </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
 
-  <script>
-    function handleButtonRefreshClick(event) {
-      event.stopPropagation(); // Prevent the click event from propagating to the <a> tag
-      refreshImages();
-    }
 
-
-    function setModalContent(areaName, type) {
-      $('.area').hide();
-      $(`.${areaName}`).fadeIn(200);
-
-      const container = $(`#data-modal`);
-      const scrollTo = $(`.${areaName} .${type}`);
-
-      //
-      setTimeout(() => {
-        $(`.${areaName}`).fadeIn();
-        container.animate({
-          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-        }, 500);
-      }, 500);
-    }
-
-
-    function refreshImages() {
-      const $img = $('.card img').add('.area img');
-      $img.each(function () {
-        loadNewImage(this); // Fetch a new image for each image element every minute
-      });
-    }
-
-    function loadNewImage(im) {
-      const timestamp = new Date().getTime(); // Generate a unique timestamp
-      const $currentImg = $(im);
-      $currentImg.closest('.card').addClass('.is-loading');
-      $currentImg.css('opacity', '0.3');
-      $currentImg.attr('src', $currentImg[0].src + `?timestamp=${timestamp}`); // Replace 'your_image_url_here' with the URL to fetch the new image
-      $currentImg.on('load', () => setTimeout(() => $currentImg.css('opacity', '1'), 1000))
-    };
-
-    function imageLoader() {
-      const $img = $('.card img').add('.area img');
-      // on image load first time
-      $img.on('load', () => {
-        const $card = $(this).closest('.card.is-loading');
-        $card.removeClass('is-loading');
-        $card.find('.card-body').css('visibility', 'visible');
-        $(this).css('display', 'block');
-      });
-
-      imageTimer = setInterval(() => {
-        $img.each(function () {
-          loadNewImage(this); // Fetch a new image for each image element every minute
-        });
-      }, 60000);
-
-    }
-
-    function menuItemClick(area, tp) {
-      $('#data-modal').modal('show');
-      setModalContent(area, tp);
-    }
-
-    window.menuItemClick = menuItemClick;
-
-    $(document).ready(function () {
-      // $('#head').load('menu.html');
-      imageLoader()
-    });
-
-  </script>
 
 </body>
 

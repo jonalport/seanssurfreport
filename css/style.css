@@ -199,7 +199,7 @@ h2 {
   margin: 0;
 }
 
-h3 {
+h2 {
   font-size: 1.25rem;
   display: block;
   color: white;
@@ -207,7 +207,7 @@ h3 {
   padding: 0.2rem 2rem;
   font-weight: 100;
   text-align: center;
-  width: 150px;
+  width: 180px;
   margin: auto;
   margin-bottom: 1rem;
 

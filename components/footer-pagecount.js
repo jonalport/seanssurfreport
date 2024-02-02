@@ -49,7 +49,7 @@ class FooterPagecount extends HTMLElement {
   
           </style>
   
-          <footer>
+          <footer class="pb-5">
             <div class="bottom-text" style="max-width: 800px">
                 <p> It would be amazing to have these types of weather stations around the UAE. If you have any suggestions
                     or
