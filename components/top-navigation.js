@@ -38,24 +38,24 @@ class TopNavigation extends HTMLElement {
 
             <ul class="nav-row-inner d-flex justify-content-xl-center slide-in-blurred-top">
 
-                <li><nav-location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_kbc/picture.jpg"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/kbc"
                         title="Kite Beach Center, UAQ" link-url="/kite-beach-center.html">
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_bos/picture.jpg"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/bos"
                         title="Blue Ocean Sports, Jebel Ali" link-url="/blue-ocean-sports.html"
                         >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_dosc/picture.jpg"
+                <li><nav-location-card image-url="./img/coming.jpeg"
                         title="Dubai Offshore Sailing Club" link-url="/dubai-offshore-sailing-club.html">
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_sandy/picture.jpg"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/sandy"
                         title="Sandy Beach Hotel, Dibba" link-url="/sandy-beach-hotel.html" >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://seanssurfreport.com/wp-content/uploads/from_mikoko/picture.jpg"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/mikoko"
                         title="Mikiko, Umm Al Quwain" link-url="/mikoko.html" >
                     </nav-location-card></li>              
 

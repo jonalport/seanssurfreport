@@ -95,7 +95,7 @@ class NavLocationCard extends HTMLElement {
           }
   
           @media (max-width: 680px){
-            .card-img-top {
+            .card-img-top, .bg {
               height: 80px;
             }
           }

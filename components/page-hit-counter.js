@@ -47,18 +47,6 @@ class PageHitCounter extends HTMLElement {
         console.error("Error fetching page hit count:", error);
       });
   }
-
-  // Observe changes to the 'serverUrl' attribute
-  static get observedAttributes() {
-    return ["server-url"];
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (name === "server-url" && oldValue !== newValue) {
-      this.serverUrl = newValue;
-      this.fetchHitCount();
-    }
-  }
 }
 
 // Define the custom element
