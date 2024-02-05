@@ -25,7 +25,7 @@ class TidesForecast extends HTMLElement {
   }
 
   async fetchTidesData() {
-    const apiUrl = `https://www.worldtides.info/api/v3?heights&extremes&date=${this.date}&lat=${this.latitude}&lon=${this.longitude}&days=5&key=${this.ky}&plot&points&background=228,252,239&timemode=24`;
+    const apiUrl = `https://www.worldtides.info/api/v3?heights&extremes&date=${this.date}&lat=${this.latitude}&lon=${this.longitude}&days=5&key=${this.ky}&timemode=24`;
 
     try {
       const response = await fetch(apiUrl);
@@ -111,22 +111,25 @@ class TidesForecast extends HTMLElement {
   }
 
   renderChart(container, data) {
-    const dataPoints = data.map((entry) => {
-      const dateTime = new Date(entry.date);
-      const formattedDateTime = dateTime.toLocaleString("en-US", {
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        // month: "short",
-      });
+    const dataPoints = data
+      .map((entry) => {
+        const dateTime = new Date(entry.date);
+        const formattedDateTime = dateTime.toLocaleString("en-US", {
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          // month: "short",
+          timeZone: "Asia/Dubai",
+        });
 
-      const label = `${formattedDateTime}`;
+        const label = `${formattedDateTime}`;
 
-      return {
-        label: label,
-        height: entry.height,
-      };
-    });
+        return {
+          label: label,
+          height: entry.height,
+        };
+      })
+      .slice(0, 50);
 
     const labels = dataPoints.map((entry) => entry.label);
     const heights = data.map((entry) => entry.height);
@@ -148,7 +151,7 @@ class TidesForecast extends HTMLElement {
             label: "Tidal Heights",
             data: heights,
             borderWidth: 0,
-            fill: "origin",
+            fill: "start",
           },
         ],
       },
@@ -189,6 +192,7 @@ class TidesForecast extends HTMLElement {
       hour: "numeric",
       minute: "numeric",
       month: "short",
+      timeZone: "Asia/Dubai",
     });
     return formattedDateTime;
   }
