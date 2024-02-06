@@ -22,9 +22,9 @@ main {
 }
 
 
-@media (max-width: 480px){
+@media (max-width: 480px) {
   .lead {
-    font-size: 1rem!important;
+    font-size: 1rem !important;
   }
 }
 
@@ -80,8 +80,8 @@ hr.line {
 }
 
 .widget {
-  bottom: 4rem; 
-  left: 2rem; 
+  bottom: 4rem;
+  left: 2rem;
   width: 13%
 }
 

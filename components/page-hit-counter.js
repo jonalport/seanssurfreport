@@ -3,7 +3,7 @@ const template = document.createElement("template");
 template.innerHTML = `
   <style>
     .retro-counter {
-      font-family: monospace;
+      <!-- font-family: monospace; -->
       font-size: 20px;
     }
 
