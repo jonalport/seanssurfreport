@@ -26,7 +26,7 @@ class FooterPagecount extends HTMLElement {
             }
             
             footer p {
-                padding: 10px 0;
+                padding: 5px 0;
             }
           
             
@@ -49,16 +49,15 @@ class FooterPagecount extends HTMLElement {
   
           </style>
   
-          <footer class="pb-5">
+          <footer class="pb-4">
             <div class="bottom-text" style="max-width: 800px">
                 <p> It would be amazing to have these types of weather stations around the UAE. If you have any suggestions
-                    or
-                    want to
-                    contribute to this project, you can reach me on <a
-                        href="mailto:seanocaster@gmail.com">seanocaster@gmail.com</a>
-                    or instagram <a href="https://www.instagram.com/foilandwater/">@foilandwater.</a></p>
-                <p> Developed by <a
-                href="https://www.devkylo.com/">Kyle Robinson</a>. A special thanks to <a href="https://www.instagram.com/jonalport/">Jon Alport</a>.</p>
+                    or want to contribute to this project, you can reach me on
+                    <a href="mailto:seanocaster@gmail.com">seanocaster@gmail.com</a>
+                    or instagram <a href="https://www.instagram.com/foilandwater/">@foilandwater.</a>
+                    <br><br>
+                    Developed by <a href="https://www.devkylo.com/">Kyle Robinson</a>. A special thanks to <a href="https://www.instagram.com/jonalport/">Jon Alport</a>.
+                </p>
             </div>
             <page-hit-counter server-url="https://worker.seanssurfreport.workers.dev/pageCount"></page-hit-counter>
         </footer>
