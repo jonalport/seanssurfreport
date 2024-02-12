@@ -70,7 +70,7 @@ class LogoHeader extends HTMLElement {
           
           .logo {
             width: 100%;
-            padding: 1rem;
+            padding: 0.5rem;
             height: auto;
             display: block;
             max-width: 100%;
