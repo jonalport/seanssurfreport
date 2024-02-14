@@ -35,7 +35,7 @@ h1 {
 
 h2 {
 
-  font-size: 1.25rem;
+  font-size: 1rem;
   display: block;
   color: white;
   background: var(--primary);
@@ -84,5 +84,3 @@ hr.line {
   left: 2rem;
   width: 13%
 }
-
-
