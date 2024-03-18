@@ -47,8 +47,8 @@ class TopNavigation extends HTMLElement {
                         >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="./img/coming.jpeg"
-                        title="Dubai Offshore Sailing Club" link-url="/dubai-offshore-sailing-club.html">
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/yas"
+                        title="Yas Kite Beach, Abu Dhabi" link-url="/yas.html">
                     </nav-location-card></li>
 
                 <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/sandy"
