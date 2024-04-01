@@ -39,7 +39,7 @@ class TopNavigation extends HTMLElement {
             <ul class="nav-row-inner d-flex justify-content-xl-center slide-in-blurred-top">
 
                 <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/kbc"
-                        title="Kite Beach Center, UAQ" link-url="/kite-beach-center.html">
+                        title="Kitesurf Beach Center, UAQ" link-url="/kite-beach-center.html">
                     </nav-location-card></li>
 
                 <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/bos"
