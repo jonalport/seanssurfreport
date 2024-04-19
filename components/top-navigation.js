@@ -52,7 +52,7 @@ class TopNavigation extends HTMLElement {
                     </nav-location-card></li>
 
                 <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/sandy"
-                        title="Sandy Beach Hotel, Dibba" link-url="/sandy-beach-hotel.html" >
+                        title="Sandy Beach Hotel, Dibba" link-url="/sandy.html" >
                     </nav-location-card></li>
 
                 <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/mikoko"
