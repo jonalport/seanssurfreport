@@ -51,6 +51,10 @@ class TopNavigation extends HTMLElement {
                         title="Yas Kite Area, Abu Dhabi" link-url="/yas.html">
                     </nav-location-card></li>
 
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/dosc"
+                        title="Dubai Offshore Sailing Club" link-url="/dosc.html" >
+                    </nav-location-card></li>
+
                 <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/sandy"
                         title="Sandy Beach Hotel, Dibba" link-url="/sandy.html" >
                     </nav-location-card></li>
