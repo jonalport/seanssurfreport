@@ -22,9 +22,8 @@
     <script type="module" src="./components/footer-pagecount.js"> </script>
     <script type="module" src="./components/tides-forecast.js"> </script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video-js.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.14.3/video.min.js"></script>
-    <script src="https://player.live-video.net/1.28.0/amazon-ivs-videojs-tech.min.js"></script>
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <script defer src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
 </head>
 <style>
@@ -61,28 +60,15 @@
 
                         <div class="cam viewtype">
                             <h2 class="mt-1 mb-4">Live Camera</h2>
-                            <div style="height: auto; margin: 0; ">
-                                <video id="amazon-ivs-videojs" class="video-js vjs-16-9 vjs-big-play-centered" controls
-                                    autoplay playsinline></video>
-                                <script>
-                                    (function play() {
-                                        // Get playback URL from Amazon IVS API
-                                        var PLAYBACK_URL = 'https://375059a4f590.eu-west-1.playback.live-video.net/api/video/v1/eu-west-1.637423424578.channel.hIsDVVtMbZdB.m3u8';
 
-                                        // Register Amazon IVS as playback technology for Video.js
-                                        registerIVSTech(videojs);
+                            <video id="my-video" class="video-js vjs-default-skin vjs-16-9" controls preload="auto"
+                                controls data-setup="{}" source
+                                src="http://165.227.136.133:8080/memfs/1016e082-d3d4-474e-ba1f-b4bae4631ddc.m3u8"
+                                type="application/x-mpegURL">
 
-                                        // Initialize player
-                                        var player = videojs('amazon-ivs-videojs', {
-                                            techOrder: ["AmazonIVS"]
-                                        }, () => {
-                                            console.log('Player is ready to use!');
-                                            // Play stream
-                                            player.src(PLAYBACK_URL);
-                                        });
-                                    })();
-                                </script>
-                            </div>
+
+
+                            </video>
                         </div>
 
 
