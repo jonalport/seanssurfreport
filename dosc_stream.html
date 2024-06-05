@@ -57,10 +57,20 @@
                             </div>
                         </div>
 
+                        <h2 class="mt-1 mb-4">Live Camera</h2>
+                        <div class="w3-bar w3-black">
+                            <button class="w3-bar-item w3-button" onclick="openCity('tab_photo')">Photo</button>
+                            <button class="w3-bar-item w3-button" onclick="openCity('tab_video')">Video</button>
+                        </div>
 
-                        <div class="cam viewtype">
-                            <h2 class="mt-1 mb-4">Live Camera</h2>
+                        <div id="tab_photo" class="w3-container city">
+                            <div class="cam viewtype">
+                                <location-card image-url="https://worker.seanssurfreport.workers.dev/dosc">
+                                </location-card>
+                            </div>
+                        </div>
 
+                        <div id="tab_video" class="w3-container city" style="display:none">
                             <video id="my-video" class="video-js vjs-default-skin vjs-16-9" muted autoplay controls loop
                                 preload="auto" controls data-setup="{}" source
                                 src="https://video.seanssurfreport.com/hls/stream.m3u8" type="application/x-mpegURL">
@@ -108,7 +118,16 @@
                             <div class="shadow">
                                 <!---  <tides-forecast latitude="25.175505" longitude="55.216729"></tides-forecast> --->
                             </div>
-
+                            <script>
+                                function openCity(cityName) {
+                                    var i;
+                                    var x = document.getElementsByClassName("city");
+                                    for (i = 0; i < x.length; i++) {
+                                        x[i].style.display = "none";
+                                    }
+                                    document.getElementById(cityName).style.display = "block";
+                                }
+                            </script>
                         </div>
                     </section>
                 </div>
