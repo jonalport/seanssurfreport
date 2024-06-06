@@ -90,124 +90,97 @@
                         </div>
 
                         <div id="tab_video" class="w3-container city" style="display:none">
-                            <div class="container">
 
-                                <script src="//cdn.jsdelivr.net/npm/hls.js@1"></script>
+                            <!--- This is the start of the HLS magic bit --->
 
-                                <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-                                <script>
-                                    if (Hls.isSupported()) {
-                                        console.log('Hello HLS.js!');
-                                    }
-                                </script>
-
-                                <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-
-                                <video id="video"></video>
-                                <script>
-                                    if (Hls.isSupported()) {
-                                        var video = document.getElementById('video');
-
-                                        // If you are using the ESM version of the library (hls.mjs), you
-                                        // should specify the "workerPath" config option here if you want
-                                        // web workers to be used. Note that bundlers (such as webpack)
-                                        // will likely use the ESM version by default.
-                                        var hls = new Hls();
-
-                                        // bind them together
-                                        hls.attachMedia(video);
-                                        // MEDIA_ATTACHED event is fired by hls object once MediaSource is ready
-                                        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-                                            console.log('video and hls.js are now bound together !');
-                                        });
-                                    }
-                                </script>
-
-                                <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-
-                                <video id="video"></video>
-                                <script>
-                                    if (Hls.isSupported()) {
-                                        var video = document.getElementById('video');
-                                        var hls = new Hls();
-                                        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-                                            console.log('video and hls.js are now bound together !');
-                                        });
-                                        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-                                            console.log(
-                                                'manifest loaded, found ' + data.levels.length + ' quality level',
-                                            );
-                                        });
-                                        hls.loadSource('https://video.seanssurfreport.com/hls/stream.m3u8');
-                                        // bind them together
-                                        hls.attachMedia(video);
-                                    }
-                                </script>
-                                <script>
-                                    hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-                                        video.muted = true;
-                                        video.play();
-                                    });
-                                </script>
-
-                            </div>
-                        </div>
-
-
-
-                        <div class="p-12 m-8">
-                            <h2 class="mt-5 mb-4">Live Wind</h2>
-                            <div class="wind viewtype shadow">
-                                <div style="max-width: 100%;">
-                                    <script id="wglive_4065_1715857744393">
-                                        (function (window, document) {
-                                            var loader = function () {
-                                                var arg = ["spot=4065", "uid=wglive_4065_1715857744393", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"];
-                                                var script = document.createElement("script");
-                                                var tag = document.getElementsByTagName("script")[0];
-                                                script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                                                tag.parentNode.insertBefore(script, tag);
-                                            };
-                                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                                        })(window, document);
-                                    </script>
-                                </div>
-                            </div>
-
-                            <h2 class="mt-5 mb-4">Forecast</h2>
-                            <div class="forecast viewtype shadow">
-                                <script id="wg_fwdg_1192330_100_1715857483783">
-                                    (function (window, document) {
-                                        var loader = function () {
-                                            var arg = ["s= 1192330", "m=100", "mw=84", "uid=wg_fwdg_1192330_100_1715857483783", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-                                            var script = document.createElement("script");
-                                            var tag = document.getElementsByTagName("script")[0];
-                                            script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                            tag.parentNode.insertBefore(script, tag);
-                                        };
-                                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                                    })(window, document);
-                                </script>
-                            </div>
-
-                            <h2 class="mt-5 mb-4">Tides</h2>
-                            <div class="shadow">
-                                <!---  <tides-forecast latitude="25.175505" longitude="55.216729"></tides-forecast> --->
-                            </div>
+                            <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+                            <!-- Or if you want the latest version from the main branch -->
+                            <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@canary"></script> -->
+                            <video id="video"></video>
                             <script>
-                                function openCity(cityName) {
-                                    var i;
-                                    var x = document.getElementsByClassName("city");
-                                    for (i = 0; i < x.length; i++) {
-                                        x[i].style.display = "none";
-                                    }
-                                    document.getElementById(cityName).style.display = "block";
+                                var video = document.getElementById('video');
+                                var videoSrc = 'https://video.seanssurfreport.com/hls/stream.m3u8';
+                                if (Hls.isSupported()) {
+                                    var hls = new Hls();
+                                    hls.loadSource(videoSrc);
+                                    hls.attachMedia(video);
                                 }
+                                // HLS.js is not supported on platforms that do not have Media Source
+                                // Extensions (MSE) enabled.
+                                //
+                                // When the browser has built-in HLS support (check using `canPlayType`),
+                                // we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video
+                                // element through the `src` property. This is using the built-in support
+                                // of the plain video element, without using HLS.js.
+                                else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                                    video.src = videoSrc;
+                                }
+                                hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                                    video.muted = true;
+                                    video.play();
+                                });
+                            </script>
+
+                            <!--- This is the end of the HLS magic bit--->
+
+                        </div>
+                </div>
+
+
+
+                <div class="p-12 m-8">
+                    <h2 class="mt-5 mb-4">Live Wind</h2>
+                    <div class="wind viewtype shadow">
+                        <div style="max-width: 100%;">
+                            <script id="wglive_4065_1715857744393">
+                                (function (window, document) {
+                                    var loader = function () {
+                                        var arg = ["spot=4065", "uid=wglive_4065_1715857744393", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"];
+                                        var script = document.createElement("script");
+                                        var tag = document.getElementsByTagName("script")[0];
+                                        script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                                        tag.parentNode.insertBefore(script, tag);
+                                    };
+                                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                                })(window, document);
                             </script>
                         </div>
-                    </section>
+                    </div>
+
+                    <h2 class="mt-5 mb-4">Forecast</h2>
+                    <div class="forecast viewtype shadow">
+                        <script id="wg_fwdg_1192330_100_1715857483783">
+                            (function (window, document) {
+                                var loader = function () {
+                                    var arg = ["s= 1192330", "m=100", "mw=84", "uid=wg_fwdg_1192330_100_1715857483783", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
+                                    var script = document.createElement("script");
+                                    var tag = document.getElementsByTagName("script")[0];
+                                    script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                    tag.parentNode.insertBefore(script, tag);
+                                };
+                                window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                            })(window, document);
+                        </script>
+                    </div>
+
+                    <h2 class="mt-5 mb-4">Tides</h2>
+                    <div class="shadow">
+                        <!---  <tides-forecast latitude="25.175505" longitude="55.216729"></tides-forecast> --->
+                    </div>
+                    <script>
+                        function openCity(cityName) {
+                            var i;
+                            var x = document.getElementsByClassName("city");
+                            for (i = 0; i < x.length; i++) {
+                                x[i].style.display = "none";
+                            }
+                            document.getElementById(cityName).style.display = "block";
+                        }
+                    </script>
                 </div>
+                </section>
             </div>
+        </div>
         </div>
     </main>
 
