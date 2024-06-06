@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dubai Offshore Sailing Club</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="./components/logo-header.js"> </script>
+    <script type="module" src="./components/top-navigation.js"> </script>
+    <script type="module" src="./components/location-card.js"> </script>
+    <script type="module" src="./components/nav-location-card.js"> </script>
+    <script type="module" src="./components/page-hit-counter.js"> </script>
+    <script type="module" src="./components/footer-pagecount.js"> </script>
+    <script type="module" src="./components/tides-forecast.js"> </script>
+
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <script defer src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+</head>
+<style>
+    .video-container {
+        width: 1280px;
+        height: 720;
+        margin: 5px;
+    }
+
+    .container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-top: 56.25%;
+        /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+    }
+
+    /* Then style the iframe to fit in the container div with full height and width */
+    .responsive-iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<body>
+
+    <logo-header></logo-header>
+    <top-navigation></top-navigation>
+
+    <main class="pb-5 " style="position: relative">
+        <div class="container-xxl p-4">
+            <div class="row g-5">
+                <div class="col-12">
+
+                    <!------- Dubai Offshore Sailing Club ------>
+                    <section class="area mikoko">
+                        <div class="text-center">
+                            <div class="container pt-1 pb-1">
+                                <h1 class="fw-light" style="font-size:1.5rem">Dubai Offshore Sailing Club</h1>
+                                <p class="lead text-muted text-xs text-md-sm" style="font-size:1rem">Established in
+                                    1974, DOSC is an exclusive club that provides and hosts sailing courses, races,
+                                    corporate events as well as a clubhouse and private beach. DOSC has excellent
+                                    facilities enjoyed by over 700 members. - <a href="https://www.dosc.ae">website</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <h2 class="mt-1 mb-4">Live Camera</h2>
+                        <div class="w3-bar w3-black">
+                            <button class="w3-bar-item w3-button" onclick="openCity('tab_photo')">Photo</button>
+                            <button class="w3-bar-item w3-button" onclick="openCity('tab_video')">Video</button>
+                        </div>
+
+                        <div id="tab_photo" class="w3-container city">
+                            <div class="cam viewtype">
+                                <location-card image-url="https://worker.seanssurfreport.workers.dev/dosc">
+                                </location-card>
+                            </div>
+                        </div>
+
+                        <div id="tab_video" class="w3-container city" style="display:none">
+                            <div class="container">
+
+                                <script src="//cdn.jsdelivr.net/npm/hls.js@1"></script>
+
+                                <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+                                <script>
+                                    if (Hls.isSupported()) {
+                                        console.log('Hello HLS.js!');
+                                    }
+                                </script>
+
+                                <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+
+                                <video id="video"></video>
+                                <script>
+                                    if (Hls.isSupported()) {
+                                        var video = document.getElementById('video');
+
+                                        // If you are using the ESM version of the library (hls.mjs), you
+                                        // should specify the "workerPath" config option here if you want
+                                        // web workers to be used. Note that bundlers (such as webpack)
+                                        // will likely use the ESM version by default.
+                                        var hls = new Hls();
+
+                                        // bind them together
+                                        hls.attachMedia(video);
+                                        // MEDIA_ATTACHED event is fired by hls object once MediaSource is ready
+                                        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                                            console.log('video and hls.js are now bound together !');
+                                        });
+                                    }
+                                </script>
+
+                                <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+
+                                <video id="video"></video>
+                                <script>
+                                    if (Hls.isSupported()) {
+                                        var video = document.getElementById('video');
+                                        var hls = new Hls();
+                                        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                                            console.log('video and hls.js are now bound together !');
+                                        });
+                                        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+                                            console.log(
+                                                'manifest loaded, found ' + data.levels.length + ' quality level',
+                                            );
+                                        });
+                                        hls.loadSource('https://video.seanssurfreport.com/hls/stream.m3u8');
+                                        // bind them together
+                                        hls.attachMedia(video);
+                                    }
+                                </script>
+                                <script>
+                                    hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                                        video.muted = true;
+                                        video.play();
+                                    });
+                                </script>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="p-12 m-8">
+                            <h2 class="mt-5 mb-4">Live Wind</h2>
+                            <div class="wind viewtype shadow">
+                                <div style="max-width: 100%;">
+                                    <script id="wglive_4065_1715857744393">
+                                        (function (window, document) {
+                                            var loader = function () {
+                                                var arg = ["spot=4065", "uid=wglive_4065_1715857744393", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"];
+                                                var script = document.createElement("script");
+                                                var tag = document.getElementsByTagName("script")[0];
+                                                script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                                                tag.parentNode.insertBefore(script, tag);
+                                            };
+                                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                                        })(window, document);
+                                    </script>
+                                </div>
+                            </div>
+
+                            <h2 class="mt-5 mb-4">Forecast</h2>
+                            <div class="forecast viewtype shadow">
+                                <script id="wg_fwdg_1192330_100_1715857483783">
+                                    (function (window, document) {
+                                        var loader = function () {
+                                            var arg = ["s= 1192330", "m=100", "mw=84", "uid=wg_fwdg_1192330_100_1715857483783", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
+                                            var script = document.createElement("script");
+                                            var tag = document.getElementsByTagName("script")[0];
+                                            script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                            tag.parentNode.insertBefore(script, tag);
+                                        };
+                                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                                    })(window, document);
+                                </script>
+                            </div>
+
+                            <h2 class="mt-5 mb-4">Tides</h2>
+                            <div class="shadow">
+                                <!---  <tides-forecast latitude="25.175505" longitude="55.216729"></tides-forecast> --->
+                            </div>
+                            <script>
+                                function openCity(cityName) {
+                                    var i;
+                                    var x = document.getElementsByClassName("city");
+                                    for (i = 0; i < x.length; i++) {
+                                        x[i].style.display = "none";
+                                    }
+                                    document.getElementById(cityName).style.display = "block";
+                                }
+                            </script>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <footer-pagecount></footer-pagecount>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
