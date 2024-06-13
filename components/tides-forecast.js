@@ -6,21 +6,30 @@ class TidesForecast extends HTMLElement {
     this.date = new Date().toISOString().split("T")[0]; // Current date in "YYYY-MM-DD" format
     this.latitude = this.getAttribute("latitude");
     this.longitude = this.getAttribute("longitude");
+    this.observer = null;
+    this.spinner = null;
   }
 
   connectedCallback() {
-    // Wait for the shadow DOM to be fully attached
-    if (this.shadowRoot) {
-      this.fetchTidesData();
-    } else {
-      // If shadow DOM is not ready, use a MutationObserver to wait for it
-      const observer = new MutationObserver(() => {
-        if (this.shadowRoot) {
-          observer.disconnect();
+    // show a loading spinner
+    this.spinner = document.createElement("loading-spinner");
+    this.shadowRoot.appendChild(this.spinner);
+
+    this.observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
           this.fetchTidesData();
+          observer.unobserve(entry.target);
         }
       });
-      observer.observe(this, { childList: true });
+    });
+
+    this.observer.observe(this);
+  }
+
+  disconnectedCallback() {
+    if (this.observer) {
+      this.observer.disconnect();
     }
   }
 
@@ -30,9 +39,10 @@ class TidesForecast extends HTMLElement {
     try {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      if (data.extremes && data.heights)
+      if (data.extremes && data.heights) {
         this.renderData(data.extremes, data.heights);
-      else console.error("Unable to fetch forecast data");
+        this.spinner.remove(); // Remove the spinner after the data has been rendered
+      } else console.error("Unable to fetch forecast data");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
