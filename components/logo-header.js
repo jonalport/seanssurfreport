@@ -27,14 +27,14 @@ class LogoHeader extends HTMLElement {
           @media (min-width: 780px) {
             .logo--link {
               margin: 0;
-              width: 45%;
+              width: 40%;
               padding: 0rem;
             }
           }
           
           @media (min-width: 1200px) {
             .logo--link {
-              width: 35%;
+              width: 30%;
             }
           }
 
