@@ -27,6 +27,7 @@ class FooterPagecount extends HTMLElement {
             
             footer p {
                 padding: 0 0;
+                margin: 5px 0;
             }
           
             
