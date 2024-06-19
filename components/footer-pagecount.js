@@ -49,7 +49,7 @@ class FooterPagecount extends HTMLElement {
   
           </style>
   
-          <footer class="pb-3">
+          <footer class="pb-03">
             <div class="bottom-text" style="max-width: 800px">
                 <p> It would be amazing to have these types of weather stations around the UAE. If you have any suggestions
                     or want to contribute to this project, you can reach me on
@@ -65,5 +65,4 @@ class FooterPagecount extends HTMLElement {
         `;
   }
 }
-
 customElements.define("footer-pagecount", FooterPagecount);

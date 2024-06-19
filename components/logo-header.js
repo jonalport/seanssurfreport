@@ -40,7 +40,7 @@ class LogoHeader extends HTMLElement {
 
           header {
             background-color: #222;
-            padding: 1% 0;
+            padding: 1.25% 0;
           }
           
           header .content {
@@ -81,7 +81,7 @@ class LogoHeader extends HTMLElement {
   
         <header>
             <div class="content d-flex justify-content-center">
-            <a href="/" class="logo--link"><img class="logo" src="./img/logo.png" alt="Sean's surf report" /></a>
+            <a href="/" class="logo--link"><img class="logo" src="./img/logo.png" alt="Sean's Surf Report" /></a>
             </div>
         </header>
         `;
