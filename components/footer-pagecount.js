@@ -31,7 +31,7 @@ class FooterPagecount extends HTMLElement {
           
             
             .bottom-text {
-                margin-top: 4rem;
+                margin-top: 0rem;
             }
 
             p a {

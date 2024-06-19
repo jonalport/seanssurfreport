@@ -4,12 +4,12 @@ template.innerHTML = `
   <style>
     .retro-counter {
       <!-- font-family: monospace; -->
-      font-size: 20px;
+      font-size: 14px;
     }
 
     @media(max-width: 680px){
       .retro-counter {
-        font-size: 18px;
+        font-size: 14px;
       }
     }
   </style>
