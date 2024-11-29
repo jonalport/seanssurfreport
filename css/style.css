@@ -75,6 +75,30 @@ p a {
 
 h2 a {
   color: white;
+
+  a:link {
+    color: white
+  }
+
+  ;
+
+  a:visited {
+    color: white
+  }
+
+  ;
+
+  a:hover {
+    color: white
+  }
+
+  ;
+
+  a:active {
+    color: white
+  }
+
+  ;
 }
 
 hr.line {
