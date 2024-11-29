@@ -73,6 +73,9 @@ p a {
   color: #87b280;
 }
 
+h2 a {
+  color: white;
+}
 
 hr.line {
   width: 35%;
