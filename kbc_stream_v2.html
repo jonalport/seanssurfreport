@@ -51,7 +51,10 @@
                         </div>
 
                         <h2 class="mt-1 mb-4">Live Camera</h2>
-                        <div id="tab_video" class="w3-container city" style="display:none">
+
+
+                        <div id="tab_video" class="w3-container city">
+
 
                             <!--- This is the start of the HLS magic bit --->
 
@@ -62,79 +65,78 @@
                                 muted autoplay></hls-video>
 
                             <!--- This is the end of the HLS magic bit--->
-                        </div>
-
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class="p-12 m-8">
-                    <h2 class="mt-4 mb-4">Live Wind</h2>
-                    <div class="wind viewtype shadow">
-                        <div style="max-width: 100%;">
-
-                            <script id="wglive_2146_1617178001640">
-                                (function (window, document) {
-                                    var loader = function () {
-                                        var arg = ["spot=2146", "uid=wglive_2146_1617178001640", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"];
-                                        var script = document.createElement("script");
-                                        var tag = document.getElementsByTagName("script")[0];
-                                        script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                                        tag.parentNode.insertBefore(script, tag);
-                                    };
-                                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                                })(window, document);
-                            </script>
 
                         </div>
-                    </div>
 
-                    <h2 class="mt-4 mb-4">Forecast</h2>
-                    <div class="forecast viewtype shadow">
-                        <script id="wg_fwdg_687932_100_1617177954510">
-                            (function (window, document) {
-                                var loader = function () {
-                                    var arg = ["s=687932", "m=100", "mw=84", "uid=wg_fwdg_687932_100_1617177954510", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
-                                    var script = document.createElement("script");
-                                    var tag = document.getElementsByTagName("script")[0];
-                                    script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                    tag.parentNode.insertBefore(script, tag);
-                                };
-                                window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                            })(window, document);
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="p-12 m-8">
+                            <h2 class="mt-4 mb-4">Live Wind</h2>
+                            <div class="wind viewtype shadow">
+                                <div style="max-width: 100%;">
+
+                                    <script id="wglive_2146_1617178001640">
+                                        (function (window, document) {
+                                            var loader = function () {
+                                                var arg = ["spot=2146", "uid=wglive_2146_1617178001640", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"];
+                                                var script = document.createElement("script");
+                                                var tag = document.getElementsByTagName("script")[0];
+                                                script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                                                tag.parentNode.insertBefore(script, tag);
+                                            };
+                                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                                        })(window, document);
+                                    </script>
+
+                                </div>
+                            </div>
+
+                            <h2 class="mt-4 mb-4">Forecast</h2>
+                            <div class="forecast viewtype shadow">
+                                <script id="wg_fwdg_687932_100_1617177954510">
+                                    (function (window, document) {
+                                        var loader = function () {
+                                            var arg = ["s=687932", "m=100", "mw=84", "uid=wg_fwdg_687932_100_1617177954510", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"];
+                                            var script = document.createElement("script");
+                                            var tag = document.getElementsByTagName("script")[0];
+                                            script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                            tag.parentNode.insertBefore(script, tag);
+                                        };
+                                        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                                    })(window, document);
+                                </script>
+                            </div>
+
+                            <h2 class="mt-4 mb-4">Tides</h2>
+                            <div class="shadow">
+                                <tides-forecast latitude="25.583" longitude="55.583"></tides-forecast>
+                            </div>
+
+                        </div>
+                        <!--- The script required for the photo/video button to work --->
+                        <script>
+                            function openTab(cityName) {
+                                var i;
+                                var x = document.getElementsByClassName("city");
+                                for (i = 0; i < x.length; i++) {
+                                    x[i].style.display = "none";
+                                }
+                                document.getElementById(cityName).style.display = "block";
+                            }
                         </script>
-                    </div>
 
-                    <h2 class="mt-4 mb-4">Tides</h2>
-                    <div class="shadow">
-                        <tides-forecast latitude="25.583" longitude="55.583"></tides-forecast>
-                    </div>
-
+                    </section>
                 </div>
-                <!--- The script required for the photo/video button to work --->
-                <script>
-                    function openTab(cityName) {
-                        var i;
-                        var x = document.getElementsByClassName("city");
-                        for (i = 0; i < x.length; i++) {
-                            x[i].style.display = "none";
-                        }
-                        document.getElementById(cityName).style.display = "block";
-                    }
-                </script>
-
-                </section>
             </div>
-        </div>
         </div>
     </main>
 
