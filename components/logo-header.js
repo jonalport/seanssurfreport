@@ -70,7 +70,7 @@ class LogoHeader extends HTMLElement {
           .main-nav-link img {
             width: 4vw;
             height: auto;
-            opacity: 100%;
+            opacity: 75%;
             transition: opacity .25s ease-in-out;
             max-width: 120px;
             min-width: 50px;
