@@ -18,9 +18,8 @@ body {
 }
 
 main {
-  position: relative;
+  flex: 1;
 }
-
 
 @media (max-width: 480px) {
   .lead {
@@ -28,13 +27,11 @@ main {
   }
 }
 
-
 h1 {
   color: var(--primary);
 }
 
 h2 {
-
   font-size: 1rem;
   display: block;
   color: white;
@@ -45,7 +42,6 @@ h2 {
   width: 180px;
   margin: auto;
   margin-bottom: 1rem;
-
 }
 
 p {
@@ -77,28 +73,20 @@ h2 a {
   color: white;
 
   a:link {
-    color: white
+    color: white;
   }
-
-  ;
 
   a:visited {
-    color: white
+    color: white;
   }
-
-  ;
 
   a:hover {
-    color: white
+    color: white;
   }
-
-  ;
 
   a:active {
-    color: white
+    color: white;
   }
-
-  ;
 }
 
 hr.line {
@@ -109,5 +97,5 @@ hr.line {
 .widget {
   bottom: 4rem;
   left: 2rem;
-  width: 13%
+  width: 13%;
 }
