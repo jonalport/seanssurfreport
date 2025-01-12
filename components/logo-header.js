@@ -63,14 +63,14 @@ class LogoHeader extends HTMLElement {
           }
 
           .main-nav-link {
-            margin-left: 2vw;
+            margin-left: 3vw;
             display: block;
           }
 
           .main-nav-link img {
             width: 4vw;
             height: auto;
-            opacity: 80%;
+            opacity: 100%;
             transition: opacity .25s ease-in-out;
             max-width: 120px;
             min-width: 50px;
@@ -105,7 +105,7 @@ class LogoHeader extends HTMLElement {
           </a>
 
           <a class="main-nav-link" href="https://community.seanssurfreport.com/">
-            <img src="/img/classifieds_320.png" alt="Classifieds" />
+            <img src="/img/community_320.png" alt="Classifieds" />
           </>
         </header>
         `;
