@@ -342,15 +342,21 @@ class LocationCard extends HTMLElement {
     imgElement.style.opacity = "0.3";
     
     const baseUrl = this.getAttribute('image-url');
-    // Create clean URLs with single timestamp
-    const getUrlWithParams = (size) => `${baseUrl}?size=${size}&timestamp=${timestamp}`;
     
-    imgElement.src = getUrlWithParams('md');
+    // Helper function to create clean URLs
+    const createUrl = (size) => {
+        const url = new URL(baseUrl);
+        url.searchParams.set('size', size);
+        url.searchParams.set('timestamp', timestamp);
+        return url.toString();
+    };
+    
+    imgElement.src = createUrl('md');
     sourceElement.srcset = `
-        ${getUrlWithParams('xs')} 320w,
-        ${getUrlWithParams('sm')} 640w,
-        ${getUrlWithParams('md')} 1024w,
-        ${getUrlWithParams('lg')} 1920w
+        ${createUrl('xs')} 320w,
+        ${createUrl('sm')} 640w,
+        ${createUrl('md')} 1024w,
+        ${createUrl('lg')} 1920w
     `;
     
     imgElement.onload = () => {
