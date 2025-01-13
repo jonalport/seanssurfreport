@@ -342,16 +342,21 @@ class LocationCard extends HTMLElement {
     imgElement.style.opacity = "0.3";
     
     const baseUrl = this.getAttribute('image-url');
-    imgElement.src = `${baseUrl}?size=md&timestamp=${timestamp}`;
+    // Create clean URLs with single timestamp
+    const getUrlWithParams = (size) => `${baseUrl}?size=${size}&timestamp=${timestamp}`;
+    
+    imgElement.src = getUrlWithParams('md');
     sourceElement.srcset = `
-        ${baseUrl}?size=xs&timestamp=${timestamp} 320w,
-        ${baseUrl}?size=sm&timestamp=${timestamp} 640w,
-        ${baseUrl}?size=md&timestamp=${timestamp} 1024w,
-        ${baseUrl}?size=lg&timestamp=${timestamp} 1920w
+        ${getUrlWithParams('xs')} 320w,
+        ${getUrlWithParams('sm')} 640w,
+        ${getUrlWithParams('md')} 1024w,
+        ${getUrlWithParams('lg')} 1920w
     `;
     
-    imgElement.onload = () =>
+    imgElement.onload = () => {
+        imgElement.closest(".card").classList.remove("is-loading");
         setTimeout(() => (imgElement.style.opacity = "1"), 1000);
+    };
   }
 
   // Handle refresh button click
