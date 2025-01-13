@@ -232,10 +232,29 @@ class LocationCard extends HTMLElement {
          }
             <div class="card shadow-sm">
               <div class="bg">
-                  <img id="thumbnail" 
-                    class="object-fit-cover card-img-top ${thumbnailClass}" 
-                    src="${imageUrl}"   
-                  />
+                  <picture>
+                    <source
+                        type="image/webp"
+                        srcset="
+                            ${this.getAttribute('image-url')}?size=xs 320w,
+                            ${this.getAttribute('image-url')}?size=sm 640w,
+                            ${this.getAttribute('image-url')}?size=md 1024w,
+                            ${this.getAttribute('image-url')}?size=lg 1920w
+                        "
+                        sizes="(max-width: 320px) 320px,
+                               (max-width: 640px) 640px,
+                               (max-width: 1024px) 1024px,
+                               1920px"
+                    />
+                    <img 
+                        class="card-img-top"
+                        src="${this.getAttribute('image-url')}?size=md"
+                        loading="lazy"
+                        @load=${this.handleImageLoad}
+                        @click=${this.handleImageClick}
+                        alt="Weather station camera view"
+                    />
+                  </picture>
                   ${refreshButton}
               </div>
             <div class="card-body px-2 shadow-sm ${titlePadding}">
@@ -318,11 +337,21 @@ class LocationCard extends HTMLElement {
     e?.stopPropagation();
     const timestamp = new Date().getTime();
     const imgElement = this.shadowRoot.querySelector(".card-img-top");
+    const sourceElement = this.shadowRoot.querySelector("source");
     imgElement.closest(".card").classList.add("is-loading");
     imgElement.style.opacity = "0.3";
-    imgElement.src = `${imgElement.src}?timestamp=${timestamp}`;
+    
+    const baseUrl = this.getAttribute('image-url');
+    imgElement.src = `${baseUrl}?size=md&timestamp=${timestamp}`;
+    sourceElement.srcset = `
+        ${baseUrl}?size=xs&timestamp=${timestamp} 320w,
+        ${baseUrl}?size=sm&timestamp=${timestamp} 640w,
+        ${baseUrl}?size=md&timestamp=${timestamp} 1024w,
+        ${baseUrl}?size=lg&timestamp=${timestamp} 1920w
+    `;
+    
     imgElement.onload = () =>
-      setTimeout(() => (imgElement.style.opacity = "1"), 1000);
+        setTimeout(() => (imgElement.style.opacity = "1"), 1000);
   }
 
   // Handle refresh button click
