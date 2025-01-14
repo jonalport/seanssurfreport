@@ -38,28 +38,28 @@ class TopNavigation extends HTMLElement {
 
             <ul class="nav-row-inner d-flex justify-content-xl-center slide-in-blurred-top">
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/kbc"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/kbc?size=xs"
                         title="Kitesurf Beach Center, UAQ" link-url="/kbc.html">
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/bos"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/bos?size=xs"
                         title="Blue Ocean Sports, Jebel Ali" link-url="/blue-ocean-sports.html"
                         >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/yas"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/yas?size=xs"
                         title="Yas Kite Area, Abu Dhabi" link-url="/yas.html">
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/dosc"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/dosc?size=xs"
                         title="Dubai Offshore Sailing Club" link-url="/dosc.html" >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/sandy"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/sandy?size=xs"
                         title="Sandy Beach Hotel, Dibba" link-url="/sandy.html" >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/mikoko"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/mikoko?size=xs"
                         title="Mikiko, Umm Al Quwain" link-url="/mikoko.html" >
                     </nav-location-card></li>              
 
