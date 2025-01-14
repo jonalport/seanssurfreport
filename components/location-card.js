@@ -77,10 +77,10 @@ class LocationCard extends HTMLElement {
         /** Card images */
         
         .card-img-top {
-          opacity: 0;
-          transition: transform 0.3s ease, filter 0.3s ease;
-          background: url(./img/blurred.png);
-          background-size: cover;
+          // opacity: 0;
+          // transition: transform 0.3s ease, filter 0.3s ease;
+          // background: url(./img/blurred.png);
+          // background-size: cover;
         }
 
         .loaded {
@@ -338,19 +338,20 @@ class LocationCard extends HTMLElement {
     const timestamp = new Date().getTime();
     const imgElement = this.shadowRoot.querySelector(".card-img-top");
     const sourceElement = this.shadowRoot.querySelector("source");
-    imgElement.closest(".card").classList.add("is-loading");
-    imgElement.style.opacity = "0.3";
     
     const baseUrl = this.getAttribute('image-url');
+    const speed = getConnectionSpeed();
     
-    // Helper function to create clean URLs
+    // Helper function to create clean URLs with network speed
     const createUrl = (size) => {
         const url = new URL(baseUrl);
         url.searchParams.set('size', size);
+        url.searchParams.set('speed', speed);
         url.searchParams.set('timestamp', timestamp);
         return url.toString();
     };
     
+    // Update both the img src and source srcset with network speed parameter
     imgElement.src = createUrl('md');
     sourceElement.srcset = `
         ${createUrl('xs')} 320w,
@@ -378,3 +379,22 @@ class LocationCard extends HTMLElement {
 
 // Define the custom element "image-card"
 customElements.define("location-card", LocationCard);
+
+function getConnectionSpeed() {
+    if (!navigator.connection) return 'medium';
+    
+    const connection = navigator.connection;
+    if (connection.effectiveType === '4g' || connection.downlink > 5) return 'fast';
+    if (connection.effectiveType === '2g' || connection.downlink < 1) return 'slow';
+    return 'medium';
+}
+
+function getResponsiveImageUrl(baseUrl) {
+    const speed = getConnectionSpeed();
+    return `
+        ${baseUrl}?size=xs&speed=${speed} 320w,
+        ${baseUrl}?size=sm&speed=${speed} 640w,
+        ${baseUrl}?size=md&speed=${speed} 1024w,
+        ${baseUrl}?size=lg&speed=${speed} 1920w
+    `;
+}

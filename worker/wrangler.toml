@@ -4,14 +4,12 @@ compatibility_date = "2023-10-30"
 
 workers_dev = true
 
-
 r2_buckets  = [
 	{ binding = "PICTURE_BUCKET", bucket_name = "pictures", preview_bucket_name =  "BUCKET-LOCALIN" }
 ]
 kv_namespaces = [
   { binding = "surfreport", id = "c49f396c288043359e4c8c434f82afaf", preview_id = "664224caf86746e7adb2352582568172" },
 ]
-
 
 [env.kyles]
 r2_buckets  = [
@@ -21,11 +19,18 @@ kv_namespaces = [
   { binding = "surfreport", id = "3b2fa08fa23345ad8c8750fe33d1e293", preview_id = "664224caf86746e7adb2352582568172" },
 ]
 
+[observability.logs]
+enabled = true
 
 
-# Bind another Worker service. Use this binding to call another Worker without network overhead.
-# Docs: https://developers.cloudflare.com/workers/platform/services
-# [[services]]
-# binding = "MY_SERVICE"
-# service = "my-service"
+# Secret variables
+[vars]
+CLOUDINARY_CLOUD_NAME = "seanssurfreport"
+CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/seanssurfreport/image/upload"
+
+# Secrets should be set using wrangler
+# Run these commands:
+# wrangler secret put HEADER_PSK
+# wrangler secret put CLOUDINARY_API_KEY
+# wrangler secret put CLOUDINARY_API_SECRET
 
