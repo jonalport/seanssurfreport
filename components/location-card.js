@@ -3,7 +3,7 @@ class LocationCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this.connectionSpeed = this.getConnectionSpeed();
+    this.connectionSpeed = getConnectionSpeed();
     this.currentDate = new Date().getTime();
 
     // Get attributes or set default values
