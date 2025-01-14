@@ -3,6 +3,8 @@ class LocationCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.connectionSpeed = this.getConnectionSpeed();
+    this.currentDate = new Date().getTime();
 
     // Get attributes or set default values
     const imageUrl = this.getAttribute("image-url") || "";
@@ -10,6 +12,7 @@ class LocationCard extends HTMLElement {
     const emitdata = this.getAttribute("emitdata");
     const linkUrl = this.getAttribute("link-url") || "#";
     const hideRefreshBtn = this.getAttribute("hide-refresh");
+    
 
     const refreshInterval =
       parseInt(this.getAttribute("refresh-interval")) || 60000; // Default: 1 minute
@@ -236,10 +239,10 @@ class LocationCard extends HTMLElement {
                     <source
                         type="image/webp"
                         srcset="
-                            ${this.getAttribute('image-url')}?size=xs 320w,
-                            ${this.getAttribute('image-url')}?size=sm 640w,
-                            ${this.getAttribute('image-url')}?size=md 1024w,
-                            ${this.getAttribute('image-url')}?size=lg 1920w
+                            ${this.createUrl('xs')} 320w,
+                            ${this.createUrl('sm')} 640w,
+                            ${this.createUrl('md')} 1024w,
+                            ${this.createUrl('lg')} 1920w
                         "
                         sizes="(max-width: 320px) 320px,
                                (max-width: 640px) 640px,
@@ -248,7 +251,7 @@ class LocationCard extends HTMLElement {
                     />
                     <img 
                         class="card-img-top"
-                        src="${this.getAttribute('image-url')}?size=md"
+                        src="${this.createUrl('md')}"
                         loading="lazy"
                         @load=${this.handleImageLoad}
                         @click=${this.handleImageClick}
@@ -331,33 +334,29 @@ class LocationCard extends HTMLElement {
     }
   }
 
+  createUrl(size) {
+      const url = new URL(this.getAttribute('image-url'));
+      url.searchParams.set('size', size);
+      url.searchParams.set('speed', this.connectionSpeed);
+      url.searchParams.set('timestamp', this.currentDate);
+      return url.toString();
+  };
+
   // Refresh the image by appending a timestamp
   refreshImage(e) {
     e?.preventDefault();
     e?.stopPropagation();
-    const timestamp = new Date().getTime();
     const imgElement = this.shadowRoot.querySelector(".card-img-top");
     const sourceElement = this.shadowRoot.querySelector("source");
-    
-    const baseUrl = this.getAttribute('image-url');
-    const speed = getConnectionSpeed();
-    
-    // Helper function to create clean URLs with network speed
-    const createUrl = (size) => {
-        const url = new URL(baseUrl);
-        url.searchParams.set('size', size);
-        url.searchParams.set('speed', speed);
-        url.searchParams.set('timestamp', timestamp);
-        return url.toString();
-    };
+  
     
     // Update both the img src and source srcset with network speed parameter
-    imgElement.src = createUrl('md');
+    imgElement.src = this.createUrl('md');
     sourceElement.srcset = `
-        ${createUrl('xs')} 320w,
-        ${createUrl('sm')} 640w,
-        ${createUrl('md')} 1024w,
-        ${createUrl('lg')} 1920w
+        ${this.createUrl('xs')} 320w,
+        ${this.createUrl('sm')} 640w,
+        ${this.createUrl('md')} 1024w,
+        ${this.createUrl('lg')} 1920w
     `;
     
     imgElement.onload = () => {
@@ -387,14 +386,4 @@ function getConnectionSpeed() {
     if (connection.effectiveType === '4g' || connection.downlink > 5) return 'fast';
     if (connection.effectiveType === '2g' || connection.downlink < 1) return 'slow';
     return 'medium';
-}
-
-function getResponsiveImageUrl(baseUrl) {
-    const speed = getConnectionSpeed();
-    return `
-        ${baseUrl}?size=xs&speed=${speed} 320w,
-        ${baseUrl}?size=sm&speed=${speed} 640w,
-        ${baseUrl}?size=md&speed=${speed} 1024w,
-        ${baseUrl}?size=lg&speed=${speed} 1920w
-    `;
 }
