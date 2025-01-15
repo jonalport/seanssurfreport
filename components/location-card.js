@@ -3,8 +3,6 @@ class LocationCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this.connectionSpeed = getConnectionSpeed();
-    this.currentDate = new Date().getTime();
 
     // Get attributes or set default values
     const imageUrl = this.getAttribute("image-url") || "";
@@ -12,7 +10,6 @@ class LocationCard extends HTMLElement {
     const emitdata = this.getAttribute("emitdata");
     const linkUrl = this.getAttribute("link-url") || "#";
     const hideRefreshBtn = this.getAttribute("hide-refresh");
-    
 
     const refreshInterval =
       parseInt(this.getAttribute("refresh-interval")) || 60000; // Default: 1 minute
@@ -80,10 +77,10 @@ class LocationCard extends HTMLElement {
         /** Card images */
         
         .card-img-top {
-          // opacity: 0;
-          // transition: transform 0.3s ease, filter 0.3s ease;
-          // background: url(./img/blurred.png);
-          // background-size: cover;
+          opacity: 0;
+          transition: transform 0.3s ease, filter 0.3s ease;
+          background: url(./img/blurred.png);
+          background-size: cover;
         }
 
         .loaded {
@@ -235,29 +232,10 @@ class LocationCard extends HTMLElement {
          }
             <div class="card shadow-sm">
               <div class="bg">
-                  <picture>
-                    <source
-                        type="image/webp"
-                        srcset="
-                            ${this.createUrl('xs')} 320w,
-                            ${this.createUrl('sm')} 640w,
-                            ${this.createUrl('md')} 1024w,
-                            ${this.createUrl('lg')} 1920w
-                        "
-                        sizes="(max-width: 320px) 320px,
-                               (max-width: 640px) 640px,
-                               (max-width: 1024px) 1024px,
-                               1920px"
-                    />
-                    <img 
-                        class="card-img-top"
-                        src="${this.createUrl('md')}"
-                        loading="lazy"
-                        @load=${this.handleImageLoad}
-                        @click=${this.handleImageClick}
-                        alt="Weather station camera view"
-                    />
-                  </picture>
+                  <img id="thumbnail" 
+                    class="object-fit-cover card-img-top ${thumbnailClass}" 
+                    src="${imageUrl}"   
+                  />
                   ${refreshButton}
               </div>
             <div class="card-body px-2 shadow-sm ${titlePadding}">
@@ -334,35 +312,17 @@ class LocationCard extends HTMLElement {
     }
   }
 
-  createUrl(size) {
-      const url = new URL(this.getAttribute('image-url'));
-      url.searchParams.set('size', size);
-      url.searchParams.set('speed', this.connectionSpeed);
-      url.searchParams.set('timestamp', this.currentDate);
-      return url.toString();
-  };
-
   // Refresh the image by appending a timestamp
   refreshImage(e) {
     e?.preventDefault();
     e?.stopPropagation();
+    const timestamp = new Date().getTime();
     const imgElement = this.shadowRoot.querySelector(".card-img-top");
-    const sourceElement = this.shadowRoot.querySelector("source");
-  
-    
-    // Update both the img src and source srcset with network speed parameter
-    imgElement.src = this.createUrl('md');
-    sourceElement.srcset = `
-        ${this.createUrl('xs')} 320w,
-        ${this.createUrl('sm')} 640w,
-        ${this.createUrl('md')} 1024w,
-        ${this.createUrl('lg')} 1920w
-    `;
-    
-    imgElement.onload = () => {
-        imgElement.closest(".card").classList.remove("is-loading");
-        setTimeout(() => (imgElement.style.opacity = "1"), 1000);
-    };
+    imgElement.closest(".card").classList.add("is-loading");
+    imgElement.style.opacity = "0.3";
+    imgElement.src = `${imgElement.src}?timestamp=${timestamp}`;
+    imgElement.onload = () =>
+      setTimeout(() => (imgElement.style.opacity = "1"), 1000);
   }
 
   // Handle refresh button click
@@ -378,12 +338,3 @@ class LocationCard extends HTMLElement {
 
 // Define the custom element "image-card"
 customElements.define("location-card", LocationCard);
-
-function getConnectionSpeed() {
-    if (!navigator.connection) return 'medium';
-    
-    const connection = navigator.connection;
-    if (connection.effectiveType === '4g' || connection.downlink > 5) return 'fast';
-    if (connection.effectiveType === '2g' || connection.downlink < 1) return 'slow';
-    return 'medium';
-}

@@ -38,28 +38,28 @@ class TopNavigation extends HTMLElement {
 
             <ul class="nav-row-inner d-flex justify-content-xl-center slide-in-blurred-top">
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.com/kbc?size=xs"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/kbc"
                         title="Kitesurf Beach Center, UAQ" link-url="/kbc.html">
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.com/bos?size=xs"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/bos"
                         title="Blue Ocean Sports, Jebel Ali" link-url="/blue-ocean-sports.html"
                         >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.com/yas?size=xs"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/yas"
                         title="Yas Kite Area, Abu Dhabi" link-url="/yas.html">
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.com/dosc?size=xs"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/dosc"
                         title="Dubai Offshore Sailing Club" link-url="/dosc.html" >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.com/sandy?size=xs"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/sandy"
                         title="Sandy Beach Hotel, Dibba" link-url="/sandy.html" >
                     </nav-location-card></li>
 
-                <li><nav-location-card image-url="https://worker.seanssurfreport.com/mikoko?size=xs"
+                <li><nav-location-card image-url="https://worker.seanssurfreport.workers.dev/mikoko"
                         title="Mikiko, Umm Al Quwain" link-url="/mikoko.html" >
                     </nav-location-card></li>              
 

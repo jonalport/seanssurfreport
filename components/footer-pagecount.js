@@ -59,7 +59,7 @@ class FooterPagecount extends HTMLElement {
                     Developed by <a href="https://www.devkylo.com/">Kyle Robinson</a>. A special thanks to <a href="https://www.instagram.com/jonalport/">Jon Alport</a>.
                 </p>
             </div>
-            <page-hit-counter server-url="https://worker.seanssurfreport.com/pageCount"></page-hit-counter>
+            <page-hit-counter server-url="https://worker.seanssurfreport.workers.dev/pageCount"></page-hit-counter>
         </footer>
         `;
   }
