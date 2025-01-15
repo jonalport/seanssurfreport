@@ -22,10 +22,7 @@ kv_namespaces = [
 ]
 
 
-
-# Bind another Worker service. Use this binding to call another Worker without network overhead.
-# Docs: https://developers.cloudflare.com/workers/platform/services
-# [[services]]
-# binding = "MY_SERVICE"
-# service = "my-service"
+# Secrets should be set using wrangler
+# Run these commands:
+# wrangler secret put HEADER_PSK
 
