@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sean's Surf Report</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script type="module" src="./components/logo-header.js"> </script>
+  <script type="module" src="./components/nav-location-card.js"> </script>
+  <script type="module" src="./components/top-navigation.js"> </script>
+  <script type="module" src="./components/location-card.js"> </script>
+  <script type="module" src="./components/page-hit-counter.js"> </script>
+  <script type="module" src="./components/footer-pagecount.js"> </script>
+</head>
+
+<body>
+
+
+  <logo-header></logo-header>
+  <main style="position: relative;">
+
+
+    <!--<section class="area">
+      <div class="text-center">
+        <div class="container">
+          <p class="lead text-muted text-xs text-md-sm " style="font-size:16px">View live conditions via cameras and
+            stations at popular spots around the UAE
+          </p>
+        </div>
+      </div>
+    </section> --->
+
+
+    <div class="album py-4 py-md-4 bg-body-tertiary">
+      <div class="container">
+
+        <div id="cards-grid" class="row row-cols-1 row-cols-lg-2 g-sm-6 g-4 ">
+          <!------ KBC ------>
+          <div class="col position-relative">
+            <location-card image-url="https://worker.seanssurfreport.workers.dev/kbc" title="Kitesurf Beach Center, UAQ"
+              link-url="/kbc.html" hide-refresh="true">
+            </location-card>
+            <div class="col position-absolute widget">
+              <div style="max-width: 200px">
+                <script id="wglive_2146_1706848056699">
+                  (function (window, document) {
+                    var loader = function () {
+                      var arg = ["spot=2146", "uid=wglive_2146_1706848056699", "color=light", "wj=knots", "tj=c", "avg_min=0", "gsize=400", "msize=400", "m=3", "arrow=y", "show=n,g,c,f,m"];
+                      var script = document.createElement("script");
+                      var tag = document.getElementsByTagName("script")[0];
+                      script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                      tag.parentNode.insertBefore(script, tag);
+                    };
+                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                  })(window, document);
+                </script>
+              </div>
+
+            </div>
+          </div>
+          <!------ Blue Ocean Sports ------>
+          <div class="col position-relative">
+            <location-card image-url="https://worker.seanssurfreport.workers.dev/bos"
+              title="Blue Ocean Sports, Jebel Ali" link-url="/blue-ocean-sports.html" hide-refresh="true">
+            </location-card>
+            <div class="col position-absolute widget">
+              <div style="max-width: 200px">
+                <script id="wglive_3568_1706847920748">
+                  (function (window, document) {
+                    var loader = function () {
+                      var arg = ["spot=3568", "uid=wglive_3568_1706847920748", "color=light", "wj=knots", "tj=c", "avg_min=0", "gsize=400", "msize=400", "m=3", "arrow=y", "show=n,g,c,f,m"];
+                      var script = document.createElement("script");
+                      var tag = document.getElementsByTagName("script")[0];
+                      script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                      tag.parentNode.insertBefore(script, tag);
+                    };
+                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                  })(window, document);
+                </script>
+              </div>
+
+            </div>
+          </div>
+          <!------ Yas Kite Beach ------>
+          <div class="col position-relative">
+            <location-card image-url="https://worker.seanssurfreport.workers.dev/yas" title="Yas Kite Area, Abu Dhabi"
+              link-url="/yas.html" hide-refresh="true">
+            </location-card>
+            <div class="col position-absolute widget">
+              <div style="max-width: 200px">
+                <script id="wglive_3858_1710779222995">
+                  (function (window, document) {
+                    var loader = function () {
+                      var arg = ["spot=3858", "uid=wglive_3858_1710779222995", "color=light", "wj=knots", "tj=c", "avg_min=0", "gsize=400", "msize=400", "m=3", "arrow=y", "show=n,g,c,f,m"];
+                      var script = document.createElement("script");
+                      var tag = document.getElementsByTagName("script")[0];
+                      script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                      tag.parentNode.insertBefore(script, tag);
+                    };
+                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                  })(window, document);
+                </script>
+              </div>
+
+            </div>
+          </div>
+          <!------ Dubai Offshore Sailing Club ------>
+          <div class="col position-relative">
+            <location-card image-url="https://worker.seanssurfreport.workers.dev/dosc"
+              title="Dubai Offshore Sailing Club" link-url="/dosc.html" hide-refresh="true">
+            </location-card>
+            <div class="col position-absolute widget">
+              <div style="max-width: 200px">
+                <script id="wglive_4065_1715855101032">
+                  (function (window, document) {
+                    var loader = function () {
+                      var arg = ["spot=4065", "uid=wglive_4065_1715855101032", "color=light", "wj=knots", "tj=c", "avg_min=0", "gsize=400", "msize=400", "m=3", "arrow=y", "show=n,g,c,f,m"];
+                      var script = document.createElement("script");
+                      var tag = document.getElementsByTagName("script")[0];
+                      script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                      tag.parentNode.insertBefore(script, tag);
+                    };
+                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                  })(window, document);
+                </script>
+              </div>
+            </div>
+          </div>
+          <!------ Sandy Beach Hotel ------>
+          <div class="col position-relative">
+            <location-card image-url="https://worker.seanssurfreport.workers.dev/sandy" title="Sandy Beach Hotel, Dibba"
+              link-url="/sandy.html" hide-refresh="true">
+            </location-card>
+            <div class="col position-absolute widget">
+              <div style="max-width: 200px">
+                <script id="wglive_2014_1713422960240">
+                  (function (window, document) {
+                    var loader = function () {
+                      var arg = ["spot=2014", "uid=wglive_2014_1713422960240", "color=light", "wj=knots", "tj=c", "avg_min=0", "gsize=400", "msize=400", "m=3", "arrow=y", "show=n,g,c,f,m"];
+                      var script = document.createElement("script");
+                      var tag = document.getElementsByTagName("script")[0];
+                      script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                      tag.parentNode.insertBefore(script, tag);
+                    };
+                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                  })(window, document);
+                </script>
+              </div>
+            </div>
+          </div>
+          <!------ Mikoko ------>
+          <div class="col position-relative">
+            <location-card image-url="https://worker.seanssurfreport.workers.dev/mikoko" title="Mikoko, Umm Al Quwain"
+              link-url="/mikoko.html" hide-refresh="true">
+            </location-card>
+            <div class="col position-absolute widget">
+              <!--Place widget here-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer-pagecount></footer-pagecount>
+
+  </main>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
