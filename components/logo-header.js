@@ -5,8 +5,10 @@ class LogoHeader extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
+            crossorigin="anonymous">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" 
+            rel="stylesheet">
 
       <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
@@ -16,55 +18,55 @@ class LogoHeader extends HTMLElement {
       <style>
         @media (min-width: 480px) {
           .logo-link img {
-            width: 35%; /* Adjust scaling for medium screens */
+            width: 35%;
           }
         }
 
         @media (min-width: 780px) {
           .logo-link img {
-            width: 25%; /* Adjust scaling for larger screens */
+            width: 25%;
           }
         }
 
         @media (min-width: 1200px) {
           .logo-link img {
-            width: 20%; /* Adjust scaling for extra-large screens */
+            width: 20%;
           }
         }
 
         header {
-          background-color: #000;
+          background-color: #141414;
           padding: 1vw;
           display: flex;
-          justify-content: center; /* Centers the logo-group horizontally */
-          align-items: center; /* Centers the logo-group vertically */
+          justify-content: center;
+          align-items: center;
         }
 
         .logo-group {
           display: flex;
-          flex-direction: row; /* Ensures horizontal layout */
-          align-items: center; /* Vertically aligns logo and community icon */
-          justify-content: center; /* Centers the images within the group */
-          gap: 3vw; /* Adds space between logo and community icon */
-          flex-wrap: nowrap; /* Prevents wrapping to avoid stacking */
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 3vw;
+          flex-wrap: nowrap;
         }
 
         .logo-link {
           display: flex;
-          align-items: center; /* Centers logo vertically within its link */
+          align-items: center;
         }
 
         .logo-link img {
-          width: 20vw; /* Base scaling with viewport */
+          width: 22vw;
           height: auto;
-          min-width: 200px; /* Minimum size */
-          max-width: 100%; /* Allows scaling beyond 600px if viewport permits */
+          min-width: 200px;
+          max-width: 100%;
         }
 
         .main-nav-link {
           display: flex;
-          align-items: center; /* Centers community icon vertically within its link */
-          position: relative; /* For notification bubble */
+          align-items: center;
+          position: relative;
         }
 
         .main-nav-link img {
@@ -110,10 +112,10 @@ class LogoHeader extends HTMLElement {
       <header>
         <div class="logo-group">
           <a class="logo-link" href="/">
-            <img src="./img/logo.png" alt="Sean's surf report" />
+            <img src="./img/logo.png" alt="Sean's surf report">
           </a>
           <a class="main-nav-link" href="https://community.seanssurfreport.com/">
-            <img src="/img/community_320.png" alt="Classifieds" />
+            <img src="/img/community_320.png" alt="Classifieds">
             <span class="notification-bubble active"></span>
           </a>
         </div>
