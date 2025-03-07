@@ -1,101 +1,150 @@
+/* Reset and Base Styles */
+html,
 body {
-  /* font-family: Arial, Helvetica, sans-serif; */
-  font-family: 'Roboto', sans-serif;
-  margin: 0 auto;
-  min-height: 100vh;
-  font-size: 1rem;
-  color: #333;
-  font-weight: 400;
-  width: 100%;
+  height: 100%;
+  /* Ensure full viewport height is available */
   margin: 0;
+  /* Remove default margins */
   padding: 0;
+  /* Remove default padding */
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  /* Consistent font */
+  font-size: 1rem;
+  /* Base font size */
+  color: #333;
+  /* Default text color */
+  font-weight: 400;
+  /* Normal weight */
+  width: 100%;
+  /* Full width */
   display: flex;
+  /* Flexbox for layout */
   flex-direction: column;
+  /* Stack children vertically */
+  min-height: 100vh;
+  /* Minimum viewport height */
+
+  /* Custom properties (variables) */
   --primary: black;
   --secondary_blue: #5d5dff;
   --secondary_gray: #6d757d;
   --secondary_lightgray: #c8d1db;
 }
 
+/* Main Content */
 main {
-  flex: 1;
+  flex: 1 0 auto;
+  /* Grow to fill space, don't shrink, auto base size */
 }
 
-@media (max-width: 480px) {
-  .lead {
-    font-size: 1rem !important;
-  }
+/* Footer (defined in footer-pagecount.js, but ensuring compatibility) */
+footer {
+  flex-shrink: 0;
+  /* Prevent footer from shrinking */
 }
 
+/* Typography */
 h1 {
   color: var(--primary);
+  /* Use custom primary color */
 }
 
 h2 {
   font-size: 1rem;
-  display: block;
+  /* Smaller heading */
   color: white;
+  /* White text */
   background: var(--primary);
+  /* Black background */
   padding: 0.2rem 2rem;
+  /* Vertical and horizontal padding */
   font-weight: 100;
+  /* Light weight */
   text-align: center;
+  /* Centered text */
   width: 180px;
-  margin: auto;
-  margin-bottom: 1rem;
+  /* Fixed width */
+  margin: 0 auto 1rem;
+  /* Centered with bottom margin */
 }
 
 p {
   margin: 10px 0;
+  /* Vertical margin only */
   padding: 0;
+  /* No padding */
 }
 
-.sections {
-  margin: 5px auto;
-  margin-top: 20px;
-  padding: 2px 4px;
-  width: max-content;
-  color: white;
-  background-color: #333;
-}
-
+/* Links */
 a {
   color: #444;
+  /* Default link color */
   text-decoration: none;
+  /* No underline by default */
 }
 
 p a {
-  margin: 0;
-  text-decoration: underline;
   color: #87b280;
+  /* Specific green for paragraph links */
+  text-decoration: underline;
+  /* Underlined in paragraphs */
 }
 
 h2 a {
   color: white;
+  /* White links in h2 */
+}
 
-  a:link {
-    color: white;
-  }
+/* Pseudo-classes for h2 links (combined for clarity) */
+h2 a:link,
+h2 a:visited,
+h2 a:hover,
+h2 a:active {
+  color: white;
+  /* Consistent white across states */
+}
 
-  a:visited {
-    color: white;
-  }
-
-  a:hover {
-    color: white;
-  }
-
-  a:active {
-    color: white;
-  }
+/* Custom Elements */
+.sections {
+  margin: 20px auto 5px;
+  /* Top-heavy margin, centered */
+  padding: 2px 4px;
+  /* Small padding */
+  width: max-content;
+  /* Fit content */
+  color: white;
+  /* White text */
+  background-color: #333;
+  /* Dark background */
 }
 
 hr.line {
   width: 35%;
+  /* Narrow width */
   border-top: 1px dotted #777;
+  /* Dotted line */
+  margin: 0 auto;
+  /* Centered */
 }
 
 .widget {
+  position: absolute;
+  /* From your HTML structure */
   bottom: 4rem;
+  /* Position from bottom */
   left: 2rem;
+  /* Position from left */
   width: 13%;
+  /* Fixed width */
+}
+
+/* Media Queries */
+@media (max-width: 480px) {
+  .lead {
+    font-size: 1rem !important;
+    /* Override Bootstrap's lead class */
+  }
 }

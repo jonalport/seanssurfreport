@@ -17,13 +17,14 @@ class FooterPagecount extends HTMLElement {
   
           <style>
 
-            footer {
-                text-align: center;
-                padding: 20px 0;
-                font-size: 14px;
-                background-color: #222;
-                color: white;
-            }
+                  footer {
+    text-align: center;
+    padding: 20px 0; /* This is fine */
+    font-size: 14px;
+    background-color: #222;
+    color: white;
+    margin: 0; /* Add this to ensure no extra space */
+}
             
             footer p {
                 padding: 0 0;
