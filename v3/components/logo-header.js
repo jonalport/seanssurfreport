@@ -116,7 +116,6 @@ class LogoHeader extends HTMLElement {
           </a>
           <a class="main-nav-link" href="https://community.seanssurfreport.com/">
             <img src="./img/community_320.png" alt="Classifieds">
-            <span class="notification-bubble active"></span>
           </a>
         </div>
       </header>
