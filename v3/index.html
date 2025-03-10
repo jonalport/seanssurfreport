@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website with Collapsible Community</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="./components/feed-handle.js" defer></script>
+    <script type="module" src="./components/logo-header.js" defer></script>
+    <script type="module" src="./components/nav-location-card.js" defer></script>
+    <script type="module" src="./components/top-navigation.js" defer></script>
+    <script type="module" src="./components/location-card.js" defer></script>
+    <script type="module" src="./components/page-hit-counter.js" defer></script>
+    <script type="module" src="./components/footer-pagecount.js" defer></script>
+    <script type="module" src="./components/community-feed.js" defer></script>
+    <script src="./components/community-notify.js" defer></script>
+    <script src="./components/windguru-widget.js" defer></script>
+
+</head>
+
+<body>
+    <logo-header></logo-header>
+
+    <div class="community-container">
+        <div id="community" class="community">
+            <!-- Posts will be populated here by JS -->
+        </div>
+        <button id="feed-handle" class="feed-handle" onclick="toggleCommunity()">COMMUNITY FEED</button>
+    </div>
+
+    <main>
+        <section class="album">
+            <div class="container">
+                <div id="cards-grid" class="cards-grid">
+                    <!-- KBC -->
+                    <div class="card-item position-relative">
+                        <location-card image-url="https://worker.seanssurfreport.workers.dev/kbc"
+                            title="Kitesurf Beach Center, UAQ" link-url="/kbc.html" hide-refresh="true">
+                        </location-card>
+                        <div class="widget position-absolute">
+                            <div class="widget-content">
+                                <script id="wglive_2146_1706848056699" data-wg-spot="2146" defer></script>
+                                <div class="wg-error">Weather data unavailable</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Blue Ocean Sports -->
+                    <div class="card-item position-relative">
+                        <location-card image-url="https://worker.seanssurfreport.workers.dev/bos"
+                            title="Blue Ocean Sports, Jebel Ali" link-url="/blue-ocean-sports.html" hide-refresh="true">
+                        </location-card>
+                        <div class="widget position-absolute">
+                            <div class="widget-content">
+                                <script id="wglive_3568_1706847920748" data-wg-spot="3568" defer></script>
+                                <div class="wg-error">Weather data unavailable</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Yas Kite Beach -->
+                    <div class="card-item position-relative">
+                        <location-card image-url="https://worker.seanssurfreport.workers.dev/yas"
+                            title="Yas Kite Area, Abu Dhabi" link-url="/yas.html" hide-refresh="true">
+                        </location-card>
+                        <div class="widget position-absolute">
+                            <div class="widget-content">
+                                <script id="wglive_3858_1710779222995" data-wg-spot="3858" defer></script>
+                                <div class="wg-error">Weather data unavailable</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dubai Offshore Sailing Club -->
+                    <div class="card-item position-relative">
+                        <location-card image-url="https://worker.seanssurfreport.workers.dev/dosc"
+                            title="Dubai Offshore Sailing Club" link-url="/dosc.html" hide-refresh="true">
+                        </location-card>
+                        <div class="widget position-absolute">
+                            <div class="widget-content">
+                                <script id="wglive_4065_1715855101032" data-wg-spot="4065" defer></script>
+                                <div class="wg-error">Weather data unavailable</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sandy Beach Hotel -->
+                    <div class="card-item position-relative">
+                        <location-card image-url="https://worker.seanssurfreport.workers.dev/sandy"
+                            title="Sandy Beach Hotel, Dibba" link-url="/sandy.html" hide-refresh="true">
+                        </location-card>
+                        <div class="widget position-absolute">
+                            <div class="widget-content">
+                                <script id="wglive_2014_1713422960240" data-wg-spot="2014" defer></script>
+                                <div class="wg-error">Weather data unavailable</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mikoko -->
+                    <div class="card-item position-relative">
+                        <location-card image-url="https://worker.seanssurfreport.workers.dev/mikoko"
+                            title="Mikoko, Umm Al Quwain" link-url="/mikoko.html" hide-refresh="true">
+                        </location-card>
+                        <div class="widget position-absolute">
+                            <!-- Placeholder for widget -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer-pagecount></footer-pagecount>
+</body>
+
+</html>

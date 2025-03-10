@@ -1,0 +1,158 @@
+/* Reset and Base Styles */
+html {
+    height: 100%;
+    /* Ensure html takes full viewport height */
+    margin: 0;
+    /* Remove default margins */
+    padding: 0;
+    overflow-x: hidden;
+    /* Prevent horizontal overflow */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    /* Allow body to grow beyond viewport if needed */
+    height: auto;
+    /* Remove fixed height to adapt to content */
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    /* Prevent horizontal overflow */
+}
+
+/* Header */
+.header {
+    width: 100%;
+    height: 15vh;
+    background-color: #4CAF50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.community-container {
+    width: 100%;
+    position: relative;
+    flex-shrink: 0;
+    background-color: #808080;
+    /* 50% grey */
+}
+
+.community {
+    width: 100%;
+    height: 5vh;
+    /* Overridden by JS to 15vh or 0px */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: height 0.3s ease;
+    overflow: hidden;
+}
+
+.community p {
+    margin: 0;
+}
+
+.feed-handle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    display: inline-block;
+    padding: 5px 12px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: fit-content;
+    width: auto;
+    font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 10;
+    /* Ensure it’s above other content */
+}
+
+/* Main Section */
+main {
+    flex: 1 0 auto;
+    /* Grow to fill available space */
+    margin-top: 25px;
+}
+
+.album {
+    background-color: #f8f9fa;
+    padding: 1.5rem 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+    /* Include padding in width calculation */
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.card-item {
+    position: relative;
+}
+
+.widget {
+    position: absolute;
+    bottom: 4rem;
+    left: 2rem;
+    width: 13%;
+}
+
+.widget-content {
+    max-width: 200px;
+}
+
+.wg-error {
+    display: none;
+    color: #dc3545;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    height: 10vh;
+    background-color: #9C27B0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.footer p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (min-width: 992px) {
+    .cards-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
