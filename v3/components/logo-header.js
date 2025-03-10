@@ -59,7 +59,7 @@ class LogoHeader extends HTMLElement {
         .logo-link img {
           width: 22vw;
           height: auto;
-          min-width: 200px;
+          min-width: 250px;
           max-width: 100%;
         }
 

@@ -33,32 +33,63 @@ body {
     margin: 0;
 }
 
+/* Community Container */
 .community-container {
     width: 100%;
     position: relative;
     flex-shrink: 0;
     background-color: #808080;
-    /* 50% grey */
+    display: flex;
+    /* Add flex to center the community */
+    justify-content: center;
+    /* Center the community horizontally */
 }
 
+/* Community Section */
 .community {
     width: 100%;
+    max-width: 1200px;
     height: auto;
-    /* Content-driven height */
     max-height: 500px;
-    /* Expand limit; JS sets to 0px when closed */
     color: white;
     display: flex;
     flex-direction: row;
-    /* Stack posts side by side */
+    /* Default: horizontal */
     flex-wrap: nowrap;
-    /* Keep all 3 posts on one line */
     align-items: center;
-    /* Center vertically */
-    justify-content: space-between;
-    /* Space posts evenly */
+    justify-content: center;
     transition: max-height 0.3s ease;
     overflow: hidden;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* Stack vertically at 992px and below */
+@media (max-width: 992px) {
+    .community {
+        flex-direction: column;
+        /* Stack posts vertically */
+        align-items: center;
+        /* Center items horizontally in column */
+        justify-content: center;
+        /* Center items vertically */
+        max-height: 600px;
+        /* Optional: increase max-height to accommodate stacking */
+    }
+}
+
+/* Post Preview (from community-feed.js) */
+.post-preview {
+    flex: 1 0 auto;
+    /* Allow natural width, no shrinking below content */
+    margin: 0 5px;
+    /* Horizontal spacing between posts */
+    font-size: 0.9rem;
+    padding: 2.5px 5px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .feed-handle {

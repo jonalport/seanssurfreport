@@ -64,31 +64,44 @@ class CommunityFeed {
             }).join('');
 
             const style = document.createElement('style');
-            style.textContent = `
-                .post-preview {
-                    flex: 1; /* Each post takes equal width */
-                    margin: 0 5px; /* Horizontal spacing between posts */
-                    font-size: 0.9rem;
-                    padding: 2.5px 5px; /* Reduced horizontal padding for fit */
-                    text-align: left;
-                    white-space: nowrap; /* Prevent text wrapping */
-                    overflow: hidden; /* Hide overflow */
-                    text-overflow: ellipsis; /* Add ellipsis for long titles */
-                }
-                .post-preview a {
-                    text-decoration: none;
-                    color: #fff;
-                }
-                .post-preview a:hover {
-                    text-decoration: underline;
-                }
-                .post-preview small {
-                    display: block;
-                    color: #ddd;
-                    font-size: 0.8rem; /* Smaller date for fit */
-                }
-            `;
-            this.community.appendChild(style);
+style.textContent = `
+    .post-preview {
+        flex: 1; /* Each post takes equal width */
+        margin: 0 5px; /* Horizontal spacing between posts */
+        font-size: 0.9rem;
+        padding: 2.5px 5px; /* Reduced horizontal padding for fit */
+        text-align: center; /* Center-align text */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow */
+        text-overflow: ellipsis; /* Add ellipsis for long titles */
+    }
+    .post-preview a {
+        text-decoration: none;
+        color: #fff;
+    }
+    .post-preview a:hover {
+        text-decoration: underline;
+    }
+    .post-preview small {
+        display: block;
+        color: #ddd;
+        font-size: 0.8rem; /* Smaller date for fit */
+    }
+    /* Stack adjustments at 992px and below */
+    @media (max-width: 992px) {
+        .post-preview {
+            flex: none; /* Remove equal width constraint */
+            width: 100%; /* Full width for stacking */
+            max-width: 500px; /* Optional: limit width for readability */
+            white-space: normal; /* Allow text to wrap */
+            overflow: visible; /* Show full content */
+            text-overflow: clip; /* Remove ellipsis */
+            margin: 5px 0; /* Vertical spacing instead of horizontal */
+            text-align: center; /* Ensure center alignment persists */
+        }
+    }
+`;
+this.community.appendChild(style);
         } catch (error) {
             console.error('Error fetching Discourse posts:', error);
             this.community.innerHTML = '<p>Unable to load community posts</p>';
