@@ -8,27 +8,22 @@ class CommunityFeed {
             return;
         }
 
-        this.setupToggle(); // Set up toggle
-        this.init(); // Fetch posts asynchronously
+        this.setupToggle();
+        this.init();
     }
 
     setupToggle() {
-        // Define toggleCommunity globally to match HTML onclick
         window.toggleCommunity = () => {
             console.log('Toggling community section');
-            if (this.community.style.height === '' || this.community.style.height === '0px') {
-                this.community.style.height = '5vh'; // Expand to show content
+            if (this.community.style.maxHeight === '' || this.community.style.maxHeight === '0px') {
+                this.community.style.maxHeight = '500px'; // Expand to allow full content
             } else {
-                this.community.style.height = '0px'; // Collapse fully
+                this.community.style.maxHeight = '0px'; // Collapse fully
             }
         };
-
-        // Ensure the handle uses the global toggle function
         this.handle.onclick = window.toggleCommunity;
-
-        // Set initial state to 5vh on load
-        if (!this.community.style.height) {
-            this.community.style.height = '5vh'; // Default to 5vh instead of 15vh
+        if (!this.community.style.maxHeight) {
+            this.community.style.maxHeight = '500px'; // Default to open
         }
     }
 
@@ -45,9 +40,7 @@ class CommunityFeed {
         try {
             const response = await fetch('https://community-feed-proxy.seanssurfreport.workers.dev', {
                 method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                }
+                headers: { 'Accept': 'application/json' }
             });
 
             if (!response.ok) {
@@ -55,13 +48,12 @@ class CommunityFeed {
             }
 
             const data = await response.json();
-            console.log('API Response:', data); // Debug: Log the full response
+            console.log('API Response:', data);
 
-            // Use the Worker's summarized data directly
-            const latestTopics = data.slice(0, 3); // Assuming Worker returns array of 3 posts
+            const latestTopics = data.slice(0, 3);
 
             this.community.innerHTML = latestTopics.map(topic => {
-                const categoryName = topic.category || 'Uncategorized'; // Use category from Worker
+                const categoryName = topic.category || 'Uncategorized';
                 const titleWords = topic.title.split(' ').slice(0, 6).join(' ');
                 return `
                     <div class="post-preview">
@@ -74,10 +66,14 @@ class CommunityFeed {
             const style = document.createElement('style');
             style.textContent = `
                 .post-preview {
-                    margin-bottom: 5px; /* Half of original 10px */
+                    flex: 1; /* Each post takes equal width */
+                    margin: 0 5px; /* Horizontal spacing between posts */
                     font-size: 0.9rem;
-                    padding: 2.5px 10px; /* Half height: reduced from 5px to 2.5px */
+                    padding: 2.5px 5px; /* Reduced horizontal padding for fit */
                     text-align: left;
+                    white-space: nowrap; /* Prevent text wrapping */
+                    overflow: hidden; /* Hide overflow */
+                    text-overflow: ellipsis; /* Add ellipsis for long titles */
                 }
                 .post-preview a {
                     text-decoration: none;
@@ -89,6 +85,7 @@ class CommunityFeed {
                 .post-preview small {
                     display: block;
                     color: #ddd;
+                    font-size: 0.8rem; /* Smaller date for fit */
                 }
             `;
             this.community.appendChild(style);
@@ -99,7 +96,6 @@ class CommunityFeed {
     }
 }
 
-// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded, initializing CommunityFeed');
     new CommunityFeed();
