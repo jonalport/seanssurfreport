@@ -48,7 +48,7 @@ body {
 /* Community Section */
 .community {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px;
     height: auto;
     max-height: 500px;
     color: white;
@@ -64,19 +64,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Stack vertically at 992px and below */
-@media (max-width: 992px) {
-    .community {
-        flex-direction: column;
-        /* Stack posts vertically */
-        align-items: center;
-        /* Center items horizontally in column */
-        justify-content: center;
-        /* Center items vertically */
-        max-height: 600px;
-        /* Optional: increase max-height to accommodate stacking */
-    }
-}
+
 
 /* Post Preview (from community-feed.js) */
 .post-preview {
@@ -127,7 +115,7 @@ main {
 
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 15px;
     box-sizing: border-box;
@@ -176,7 +164,23 @@ main {
 }
 
 /* Responsive Design */
-@media (min-width: 992px) {
+
+@media (max-width: 800px) {
+
+    /*was 992px before */
+    .community {
+        flex-direction: column;
+        /* Stack posts vertically */
+        align-items: center;
+        /* Center items horizontally in column */
+        justify-content: center;
+        /* Center items vertically */
+        max-height: 600px;
+        /* Optional: increase max-height to accommodate stacking */
+    }
+}
+
+@media (min-width: 800px) {
     .cards-grid {
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
