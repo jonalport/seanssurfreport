@@ -58,7 +58,7 @@ body {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    transition: max-height 0.3s ease;
+    transition: max-height 1s ease;
     overflow: hidden;
     padding: 0 15px;
     box-sizing: border-box;
