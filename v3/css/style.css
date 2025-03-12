@@ -186,3 +186,7 @@ main {
         gap: 2rem;
     }
 }
+
+h1 {
+    color: var(--primary);
+}
