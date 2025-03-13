@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    /* Ensure full viewport height */
+    margin: 0;
+    /* Remove default margins */
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    min-height: 100vh;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 400;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    --primary: black;
+    --secondary_blue: #5d5dff;
+    --secondary_gray: #6d757d;
+    --secondary_lightgray: #c8d1db;
+}
+
+site-header {
+    height: 8vh;
+    background-color: #ff6b6b;
+    /* Red */
+}
+
+site-feed {
+    background-color: #55DFB8;
+    /* Orange - distinct color */
+    transition: max-height 0.3s ease-in-out;
+    /* Smooth collapse animation */
+    overflow: hidden;
+    /* Hide content when collapsed */
+}
+
+site-nav {
+    height: 10vh;
+    background-color: #e6e6e6;
+    /* Turquoise */
+    overflow: hidden;
+}
+
+site-main {
+    flex: 1;
+}
+
+site-footer {
+    height: 8vh;
+    background-color: #96ceb4;
+    /* Green */
+}
