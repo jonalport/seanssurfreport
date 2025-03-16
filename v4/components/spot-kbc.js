@@ -1,13 +1,15 @@
 // Attach the loadKBCContent function to the global window object for accessibility
 window.loadKBCContent = function(main) {
-    // Set the HTML structure with nine blocks
+    // Set the HTML structure with nine blocks, adding location-card to camera-image
     main.innerHTML = `
         <section>
             <div id="info" class="content-block"><h1>Kitesurf Beach Center, UAQ</h1><p>Located an hour NE of Dubai in the emirate of Umm Al Quwain, KBC is well located to receive good wind and swell when the conditions align. You will also find a nice community of local riders and some incredible food on the restaurants menu -
                                 <a href="https://kitesurfbeachcenter.ae" target="_blank" rel="noopener noreferrer">website</a>
                             </p></div>
             <div id="camera-title" class="content-block title-block"><div class="title-content">Live Camera</div></div>
-            <div id="camera-image" class="content-block"></div>
+            <div id="camera-image" class="content-block">
+                <location-card image-url="https://worker.seanssurfreport.com/kbc"></location-card>
+            </div>
             <div id="wind-title" class="content-block title-block"><div class="title-content">Live Wind</div></div>
             <div id="wind-graph" class="content-block"></div>
             <div id="forecast-title" class="content-block title-block"><div class="title-content">Forecast</div></div>
@@ -52,9 +54,9 @@ window.loadKBCContent = function(main) {
         }
 
         .title-block {
-            font-size: 0.9rem; /* Example: Larger font size */
-            font-weight: 500; /* Example: Medium font weight */
-            padding: 5px; /* Example: More padding for emphasis */
+            font-size: 0.9rem; /* Larger font size */
+            font-weight: 500; /* Medium font weight */
+            padding: 5px; /* More padding for emphasis */
         }
 
         /* Style the wrapper for title content to apply the background */
@@ -62,14 +64,19 @@ window.loadKBCContent = function(main) {
             background-color: black;
             color: white;
             display: inline-block; /* Width adjusts to content */
-            padding: 5px 25px; /* Padding around the text */
-            border-radius: 50px; /* Optional: Rounded corners */
+            padding: 5px 15px; /* Reduced horizontal padding for a tighter fit */
+            border-radius: 50px; /* Rounded corners */
             width: auto; /* Explicitly set to auto to ensure it fits content */
+            line-height: 1; /* Normalize line-height to avoid extra spacing */
+            white-space: nowrap; /* Prevent text wrapping that could increase width */
+            font-family: 'Roboto', sans-serif; /* Match the font family for consistency */
         }
-            p {
+
+        p {
+            font-size: 0.9rem;
             text-align: center;
             width: 90%;
-            }
+        }
     `;
     document.head.appendChild(style);
 };
