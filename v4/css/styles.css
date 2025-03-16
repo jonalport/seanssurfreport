@@ -41,8 +41,6 @@ site-header {
 }
 
 site-feed {
-    background-color: #55DFB8;
-    /* Orange - distinct color */
     transition: max-height 0.3s ease-in-out;
     /* Smooth collapse animation */
     overflow: hidden;
