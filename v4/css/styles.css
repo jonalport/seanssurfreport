@@ -14,19 +14,17 @@ body {
 
 body {
     min-height: 100vh;
+    /* Minimum height of viewport */
     display: flex;
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
     margin: 0 auto;
-    min-height: 100vh;
     font-size: 1rem;
     color: #333;
     font-weight: 400;
     width: 100%;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
     --primary: black;
     --secondary_blue: #5d5dff;
     --secondary_gray: #6d757d;
@@ -34,9 +32,12 @@ body {
 }
 
 site-header {
-    height: 8vh;
+    height: 7vh;
+    /* Fixed height */
     background-color: #ff6b6b;
     /* Red */
+    flex-shrink: 0;
+    /* Prevent shrinking */
 }
 
 site-feed {
@@ -46,21 +47,81 @@ site-feed {
     /* Smooth collapse animation */
     overflow: hidden;
     /* Hide content when collapsed */
+    min-height: 50px;
+    /* Ensure a minimum height */
+    height: auto;
+    /* Allow height to grow with content */
+    flex-shrink: 0;
+    /* Prevent shrinking */
 }
 
 site-nav {
     height: 10vh;
+    /* Fixed height */
     background-color: #e6e6e6;
     /* Turquoise */
     overflow: hidden;
+    flex-shrink: 0;
+    /* Prevent shrinking */
 }
 
 site-main {
     flex: 1;
+    /* Take remaining space */
+    overflow-y: auto;
+    /* Allow scrolling if content overflows */
+    min-height: 0;
+    /* Allow shrinking if necessary */
 }
 
-site-footer {
-    height: 8vh;
-    background-color: #96ceb4;
-    /* Green */
+section {
+    margin: 1rem auto;
+}
+
+section>div:first-child>div>p {
+    font-size: 0.9rem;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+h2 {
+    font-size: 0.9rem;
+    display: block;
+    color: white;
+    background: var(--primary);
+    padding: 0.2rem 2rem;
+    text-align: center;
+    width: 180px;
+    margin: 1vh auto;
+    font-weight: 500;
+}
+
+h2 a {
+    text-decoration: none;
+    color: white;
+
+    a:link {
+        color: white;
+    }
+
+    a:visited {
+        color: white;
+    }
+
+    a:hover {
+        color: white;
+    }
+
+    a:active {
+        color: white;
+    }
 }

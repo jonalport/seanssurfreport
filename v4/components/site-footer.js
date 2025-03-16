@@ -10,30 +10,28 @@ class SiteFooter extends HTMLElement {
       <style>
         footer {
           text-align: center;
-          padding: 20px 0;
           font-size: 13px;
           background-color: #141414;
           color: white;
-          margin: 0;
+          padding: 1rem 0;
         }
         
         footer p {
-          padding: 0 0;
-          margin: 5px 0;
+          padding: 0;
+          margin: 0.3rem 0;
         }
 
         p a {
-          margin: 0;
           text-decoration: underline;
           color: #87b280;
         }
         .retro-counter {
-        padding-top: 0.2rem;
+        padding: 0.2rem 0;
         }
       </style>
       
       <footer>
-          <p>If you have any suggestions or want to contribute to this project, you can reach me via <a href="mailto:seanocaster@gmail.com">email</a>
+          <p>If you have suggestions or want to contribute, you can reach me via <a href="mailto:seanocaster@gmail.com">email</a>
               or <a href="https://www.instagram.com/foilandwater/">@foilandwater.</a>
           </p>
           <p>    

@@ -18,11 +18,10 @@ class SiteHeader extends HTMLElement {
             <style>
                 header {
                     background-color: #141414;
-                    padding: 1vw;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    height: 100%; /* Fill the site-header height */
+                    height: 100%;
                     width: 100%;
                 }
 
@@ -31,32 +30,32 @@ class SiteHeader extends HTMLElement {
                     flex-direction: row;
                     align-items: center;
                     justify-content: center;
-                    gap: 3vw;
+                    gap: 2vw;
                     flex-wrap: nowrap;
-                    height: 100%; /* Fill the header */
+                    height: 100%;
                     width: 100%;
                 }
 
                 .logo-link {
                     display: flex;
                     align-items: center;
-                    height: 100%; /* Fill the parent height */
+                    height: 100%;
                 }
 
                 .logo-link img {
-                    height: 80%; /* Fill 80% of the site-header height */
-                    width: auto; /* Maintain aspect ratio */
-                    max-height: 4.5vh; /* 80% of 10vh */
-                    min-width: 200px; /* Adjusted minimum width */
+                    height: 80%;
+                    width: auto;
+                    max-height: 4.5vh;
+                    min-width: 200px;
                     max-width: 100%;
-                    object-fit: contain; /* Ensure the image fits without distortion */
+                    object-fit: contain;
                 }
 
                 .main-nav-link {
                     display: flex;
                     align-items: center;
                     position: relative;
-                    height: 100%; /* Fill the parent height */
+                    height: 100%;
                 }
 
                 .main-nav-link img {
@@ -85,20 +84,6 @@ class SiteHeader extends HTMLElement {
                     color: #fff;
                 }
 
-                .notification-bubble {
-                    display: none;
-                    position: absolute;
-                    top: -5px;
-                    right: -5px;
-                    width: 10px;
-                    height: 10px;
-                    background-color: red;
-                    border-radius: 50%;
-                }
-
-                .notification-bubble.active {
-                    display: block;
-                }
             </style>
 
             <header>

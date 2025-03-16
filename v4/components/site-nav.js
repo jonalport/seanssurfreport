@@ -3,53 +3,58 @@ class SiteNav extends HTMLElement {
         super();
         this.innerHTML = `
             <div class="nav-container">
-                <div class="card-wrapper" data-page="page1">
+                <div class="card-wrapper" data-page="kbc" draggable="true">
                     <div class="card" style="background-image: url('https://worker.seanssurfreport.com/kbc')"></div>
                     <div class="card-text">Kitesurf Beach Center, UAQ</div>
                 </div>
-                <div class="card-wrapper" data-page="page2">
+                <div class="card-wrapper" data-page="bos" draggable="true">
+                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/bos')"></div>
+                    <div class="card-text">Blue Ocean Sports, JA</div>
+                </div>
+                <div class="card-wrapper" data-page="yas" draggable="true">
                     <div class="card" style="background-image: url('https://worker.seanssurfreport.com/yas')"></div>
                     <div class="card-text">Yas Kite Area, Abu Dhabi</div>
+                </div>
+                <div class="card-wrapper" data-page="dosc" draggable="true">
+                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/dosc')"></div>
+                    <div class="card-text">Dubai Offshore Sailing Club</div>
                 </div>
             </div>
         `;
 
         this.addEventListener('click', this.handleCardClick.bind(this));
+        this.setupDragAndDrop();
     }
 
     connectedCallback() {
-        // Container styles
         this.querySelector('.nav-container').style.cssText = `
             display: flex;
             overflow-x: auto;
             padding: 10px;
             gap: 20px;
             white-space: nowrap;
-            height: 100%; /* Fill the site-nav height */
+            height: 100%;
             align-items: stretch;
         `;
 
-        // Wrapper styles (card + text)
         this.querySelectorAll('.card-wrapper').forEach(wrapper => {
             wrapper.style.cssText = `
                 flex: 0 0 auto;
-                width: 200px; /* Fixed width, adjust as needed */
-                height: 100%; /* Fill container height */
+                width: 200px;
+                height: 100%;
                 display: flex;
                 flex-direction: column;
-                cursor: pointer;
+                cursor: move;
             `;
         });
 
-        // Card styles (image only)
         this.querySelectorAll('.card').forEach(card => {
-            const bgImage = card.style.backgroundImage || ''; // Preserve inline background-image
-
+            const bgImage = card.style.backgroundImage || '';
             card.style.cssText = `
                 ${bgImage ? `background-image: ${bgImage};` : ''}
-                flex: 1; /* Take remaining space after text */
-                background-color: #fff; /* Fallback color */
-                border-radius: 8px 8px 0 0; /* Rounded top only */
+                flex: 1;
+                background-color: #fff;
+                border-radius: 8px 8px 0 0;
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                 background-size: cover;
                 background-position: center;
@@ -57,18 +62,54 @@ class SiteNav extends HTMLElement {
             `;
         });
 
-        // Text styles
         this.querySelectorAll('.card-text').forEach(text => {
             text.style.cssText = `
-                font-size: 0.9rem;    
+                font-size: 0.8rem;    
                 padding: 8px;
-                background-color: #fff; /* Match card background */
-                border-radius: 0 0 8px 8px; /* Rounded bottom only */
+                background-color: #fff;
+                border-radius: 0 0 8px 8px;
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                 text-align: center;
                 white-space: nowrap;
-                color: #000; /* Black text for visibility */
+                color: #000;
             `;
+        });
+    }
+
+    setupDragAndDrop() {
+        const container = this.querySelector('.nav-container');
+        let draggedItem = null;
+
+        container.addEventListener('dragstart', (e) => {
+            const wrapper = e.target.closest('.card-wrapper');
+            if (!wrapper) return;
+            draggedItem = wrapper;
+            setTimeout(() => wrapper.style.opacity = '0.5', 0);
+        });
+
+        container.addEventListener('dragend', (e) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '1';
+                draggedItem = null;
+            }
+        });
+
+        container.addEventListener('dragover', (e) => e.preventDefault());
+
+        container.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const targetWrapper = e.target.closest('.card-wrapper');
+            if (!targetWrapper || !draggedItem || draggedItem === targetWrapper) return;
+
+            const allWrappers = Array.from(container.querySelectorAll('.card-wrapper'));
+            const draggedIndex = allWrappers.indexOf(draggedItem);
+            const targetIndex = allWrappers.indexOf(targetWrapper);
+
+            if (draggedIndex < targetIndex) {
+                targetWrapper.after(draggedItem);
+            } else {
+                targetWrapper.before(draggedItem);
+            }
         });
     }
 
@@ -81,42 +122,31 @@ class SiteNav extends HTMLElement {
     }
 
     loadPage(page) {
-        history.pushState({ page }, `Page ${page.slice(-1)}`, `#${page}`);
+    history.pushState({ page }, `Page ${page}`, `#${page}`);
+    const main = document.querySelector('site-main');
+    if (!main) return;
 
-        const main = document.querySelector('site-main');
-        if (main) {
-            switch(page) {
-                case 'page1':
-                    main.innerHTML = `
-                        <section>
-                            <h2>Page 1 Content</h2>
-                            <p>This is the unique content for Page 1. Welcome to the first page!</p>
-                        </section>
-                    `;
-                    // Apply centering styles to Page 1
-                    main.querySelector('section').style.cssText = `
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        height: 100%;
-                        width: 100%;
-                        text-align: center;
-                        padding: 20px;
-                        box-sizing: border-box;
-                    `;
-                    break;
-                case 'page2':
-                    main.innerHTML = `
-                        <section>
-                            <h2>Page 2 Content</h2>
-                            <p>This is the unique content for Page 2. Here's something different!</p>
-                        </section>
-                    `;
-                    break;
-            }
+    const existingScript = document.getElementById(`spot-script-${page}`);
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.src = `components/spot-${page}.js`;
+    script.id = `spot-script-${page}`;
+    console.log(`Loading script: ${script.src}`); // Debug line
+    script.onload = () => {
+        const loadFunction = window[`load${page.toUpperCase()}Content`];
+        if (typeof loadFunction === 'function') {
+            loadFunction(main);
+        } else {
+            console.error(`Function load${page.toUpperCase()}Content not found`);
         }
-    }
+    };
+    script.onerror = () => {
+        console.error(`Failed to load script for ${page}`);
+        main.innerHTML = `<p>Error loading content for ${page}</p>`;
+    };
+    document.body.appendChild(script);
+}
 }
 
 customElements.define('site-nav', SiteNav);
@@ -130,6 +160,6 @@ window.addEventListener('popstate', (event) => {
 
 window.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('site-nav');
-    const hash = window.location.hash.slice(1) || 'page1';
+    const hash = window.location.hash.slice(1) || 'kbc';
     nav.loadPage(hash);
 });
