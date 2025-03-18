@@ -22,6 +22,36 @@
     <script src="components/site-main.js"></script>
     <script src="components/site-footer.js"></script>
     <script src="components/location-card.js"></script>
+
+    <!-- Default content loading -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const main = document.querySelector('site-main');
+            const hash = window.location.hash.slice(1);
+
+            // If no hash or hash is 'dashboard', load site-dash.js
+            if (!hash || hash === 'dashboard') {
+                const existingScript = document.getElementById('site-dash-script');
+                if (existingScript) existingScript.remove();
+
+                const script = document.createElement('script');
+                script.src = 'components/site-dash.js';
+                script.id = 'site-dash-script';
+                script.onload = () => {
+                    if (window.loadDashContent && typeof window.loadDashContent === 'function') {
+                        window.loadDashContent(main);
+                    } else {
+                        console.error('loadDashContent function not found');
+                    }
+                };
+                script.onerror = () => {
+                    console.error('Failed to load site-dash.js');
+                    main.innerHTML = '<p>Error loading dashboard</p>';
+                };
+                document.body.appendChild(script);
+            }
+        });
+    </script>
 </body>
 
 </html>

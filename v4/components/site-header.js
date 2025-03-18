@@ -18,8 +18,8 @@ class SiteHeader extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    height: 80px; /* Fixed height */
-                    width: 100%; /* Full width of the page */
+                    height: 80px;
+                    width: 100%;
                     background-color: #141414;
                 }
 
@@ -27,46 +27,90 @@ class SiteHeader extends HTMLElement {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    justify-content: center; /* Center the contents */
-                    height: 100%; /* Fill site-header height */
-                    width: auto; /* Size based on contents */
-                    margin: 0; /* No margin */
-                    padding: 0; /* No padding */
+                    justify-content: center;
+                    height: 100%;
+                    width: auto;
+                    margin: 0;
+                    padding: 0;
+                    gap: 20px;
                 }
 
                 .logo-site {
                     display: flex;
                     align-items: center;
-                    height: 100%; /* Fill logo-group height */
-                    margin: 0; /* No margin */
-                    padding: 10px; /* No padding */
+                    height: 100%;
+                    margin: 0;
+                    padding: 0 20px 0 0;
                 }
 
                 .logo-site img {
-                    height: 100%; /* Fill logo-site height */
-                    width: auto; /* Maintain aspect ratio */
-                    max-width: 100%; /* Prevent overflow */
-                    object-fit: contain; /* Preserve aspect ratio */
+                    height: 100%;
+                    width: auto;
+                    max-width: 100%;
+                    object-fit: contain;
+                    padding: 16px 0;
                 }
 
-                .logo-community {
+                .icon-dash {
                     display: flex;
                     align-items: center;
-                    height: 100%; /* Fill logo-group height */
-                    margin: 0 0 0 10px; /* Space to the right of logo-site, no other margins */
-                    padding: 10px; /* No padding */
+                    height: 100%;
+                    margin: 0;
+                    padding: 14px 0;
                 }
 
-                .logo-community img {
-                    height: 100%; /* Fill logo-community height */
-                    width: auto; /* Maintain aspect ratio */
-                    max-width: 100%; /* Prevent overflow */
+                .icon-dash img {
+                    height: 100%;
+                    width: auto;
+                    max-width: 100%;
                     opacity: 75%;
                     transition: opacity .25s ease-in-out;
-                    object-fit: contain; /* Preserve aspect ratio */
+                    object-fit: contain;
                 }
 
-                .logo-community img:hover {
+                .icon-dash img:hover {
+                    opacity: 100%;
+                }
+
+                .icon-forecast {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    margin: 0;
+                    padding: 14px 0;
+                }
+
+                .icon-forecast img {
+                    height: 100%;
+                    width: auto;
+                    max-width: 100%;
+                    opacity: 75%;
+                    transition: opacity .25s ease-in-out;
+                    object-fit: contain;
+                }
+
+                .icon-forecast img:hover {
+                    opacity: 100%;
+                }
+
+                .icon-community {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    margin: 0;
+                    padding: 14px 0;
+                }
+
+                .icon-community img {
+                    height: 100%;
+                    width: auto;
+                    max-width: 100%;
+                    opacity: 75%;
+                    transition: opacity .25s ease-in-out;
+                    object-fit: contain;
+                }
+
+                .icon-community img:hover {
                     opacity: 100%;
                 }
             </style>
@@ -75,11 +119,57 @@ class SiteHeader extends HTMLElement {
                 <a class="logo-site" href="/">
                     <img src="./img/logo.png" alt="Sean's surf report">
                 </a>
-                <a class="logo-community" href="https://community.seanssurfreport.com/">
-                    <img src="./img/community_320.png" alt="Classifieds">
+                <a class="icon-dash" href="/dashboard">
+                    <img src="./img/icon_01_dash.png" alt="Dashboard">
+                </a>
+                <a class="icon-forecast" href="/forecast">
+                    <img src="./img/icon_02_forecast.png" alt="Forecast">
+                </a>
+                <a class="icon-community" href="https://community.seanssurfreport.com/">
+                    <img src="./img/icon_03_community.png" alt="Community">
                 </a>
             </div>
         `;
+
+        // Add event listeners for the buttons
+        this.shadowRoot.querySelector('.icon-dash').addEventListener('click', this.handleDashClick.bind(this));
+        this.shadowRoot.querySelector('.icon-forecast').addEventListener('click', this.handleForecastClick.bind(this));
+    }
+
+    handleDashClick(event) {
+        event.preventDefault(); // Prevent default link behavior
+        const main = document.querySelector('site-main');
+        if (!main) return;
+
+        // Remove any existing dashboard script
+        const existingScript = document.getElementById('site-dash-script');
+        if (existingScript) existingScript.remove();
+
+        // Load site-dash.js
+        const script = document.createElement('script');
+        script.src = 'components/site-dash.js';
+        script.id = 'site-dash-script';
+        script.onload = () => {
+            if (window.loadDashContent && typeof window.loadDashContent === 'function') {
+                window.loadDashContent(main);
+            } else {
+                console.error('loadDashContent function not found');
+            }
+        };
+        script.onerror = () => {
+            console.error('Failed to load site-dash.js');
+            main.innerHTML = '<p>Error loading dashboard</p>';
+        };
+        document.body.appendChild(script);
+    }
+
+    handleForecastClick(event) {
+        event.preventDefault(); // Prevent default link behavior
+        const nav = document.querySelector('site-nav');
+        if (!nav) return;
+
+        // Simulate clicking the first card in site-nav (KBC)
+        nav.loadPage('kbc');
     }
 }
 

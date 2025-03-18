@@ -39,35 +39,25 @@ class SiteNav extends HTMLElement {
         navContainer.style.cssText = `
             display: flex;
             overflow-x: auto;
-            padding: 10px 10px;  /* Consistent padding on all sides */
+            padding: 10px 10px;
             gap: 20px;
             white-space: nowrap;
             height: 100%;
             align-items: stretch;
-            box-sizing: border-box; /* Ensure padding doesn't increase width */
+            box-sizing: border-box;
         `;
-    
-        // Dynamically adjust justify-content based on content width vs container width
+
         const updateAlignment = () => {
             const contentWidth = Array.from(navContainer.querySelectorAll('.card-wrapper'))
-                .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20; // Account for gap
+                .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20;
             const containerWidth = navContainer.offsetWidth;
-            
-            if (contentWidth <= containerWidth) {
-                navContainer.style.justifyContent = 'center'; // Center when content fits
-            } else {
-                navContainer.style.justifyContent = 'flex-start'; // Align left when overflowing
-            }
+            navContainer.style.justifyContent = contentWidth <= containerWidth ? 'center' : 'flex-start';
         };
-    
-        // Set initial scroll position to left
+
         navContainer.scrollLeft = 0;
-    
-        // Update alignment on load and resize
         updateAlignment();
         window.addEventListener('resize', updateAlignment);
-    
-        // Styles for card-wrapper, card, and card-text remain the same
+
         this.querySelectorAll('.card-wrapper').forEach(wrapper => {
             wrapper.style.cssText = `
                 flex: 0 0 auto;
@@ -78,7 +68,7 @@ class SiteNav extends HTMLElement {
                 cursor: move;
             `;
         });
-    
+
         this.querySelectorAll('.card').forEach(card => {
             const bgImage = card.style.backgroundImage || '';
             card.style.cssText = `
@@ -92,10 +82,10 @@ class SiteNav extends HTMLElement {
                 background-repeat: no-repeat;
             `;
         });
-    
+
         this.querySelectorAll('.card-text').forEach(text => {
             text.style.cssText = `
-                font-size: 0.8rem;    
+                font-size: 0.8rem;
                 padding: 8px;
                 background-color: #fff;
                 border-radius: 0 0 8px 8px;
@@ -153,31 +143,57 @@ class SiteNav extends HTMLElement {
     }
 
     loadPage(page) {
-    history.pushState({ page }, `Page ${page}`, `#${page}`);
-    const main = document.querySelector('site-main');
-    if (!main) return;
+        history.pushState({ page }, `Page ${page}`, `#${page}`);
+        const main = document.querySelector('site-main');
+        const nav = document.querySelector('site-nav');
+        if (!main || !nav) return;
 
-    const existingScript = document.getElementById(`spot-script-${page}`);
-    if (existingScript) existingScript.remove();
+        if (page === 'dashboard') {
+            const existingScript = document.getElementById('site-dash-script');
+            if (existingScript) existingScript.remove();
 
-    const script = document.createElement('script');
-    script.src = `components/spot-${page}.js`;
-    script.id = `spot-script-${page}`;
-    console.log(`Loading script: ${script.src}`); // Debug line
-    script.onload = () => {
-        const loadFunction = window[`load${page.toUpperCase()}Content`];
-        if (typeof loadFunction === 'function') {
-            loadFunction(main);
+            const script = document.createElement('script');
+            script.src = 'components/site-dash.js';
+            script.id = 'site-dash-script';
+            console.log(`Loading script: ${script.src}`);
+            script.onload = () => {
+                if (typeof window.loadDashContent === 'function') {
+                    window.loadDashContent(main);
+                } else {
+                    console.error('loadDashContent function not found');
+                }
+            };
+            script.onerror = () => {
+                console.error('Failed to load site-dash.js');
+                main.innerHTML = `<p>Error loading dashboard</p>`;
+            };
+            document.body.appendChild(script);
         } else {
-            console.error(`Function load${page.toUpperCase()}Content not found`);
+            // Show site-nav for non-dashboard pages
+            nav.style.display = ''; // Reset to default (block or flex, depending on CSS)
+
+            const existingScript = document.getElementById(`spot-script-${page}`);
+            if (existingScript) existingScript.remove();
+
+            const script = document.createElement('script');
+            script.src = `components/spot-${page}.js`;
+            script.id = `spot-script-${page}`;
+            console.log(`Loading script: ${script.src}`);
+            script.onload = () => {
+                const loadFunction = window[`load${page.toUpperCase()}Content`];
+                if (typeof loadFunction === 'function') {
+                    loadFunction(main);
+                } else {
+                    console.error(`Function load${page.toUpperCase()}Content not found`);
+                }
+            };
+            script.onerror = () => {
+                console.error(`Failed to load script for ${page}`);
+                main.innerHTML = `<p>Error loading content for ${page}</p>`;
+            };
+            document.body.appendChild(script);
         }
-    };
-    script.onerror = () => {
-        console.error(`Failed to load script for ${page}`);
-        main.innerHTML = `<p>Error loading content for ${page}</p>`;
-    };
-    document.body.appendChild(script);
-}
+    }
 }
 
 customElements.define('site-nav', SiteNav);
@@ -191,6 +207,6 @@ window.addEventListener('popstate', (event) => {
 
 window.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('site-nav');
-    const hash = window.location.hash.slice(1) || 'kbc';
+    const hash = window.location.hash.slice(1) || 'dashboard';
     nav.loadPage(hash);
 });
