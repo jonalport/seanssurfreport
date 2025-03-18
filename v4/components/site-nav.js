@@ -43,6 +43,7 @@ class SiteNav extends HTMLElement {
             white-space: nowrap;
             height: 100%;
             align-items: stretch;
+            justify-content: center;
         `;
 
         this.querySelectorAll('.card-wrapper').forEach(wrapper => {
