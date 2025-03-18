@@ -18,7 +18,7 @@ class SiteFooter extends HTMLElement {
         
         footer p {
           padding: 0;
-          margin: 0.3rem 0;
+          margin: 0.3rem 1rem;
         }
 
         p a {
@@ -31,7 +31,7 @@ class SiteFooter extends HTMLElement {
       </style>
       
       <footer>
-          <p>If you have suggestions or want to contribute, you can reach me via <a href="mailto:seanocaster@gmail.com">email</a>
+          <p>If you have suggestions or want to contribute, contact me via <a href="mailto:seanocaster@gmail.com">email</a>
               or <a href="https://www.instagram.com/foilandwater/">@foilandwater.</a>
           </p>
           <p>    

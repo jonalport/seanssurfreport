@@ -32,8 +32,6 @@ body {
 
 site-header {
     height: 80px;
-    /* Fixed height */
-    background-color: #ff6b6b;
     flex-shrink: 0;
 }
 

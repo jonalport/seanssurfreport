@@ -35,17 +35,39 @@ class SiteNav extends HTMLElement {
     }
 
     connectedCallback() {
-        this.querySelector('.nav-container').style.cssText = `
+        const navContainer = this.querySelector('.nav-container');
+        navContainer.style.cssText = `
             display: flex;
             overflow-x: auto;
-            padding: 10px;
+            padding: 10px 10px;  /* Consistent padding on all sides */
             gap: 20px;
             white-space: nowrap;
             height: 100%;
             align-items: stretch;
-            justify-content: center;
+            box-sizing: border-box; /* Ensure padding doesn't increase width */
         `;
-
+    
+        // Dynamically adjust justify-content based on content width vs container width
+        const updateAlignment = () => {
+            const contentWidth = Array.from(navContainer.querySelectorAll('.card-wrapper'))
+                .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20; // Account for gap
+            const containerWidth = navContainer.offsetWidth;
+            
+            if (contentWidth <= containerWidth) {
+                navContainer.style.justifyContent = 'center'; // Center when content fits
+            } else {
+                navContainer.style.justifyContent = 'flex-start'; // Align left when overflowing
+            }
+        };
+    
+        // Set initial scroll position to left
+        navContainer.scrollLeft = 0;
+    
+        // Update alignment on load and resize
+        updateAlignment();
+        window.addEventListener('resize', updateAlignment);
+    
+        // Styles for card-wrapper, card, and card-text remain the same
         this.querySelectorAll('.card-wrapper').forEach(wrapper => {
             wrapper.style.cssText = `
                 flex: 0 0 auto;
@@ -56,7 +78,7 @@ class SiteNav extends HTMLElement {
                 cursor: move;
             `;
         });
-
+    
         this.querySelectorAll('.card').forEach(card => {
             const bgImage = card.style.backgroundImage || '';
             card.style.cssText = `
@@ -70,7 +92,7 @@ class SiteNav extends HTMLElement {
                 background-repeat: no-repeat;
             `;
         });
-
+    
         this.querySelectorAll('.card-text').forEach(text => {
             text.style.cssText = `
                 font-size: 0.8rem;    

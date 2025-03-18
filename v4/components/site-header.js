@@ -16,86 +16,69 @@ class SiteHeader extends HTMLElement {
                     crossorigin="anonymous"></script>
 
             <style>
-                header {
+                :host {
+                    display: block;
+                    height: 80px; /* Fixed height */
+                    width: 100%; /* Full width of the page */
                     background-color: #141414;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100%;
-                    width: 100%;
                 }
 
                 .logo-group {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    justify-content: center;
-                    gap: 2vw;
-                    flex-wrap: nowrap;
-                    height: 100%;
-                    width: 100%;
+                    justify-content: center; /* Center the contents */
+                    height: 100%; /* Fill site-header height */
+                    width: auto; /* Size based on contents */
+                    margin: 0; /* No margin */
+                    padding: 0; /* No padding */
                 }
 
-                .logo-link {
+                .logo-site {
                     display: flex;
                     align-items: center;
-                    height: 100%;
+                    height: 100%; /* Fill logo-group height */
+                    margin: 0; /* No margin */
+                    padding: 10px; /* No padding */
                 }
 
-                .logo-link img {
-                    height: 80%;
-                    width: auto;
-                    max-height: 4.5vh;
-                    min-width: 200px;
-                    max-width: 100%;
-                    object-fit: contain;
-                }
-
-                .main-nav-link {
-                    display: flex;
-                    align-items: center;
-                    position: relative;
-                    height: 100%;
-                }
-
-                .main-nav-link img {
-                    height: 80%; /* Fill 80% of the site-header height */
+                .logo-site img {
+                    height: 100%; /* Fill logo-site height */
                     width: auto; /* Maintain aspect ratio */
-                    max-height: 5vh;
-                    min-width: 40px; /* Adjusted minimum width */
-                    max-width: 100px; /* Adjusted maximum width */
+                    max-width: 100%; /* Prevent overflow */
+                    object-fit: contain; /* Preserve aspect ratio */
+                }
+
+                .logo-community {
+                    display: flex;
+                    align-items: center;
+                    height: 100%; /* Fill logo-group height */
+                    margin: 0 0 0 10px; /* Space to the right of logo-site, no other margins */
+                    padding: 10px; /* No padding */
+                }
+
+                .logo-community img {
+                    height: 100%; /* Fill logo-community height */
+                    width: auto; /* Maintain aspect ratio */
+                    max-width: 100%; /* Prevent overflow */
                     opacity: 75%;
                     transition: opacity .25s ease-in-out;
-                    object-fit: contain; /* Ensure the image fits without distortion */
+                    object-fit: contain; /* Preserve aspect ratio */
                 }
 
-                .main-nav-link img:hover {
+                .logo-community img:hover {
                     opacity: 100%;
                 }
-
-                .header__link {
-                    margin-left: 1%;
-                    color: #ddd;
-                    font-size: 1.2rem;
-                    transition: all 200ms ease-in-out;
-                }
-
-                .header__link:hover {
-                    color: #fff;
-                }
-
             </style>
 
-            <header>
-                <div class="logo-group">
-                    <a class="logo-link" href="/">
-                        <img src="./img/logo.png" alt="Sean's surf report">
-                    </a>
-                    <a class="main-nav-link" href="https://community.seanssurfreport.com/">
-                        <img src="./img/community_320.png" alt="Classifieds">
-                    </a>
-                </div>
-            </header>
+            <div class="logo-group">
+                <a class="logo-site" href="/">
+                    <img src="./img/logo.png" alt="Sean's surf report">
+                </a>
+                <a class="logo-community" href="https://community.seanssurfreport.com/">
+                    <img src="./img/community_320.png" alt="Classifieds">
+                </a>
+            </div>
         `;
     }
 }
