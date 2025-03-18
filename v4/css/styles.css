@@ -1,3 +1,4 @@
+/* styles.css */
 * {
     margin: 0;
     padding: 0;
@@ -7,18 +8,16 @@
 html,
 body {
     height: 100%;
-    /* Ensure full viewport height */
     margin: 0;
-    /* Remove default margins */
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
     min-height: 100vh;
-    /* Minimum height of viewport */
+    /* Ensures page is at least viewport height */
     display: flex;
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
-    margin: 0 auto;
     font-size: 1rem;
     color: #333;
     font-weight: 400;
@@ -32,44 +31,43 @@ body {
 }
 
 site-header {
-    height: 7vh;
+    height: 80px;
     /* Fixed height */
     background-color: #ff6b6b;
-    /* Red */
     flex-shrink: 0;
-    /* Prevent shrinking */
 }
 
 site-feed {
     transition: max-height 0.3s ease-in-out;
-    /* Smooth collapse animation */
     overflow: hidden;
-    /* Hide content when collapsed */
-    min-height: 50px;
-    /* Ensure a minimum height */
     height: auto;
-    /* Allow height to grow with content */
+    /* Content-driven */
     flex-shrink: 0;
-    /* Prevent shrinking */
 }
 
 site-nav {
-    height: 10vh;
+    height: 120px;
     /* Fixed height */
     background-color: #e6e6e6;
-    /* Turquoise */
     overflow: hidden;
     flex-shrink: 0;
-    /* Prevent shrinking */
 }
 
 site-main {
-    flex: 1;
-    /* Take remaining space */
+    height: auto;
+    /* Scales with content */
     overflow-y: auto;
-    /* Allow scrolling if content overflows */
-    min-height: 0;
-    /* Allow shrinking if necessary */
+    /* Scroll if content overflows */
+    flex-shrink: 0;
+    /* Prevents shrinking below content height */
+    /* Removed flex: 1 to stop it from taking remaining space */
+}
+
+site-footer {
+    height: auto;
+    /* Scales with content */
+    flex-shrink: 0;
+    /* Prevents shrinking */
 }
 
 section {
@@ -85,8 +83,8 @@ section>div:first-child>div>p {
 
 h1 {
     text-align: center;
-    font-size: 1.3rem;
-    font-weight: 400;
+    font-size: 1.4rem;
+    font-weight: 500;
     margin-bottom: 10px;
     color: #333;
 }
@@ -106,20 +104,11 @@ h2 {
 h2 a {
     text-decoration: none;
     color: white;
+}
 
-    a:link {
-        color: white;
-    }
-
-    a:visited {
-        color: white;
-    }
-
-    a:hover {
-        color: white;
-    }
-
-    a:active {
-        color: white;
-    }
+h2 a:link,
+h2 a:visited,
+h2 a:hover,
+h2 a:active {
+    color: white;
 }

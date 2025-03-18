@@ -8,42 +8,44 @@ class SiteFeed extends HTMLElement {
     :host {
         display: block;
         width: 100%;
+        /* Height is omitted to allow natural content-driven sizing */
     }
 
     .feed-container {
         background-color: #9fc199;
-        padding: 5px;
         display: flex;
         flex-direction: column;
-        align-items: center; /* Ensure centering of children */
+        align-items: center;
         width: 100%;
-        max-width: 100%; /* Prevent overflow */
+        max-width: 100%; /* Prevents overflow beyond parent */
+        /* Height adapts to #community; no explicit height set */
     }
 
     #community {
         display: flex;
         justify-content: center;
         width: 100%;
+        /* Height is driven by .post-preview content; no flex-grow needed */
     }
 
     .post-preview {
-        flex: 1; /* Each post takes equal width */
-        margin: 0 5px; /* Horizontal spacing between posts */
+        flex: 1; /* Equal width in row layout */
+        margin: 0 5px; /* Horizontal spacing in row layout */
+        padding: 5px;
         font-size: 0.9rem;
-        padding: 5px; /* Increased padding for better spacing */
-        text-align: center; /* Center-align text */
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: hidden; /* Hide overflow */
-        text-overflow: ellipsis; /* Add ellipsis for long titles */
-        display: flex; /* Use flexbox to control internal layout */
-        flex-direction: column; /* Stack <a> and <small> vertically */
-        gap: 3px; /* Space between <a> and <small> */
+        text-align: center;
+        white-space: nowrap; /* Prevents wrapping in row layout */
+        overflow: hidden; /* Hides excess text */
+        text-overflow: ellipsis; /* Adds ellipsis for long text */
+        display: flex;
+        flex-direction: column; /* Stacks <a> and <small> vertically */
+        gap: 3px; /* Spacing between <a> and <small> */
     }
 
     .post-preview a {
         text-decoration: none;
         color: black;
-        line-height: 1.2; /* Ensure consistent line height */
+        line-height: 1.2;
     }
 
     .post-preview a:hover {
@@ -54,45 +56,44 @@ class SiteFeed extends HTMLElement {
         display: block;
         color: #808080;
         font-size: 0.8rem;
-        line-height: 1.2; /* Consistent line height */
+        line-height: 1.2;
     }
 
+    /* Medium screens: Stack posts vertically */
     @media (max-width: 800px) {
         #community {
             flex-direction: column;
-            align-items: center; /* Center .post-preview elements horizontally */
-            gap: 8px; /* Add spacing between stacked posts */
-            width: auto; /* Allow width to adjust based on content */
-            max-width: 350px; /* Limit width to prevent excessive stretching */
-            margin: 0 auto; /* Center the #community container itself */
+            align-items: center;
+            width: auto;
+            max-width: 350px; /* Caps width for readability */
+            margin: 0 auto; /* Centers the container */
         }
 
         .post-preview {
-            flex: none;
-            width: 100%; /* Take full width of #community */
-            max-width: 350px; /* Limit width for readability */
-            white-space: normal; /* Allow text wrapping */
-            overflow: visible;
-            text-overflow: clip;
-            margin: 0; /* Remove horizontal margins */
-            text-align: center;
-            box-sizing: border-box; /* Ensure padding doesn’t affect width */
+            flex: none; /* Disables equal-width behavior */
+            width: 100%; /* Full width within #community */
+            max-width: 350px;
+            margin: 0; /* Removes horizontal margins */
+            white-space: normal; /* Allows text wrapping */
+            overflow: visible; /* Shows full text */
+            text-overflow: clip; /* Removes ellipsis */
+            box-sizing: border-box; /* Includes padding in width */
         }
     }
 
-    /* Additional media query for very small screens */
+    /* Small screens: Adjust for very narrow viewports */
     @media (max-width: 400px) {
+        #community {
+            max-width: 100%; /* Full width on small screens */
+        }
+
         .post-preview {
-            max-width: 100%; /* Take full width on very small screens */
-            font-size: 0.85rem; /* Slightly smaller font */
+            max-width: 100%; /* Matches #community width */
+            font-size: 0.85rem; /* Slightly smaller text */
         }
 
         .post-preview small {
-            font-size: 0.75rem;
-        }https://station.windguru.cz/?id=2146
-
-        #community {
-            max-width: 100%; /* Ensure full width on very small screens */
+            font-size: 0.75rem; /* Smaller timestamp */
         }
     }
 </style>

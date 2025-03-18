@@ -19,6 +19,14 @@ class SiteNav extends HTMLElement {
                     <div class="card" style="background-image: url('https://worker.seanssurfreport.com/dosc')"></div>
                     <div class="card-text">Dubai Offshore Sailing Club</div>
                 </div>
+                <div class="card-wrapper" data-page="sandy" draggable="true">
+                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/sandy')"></div>
+                    <div class="card-text">Sandy Beach Hotel, Dibba</div>
+                </div>
+                <div class="card-wrapper" data-page="mikoko" draggable="true">
+                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/mikoko')"></div>
+                    <div class="card-text">Mikoko, UAQ</div>
+                </div>
             </div>
         `;
 
