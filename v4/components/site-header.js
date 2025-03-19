@@ -113,6 +113,45 @@ class SiteHeader extends HTMLElement {
                 .icon-community img:hover {
                     opacity: 100%;
                 }
+
+                /* Responsive adjustments for 600px and below */
+                @media (max-width: 600px) {
+                    .logo-group {
+                        gap: 5px; /* Smaller gap between elements */
+                    }
+
+                    .logo-site {
+                        padding: 0 10px 0 0; /* Reduced padding */
+                    }
+
+                    .logo-site img {
+                        padding: 8px 0; /* Reduced padding */
+                    }
+
+                    .icon-dash {
+                        padding: 7px 0; /* Reduced padding */
+                    }
+
+                    .icon-dash img {
+                        padding: 0; /* Remove padding to fit better */
+                    }
+
+                    .icon-forecast {
+                        padding: 7px 0; /* Reduced padding */
+                    }
+
+                    .icon-forecast img {
+                        padding: 0; /* Remove padding to fit better */
+                    }
+
+                    .icon-community {
+                        padding: 7px 0; /* Reduced padding */
+                    }
+
+                    .icon-community img {
+                        padding: 0; /* Remove padding to fit better */
+                    }
+                }
             </style>
 
             <div class="logo-group">
@@ -137,15 +176,13 @@ class SiteHeader extends HTMLElement {
     }
 
     handleDashClick(event) {
-        event.preventDefault(); // Prevent default link behavior
+        event.preventDefault();
         const main = document.querySelector('site-main');
         if (!main) return;
 
-        // Remove any existing dashboard script
         const existingScript = document.getElementById('site-dash-script');
         if (existingScript) existingScript.remove();
 
-        // Load site-dash.js
         const script = document.createElement('script');
         script.src = 'components/site-dash.js';
         script.id = 'site-dash-script';
@@ -164,11 +201,10 @@ class SiteHeader extends HTMLElement {
     }
 
     handleForecastClick(event) {
-        event.preventDefault(); // Prevent default link behavior
+        event.preventDefault();
         const nav = document.querySelector('site-nav');
         if (!nav) return;
 
-        // Simulate clicking the first card in site-nav (KBC)
         nav.loadPage('kbc');
     }
 }
