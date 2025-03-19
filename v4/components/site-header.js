@@ -117,39 +117,40 @@ class SiteHeader extends HTMLElement {
                 /* Responsive adjustments for 600px and below */
                 @media (max-width: 600px) {
                     .logo-group {
-                        gap: 5px; /* Smaller gap between elements */
+                        gap: 15px;
+                        padding: 0 10px;
                     }
 
                     .logo-site {
-                        padding: 0 10px 0 0; /* Reduced padding */
+                        padding: 20px 0;
                     }
 
                     .logo-site img {
-                        padding: 8px 0; /* Reduced padding */
+                        padding: 0;
                     }
 
                     .icon-dash {
-                        padding: 7px 0; /* Reduced padding */
+                        padding: 13px 0px;
                     }
 
                     .icon-dash img {
-                        padding: 0; /* Remove padding to fit better */
+                        padding: 0;
                     }
 
                     .icon-forecast {
-                        padding: 7px 0; /* Reduced padding */
+                        padding: 13px 0px;
                     }
 
                     .icon-forecast img {
-                        padding: 0; /* Remove padding to fit better */
+                        padding: 0;
                     }
 
                     .icon-community {
-                        padding: 7px 0; /* Reduced padding */
+                        padding: 13px 0px;
                     }
 
                     .icon-community img {
-                        padding: 0; /* Remove padding to fit better */
+                        padding: 0;
                     }
                 }
             </style>
