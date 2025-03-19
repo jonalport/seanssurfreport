@@ -14,7 +14,7 @@ window.loadDashContent = function(main) {
         card.style.cssText = `
             ${bgImage ? `background-image: ${bgImage};` : ''}
             width: 100%;
-            aspect-ratio: 2.5 / 1;
+            aspect-ratio: 2 / 1;
             background-color: #fff;
             border-radius: 8px 8px 0 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -24,13 +24,30 @@ window.loadDashContent = function(main) {
         `;
     });
 
-    // Add container styles
+    // Remove existing dashboard styles if present
+    const existingStyle = document.getElementById('dashboard-layout-style');
+    if (existingStyle) existingStyle.remove();
+
+    // Add container styles and full-height layout
     const style = document.createElement('style');
+    style.id = 'dashboard-layout-style';
     style.textContent = `
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        site-main { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
         section { 
             width: 90%; 
             margin: 0 auto; 
             padding: 20px 0; 
+            flex-grow: 1; 
         }
         .cards-grid { 
             display: grid; 
@@ -45,7 +62,7 @@ window.loadDashContent = function(main) {
             flex-direction: column; 
         }
         .card-text { 
-            font-size: 0.9rem; 
+            font-size: 0.8rem; 
             padding: 8px; 
             background-color: #fff; 
             border-radius: 0 0 8px 8px; 
@@ -53,6 +70,9 @@ window.loadDashContent = function(main) {
             text-align: center; 
             white-space: nowrap; 
             color: #000; 
+        }
+        site-footer { 
+            flex-shrink: 0; 
         }
         @media (max-width: 600px) { 
             .cards-grid { 
@@ -64,7 +84,7 @@ window.loadDashContent = function(main) {
             }
         }
     `;
-    main.appendChild(style);
+    document.head.appendChild(style); // Append to head for global scope
 
     // Hide site-nav when loading dashboard
     const nav = document.querySelector('site-nav');

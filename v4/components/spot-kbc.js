@@ -13,8 +13,15 @@ window.loadKBCContent = function(main) {
         </section>
     `;
 
-    // Add the Windguru live wind script programmatically
+    // Clean up previous Windguru scripts
     const windGraph = main.querySelector('#wind-graph div');
+    const forecastGraph = main.querySelector('#forecast-graph div');
+    const existingWindScript = document.getElementById('wglive_2146_1617178001640');
+    const existingForecastScript = document.getElementById('wg_fwdg_687932_100_1617177954510');
+    if (existingWindScript) existingWindScript.remove();
+    if (existingForecastScript) existingForecastScript.remove();
+
+    // Add the Windguru live wind script programmatically
     const windScript = document.createElement('script');
     windScript.id = 'wglive_2146_1617178001640';
     windScript.textContent = `
@@ -26,13 +33,12 @@ window.loadKBCContent = function(main) {
                 script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
                 tag.parentNode.insertBefore(script, tag);
             };
-            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+            loader(); // Execute immediately
         })(window, document);
     `;
     windGraph.appendChild(windScript);
 
     // Add the Windguru forecast script programmatically
-    const forecastGraph = main.querySelector('#forecast-graph div');
     const forecastScript = document.createElement('script');
     forecastScript.id = 'wg_fwdg_687932_100_1617177954510';
     forecastScript.textContent = `
@@ -44,7 +50,7 @@ window.loadKBCContent = function(main) {
                 script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
                 tag.parentNode.insertBefore(script, tag);
             };
-            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+            loader(); // Execute immediately
         })(window, document);
     `;
     forecastGraph.appendChild(forecastScript);
