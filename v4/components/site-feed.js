@@ -24,7 +24,7 @@ class SiteFeed extends HTMLElement {
     #community {
         display: flex;
         justify-content: center;
-        width: 100%;
+        width: 90%;
         /* Height is driven by .post-preview content; no flex-grow needed */
     }
 
@@ -60,7 +60,7 @@ class SiteFeed extends HTMLElement {
     }
 
     /* Medium screens: Stack posts vertically */
-    @media (max-width: 800px) {
+    @media (max-width: 640px) {
         #community {
             flex-direction: column;
             align-items: center;
@@ -82,7 +82,7 @@ class SiteFeed extends HTMLElement {
     }
 
     /* Small screens: Adjust for very narrow viewports */
-    @media (max-width: 400px) {
+    @media (max-width: 640px) {
         #community {
             max-width: 100%; /* Full width on small screens */
         }

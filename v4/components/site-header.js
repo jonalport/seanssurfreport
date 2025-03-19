@@ -115,7 +115,7 @@ class SiteHeader extends HTMLElement {
                 }
 
                 /* Responsive adjustments for 600px and below */
-                @media (max-width: 600px) {
+                @media (max-width: 640px) {
                     .logo-group {
                         gap: 15px;
                         padding: 0 10px;

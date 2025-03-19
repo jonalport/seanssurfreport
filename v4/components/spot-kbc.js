@@ -1,7 +1,7 @@
 window.loadKBCContent = function(main) {
     main.innerHTML = `
         <section>
-            <div id="info" class="content-block"><h1>Kitesurf Beach Center, UAQ</h1><p>Located an hour NE of Dubai in the emirate of Umm Al Quwain, KBC is well located to receive good wind and swell when the conditions align. You will also find a nice community of local riders and some incredible food on the restaurants menu - <a href="https://kitesurfbeachcenter.ae" target="_blank" rel="noopener noreferrer">website</a></p></div>
+            <div id="info" class="content-block"><h1>Kitesurf Beach Center, UAQ</h1><p>Located an hour NE of Dubai in the emirate of Umm Al Quwain, KBC is well located to receive good wind and swell when the conditions align. You will also find a nice community of local riders and some incredible food on the restaurants menu - <a href="https://kitesurfbeachcenter.ae" target="_blank" rel="noopener noreferrer">website</a> This is the google pin, beware of the camera on the beach road just before you reach, it catches everyone - <a href="https://maps.app.goo.gl/VZhkFiuGVY2ercHN7" target="_blank" rel="noopener noreferrer">location</a></p></div>
             <div id="camera-title" class="content-block title-block"><div class="title-content">Live Camera</div></div>
             <div id="camera-image" class="content-block"><location-card image-url="https://worker.seanssurfreport.com/kbc"></location-card></div>
             <div id="wind-title" class="content-block title-block"><div class="title-content">Live Wind</div></div>
