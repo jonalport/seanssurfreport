@@ -8,8 +8,6 @@ window.loadKBCContent = function(main) {
             <div id="wind-graph" class="content-block"><div style="max-width: 100%;"></div></div>
             <div id="forecast-title" class="content-block title-block"><div class="title-content">Forecast</div></div>
             <div id="forecast-graph" class="content-block"><div style="max-width: 100%;"></div></div>
-            <div id="tide-title" class="content-block title-block"><div class="title-content">Tides</div></div>
-            <div id="tide-graph" class="content-block"></div>
         </section>
     `;
 

@@ -1,3 +1,4 @@
+// site-dash.js
 window.loadDashContent = function(main) {
     main.innerHTML = `
         <section>
@@ -107,14 +108,58 @@ window.loadDashContent = function(main) {
     // Update URL hash
     history.pushState({ page: 'dashboard' }, 'Dashboard', '#dashboard');
 
-    // Inject Windguru widgets into <widget-windguru> after cards are rendered
+    // Add click event listeners to cards
+    const cardLinks = main.querySelectorAll('.card-wrapper');
+    cardLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // Stop default navigation
+            const page = link.getAttribute('href').substring(1); // Extract page from /kbc, /bos, etc.
+            loadSpotPage(page, main);
+        });
+    });
+
+    // Inject Windguru widgets
     injectWindguruWidgets();
 };
 
+// Function to load spot pages into site-main
+function loadSpotPage(page, main) {
+    const nav = document.querySelector('site-nav');
+    if (!main || !nav) return;
+
+    // Show site-nav for non-dashboard pages
+    nav.style.display = '';
+
+    // Remove any existing spot script
+    const existingScript = document.getElementById(`spot-script-${page}`);
+    if (existingScript) existingScript.remove();
+
+    // Load the new spot script
+    const script = document.createElement('script');
+    script.src = `components/spot-${page}.js`;
+    script.id = `spot-script-${page}`;
+    script.onload = () => {
+        const loadFunction = window[`load${page.toUpperCase()}Content`];
+        if (typeof loadFunction === 'function') {
+            loadFunction(main);
+        } else {
+            console.error(`Function load${page.toUpperCase()}Content not found`);
+            main.innerHTML = `<p>Error loading content for ${page}</p>`;
+        }
+    };
+    script.onerror = () => {
+        console.error(`Failed to load spot-${page}.js`);
+        main.innerHTML = `<p>Error loading content for ${page}</p>`;
+    };
+    document.body.appendChild(script);
+
+    // Update URL hash
+    history.pushState({ page }, `Page ${page}`, `#${page}`);
+}
+
 function injectWindguruWidgets() {
-    // Reusable function to inject a Windguru widget
     const injectWidget = (spot, uid, index) => {
-        if (!spot || !uid || spot === 'blank' || uid === 'blank') return; // Skip invalid entries
+        if (!spot || !uid || spot === 'blank' || uid === 'blank') return;
         (function (window, document) {
             var loader = function () {
                 var arg = [
@@ -134,25 +179,21 @@ function injectWindguruWidgets() {
                 script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
                 script.id = uid;
 
-                // Append script to a hidden container to avoid initial render
                 const tempContainer = document.createElement('div');
                 tempContainer.style.display = 'none';
                 document.body.appendChild(tempContainer);
                 tempContainer.appendChild(script);
 
-                // Move the widget content into the specific <widget-windguru> after it loads
                 script.onload = function () {
                     const widgetKbcElements = document.querySelectorAll('widget-windguru');
                     if (widgetKbcElements.length > index) {
                         const widgetContent = script.nextSibling || document.querySelector(`#${uid} + *`);
                         if (widgetContent) {
-                            // Move content to <widget-windguru>
                             widgetKbcElements[index].innerHTML = '';
                             widgetKbcElements[index].appendChild(widgetContent);
                             widgetContent.style.width = '100%';
                             widgetContent.style.height = '100%';
 
-                            // Clean up: remove the script and temp container
                             if (script.parentNode === tempContainer) {
                                 tempContainer.removeChild(script);
                             }
@@ -171,12 +212,11 @@ function injectWindguruWidgets() {
         })(window, document);
     };
 
-    // Inject widgets for each location with their specific spot and uid
-    injectWidget('2146', 'wglive_2146_1706848056699', 0); // Kitesurf Beach Center (KBC)
-    injectWidget('3568', 'wglive_3568_1706847920748', 1); // Blue Ocean Sports (BOS)
-    injectWidget('3858', 'wglive_3858_1710779222995', 2); // Yas Kite Area (YAS)
-    injectWidget('4065', 'wglive_4065_1715855101032', 3); // Dubai Offshore Sailing Club (DOSC)
-    injectWidget('2014', 'wglive_2014_1713422960240', 4); // Sandy Beach Hotel (SANDY)
+    injectWidget('2146', 'wglive_2146_1706848056699', 0); // KBC
+    injectWidget('3568', 'wglive_3568_1706847920748', 1); // BOS
+    injectWidget('3858', 'wglive_3858_1710779222995', 2); // YAS
+    injectWidget('4065', 'wglive_4065_1715855101032', 3); // DOSC
+    injectWidget('2014', 'wglive_2014_1713422960240', 4); // SANDY
 }
 
 function getDashboardCards() {

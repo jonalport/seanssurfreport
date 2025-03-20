@@ -1,303 +1,251 @@
-<!-- tides-forecast.js -->
-
+// tides-forecast.js
 class TidesForecast extends HTMLElement {
   constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-    this.ky = "bab808b6-a9d1-4088-b927-0f36ce396e75";
-    this.date = new Date().toISOString().split("T")[0];
-    this.latitude = this.getAttribute("latitude");
-    this.longitude = this.getAttribute("longitude");
-    this.observer = null;
-    this.spinner = null;
-  }
+      super();
+      this.attachShadow({ mode: 'open' });
+      this.apiKey = 'bab808b6-a9d1-4088-b927-0f36ce396e75'; // Your working API key
+      this.latitude = this.getAttribute('latitude');
+      this.longitude = this.getAttribute('longitude');
 
-  connectedCallback() {
-    this.spinner = document.createElement("div");
-    this.spinner.textContent = "Loading...";
-    this.shadowRoot.appendChild(this.spinner);
-
-    this.observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          this.fetchTidesData();
-          observer.unobserve(entry.target);
-        }
-      });
-    });
-
-    this.observer.observe(this);
-  }
-
-  disconnectedCallback() {
-    if (this.observer) {
-      this.observer.disconnect();
-    }
-  }
-
-  async fetchTidesData() {
-    const useMockData = true; // Toggle: true for mock, false for live API
-    if (useMockData) {
-      const mockData = {
-        extremes: [
-          { date: "2025-03-08T06:00:00Z", type: "High", height: 2.1 }, // Today
-          { date: "2025-03-08T12:00:00Z", type: "Low", height: 0.3 },
-          { date: "2025-03-08T18:00:00Z", type: "High", height: 2.0 },
-          { date: "2025-03-08T23:00:00Z", type: "Low", height: 0.4 },
-          { date: "2025-03-09T06:30:00Z", type: "High", height: 2.2 }, // Tomorrow
-          { date: "2025-03-09T12:30:00Z", type: "Low", height: 0.5 },
-          { date: "2025-03-09T18:45:00Z", type: "High", height: 2.3 },
-          { date: "2025-03-09T23:45:00Z", type: "Low", height: 0.6 },
-          { date: "2025-03-10T07:00:00Z", type: "High", height: 2.4 }, // Day after tomorrow
-          { date: "2025-03-10T13:00:00Z", type: "Low", height: 0.4 },
-          { date: "2025-03-10T19:00:00Z", type: "High", height: 2.2 },
-          { date: "2025-03-10T23:30:00Z", type: "Low", height: 0.5 },
-          { date: "2025-03-11T07:15:00Z", type: "High", height: 2.3 }, // +1 day
-          { date: "2025-03-11T13:15:00Z", type: "Low", height: 0.6 },
-          { date: "2025-03-11T19:15:00Z", type: "High", height: 2.1 },
-          { date: "2025-03-11T23:45:00Z", type: "Low", height: 0.4 },
-          { date: "2025-03-12T07:30:00Z", type: "High", height: 2.2 }, // +2 days
-          { date: "2025-03-12T13:30:00Z", type: "Low", height: 0.5 },
-          { date: "2025-03-13T07:45:00Z", type: "High", height: 2.3 }, // +3 days
-                  { date: "2025-03-13T13:45:00Z", type: "Low", height: 0.6 },
-          { date: "2025-03-13T19:45:00Z", type: "High", height: 2.1 },
-          { date: "2025-03-13T23:45:00Z", type: "Low", height: 0.4 },
-          { date: "2025-03-14T08:00:00Z", type: "High", height: 2.2 }, // +4 days
-          { date: "2025-03-14T14:00:00Z", type: "Low", height: 0.5 }
-        ],
-        heights: []
-      };
-      this.renderData(mockData.extremes, mockData.extremes);
-      this.spinner.remove();
-      return;
-    }
-
-    const apiUrl = `https://www.worldtides.info/api/v3?heights&extremes&date=${this.date}&lat=${this.latitude}&lon=${this.longitude}&days=7&key=${this.ky}&timemode=24`;
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      if (data.extremes && data.heights) {
-        this.renderData(data.extremes, data.heights);
-        this.spinner.remove();
-      } else console.error("Unable to fetch forecast data");
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-
-  renderData(extremesData, tideHeightData) {
-    // Limit chart to today (4 tides: 2 highs, 2 lows)
-    const today = new Date(this.date).toLocaleDateString();
-    const chartExtremes = extremesData.filter(entry => {
-      const entryDate = new Date(entry.date).toLocaleDateString();
-      return entryDate === today;
-    }).slice(0, 4); // Ensure only 4 points for today
-
-    // Table shows day after tomorrow + 4 extra days (16 tides)
-    const dayAfterTomorrowDate = new Date(this.date);
-    dayAfterTomorrowDate.setDate(dayAfterTomorrowDate.getDate() + 2);
-    const dayAfterTomorrow = dayAfterTomorrowDate.toLocaleDateString();
-    const tableStartIndex = extremesData.findIndex(entry => {
-      const entryDate = new Date(entry.date).toLocaleDateString();
-      return entryDate === dayAfterTomorrow;
-    });
-    const slicedExtremesData = extremesData.slice(tableStartIndex, tableStartIndex + 16);
-
-    const container = document.createElement("div");
-    const row = document.createElement("div");
-    row.classList.add("row", "m-0", "p-0");
-
-    const chartCol = document.createElement("div");
-    chartCol.classList.add("col-md-9", "chart-container");
-
-    const tableCol = document.createElement("div");
-    tableCol.classList.add("col-md-3");
-    const tableContainer = document.createElement("div");
-    tableContainer.innerHTML = `
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-      <style>
-        canvas { width: 100%; height: 100%; }
-        .chart-container, table { max-height: 600px; overflow-y: auto; }
-        @media (max-width: 780px) { .chart-container { margin-bottom: 2rem!important; } }
-        td { font-size: 14px; } /* Match text size to chart labels */
-      </style>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Time</th>
-            <th scope="col">Tide</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    `;
-
-    const tbody = tableContainer.querySelector("tbody");
-    slicedExtremesData.forEach((entry) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${this.formatDateTime(entry.date)}</td>
-        <td>${entry.type}</td>
+      this.shadowRoot.innerHTML = `
+          <style>
+              :host {
+                  display: block;
+                  width: 90%; /* Matches #wind-graph width */
+                  margin: 0 auto; /* Centers like #wind-graph */
+                  padding: 10px; /* Matches content-block padding */
+                  box-sizing: border-box;
+              }
+              canvas {
+                  width: 100% !important; /* Ensures canvas fills container */
+                  height: 250px !important; /* Matches Windguru gsize=250 */
+                  border: 0 solid #000; /* Matches iframe border override */
+              }
+          </style>
+          <canvas id="tideChart"></canvas>
       `;
-      tbody.appendChild(row);
-    });
-
-    tableCol.appendChild(tableContainer);
-    row.appendChild(chartCol);
-    row.appendChild(tableCol);
-    container.appendChild(row);
-    this.shadowRoot.appendChild(container);
-
-    this.renderChart(chartCol, chartExtremes);
   }
 
-  renderChart(container, extremesData) {
-    // Prepare extreme points with timestamps
-    const extremePoints = extremesData.map(entry => {
-      const dateTime = new Date(entry.date);
-      const timeLabel = dateTime.toLocaleString("en-US", { hour: "numeric", minute: "numeric", timeZone: "Asia/Dubai" });
-      return {
-        x: dateTime.getTime(), // Use timestamp for linear scale
-        y: entry.height,
-        time: timeLabel,
-        type: entry.type,
-        timestamp: dateTime.getTime()
-      };
-    });
-
-    // Generate sine wave points between extremes
-    const sinePoints = [];
-    const stepsPerSegment = 50; // Smooth curve with 50 points per segment
-    for (let i = 0; i < extremePoints.length - 1; i++) {
-      const start = extremePoints[i];
-      const end = extremePoints[i + 1];
-      const timeDiff = end.timestamp - start.timestamp;
-
-      for (let j = 0; j <= stepsPerSegment; j++) {
-        const t = j / stepsPerSegment;
-        const x = start.timestamp + t * timeDiff;
-        const amplitude = (end.y - start.y) / 2;
-        const mid = (start.y + end.y) / 2;
-        const phase = t * 2 * Math.PI; // Full sine wave cycle
-        const y = mid + amplitude * Math.sin(phase);
-
-        sinePoints.push({ x, y });
+  async connectedCallback() {
+      if (!window.Chart) {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+          script.onload = () => this.fetchTideData();
+          script.onerror = () => {
+              console.error('Failed to load Chart.js');
+              this.shadowRoot.innerHTML = '<p>Error loading tide chart library</p>';
+          };
+          document.head.appendChild(script);
+      } else {
+          this.fetchTideData();
       }
-    }
-
-    // Define minimal suggested labels for debugging (optional, not used directly)
-    const suggestedLabels = extremePoints.map(p => p.time);
-
-    const canvas = document.createElement("canvas");
-    canvas.width = 400;
-    canvas.height = 300;
-    container.appendChild(canvas);
-
-    const ctx = canvas.getContext("2d");
-
-    new Chart(ctx, {
-      data: {
-        datasets: [
-          {
-            type: "line",
-            label: "Tide Curve",
-            data: [...sinePoints, ...extremePoints], // Include extremes for continuity
-            xAxisID: "x", // Explicitly assign x-axis
-            borderColor: "black",
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: "rgba(173, 216, 230, 0.3)",
-            tension: 0.4,
-            pointRadius: 0,
-            pointHitRadius: 0
-          },
-          {
-            type: "scatter",
-            label: "Tide Extremes",
-            data: extremePoints.map(p => ({ x: p.x, y: p.y, time: p.time, type: p.type })),
-            xAxisID: "x", // Explicitly assign x-axis
-            backgroundColor: "black",
-            pointRadius: 0,
-            pointHitRadius: 0,
-            datalabels: {
-              anchor: "end",
-              align: "top",
-              formatter: (value) => `${value.time}\n${value.y.toFixed(1)}m`, // Height in meters
-              color: "black",
-              font: { size: 14 }
-            }
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            type: "linear",
-            position: "bottom",
-            display: false, // Hide x-axis
-            grid: { display: false },
-            ticks: {
-              display: false,
-              callback: () => null, // Prevent any tick rendering
-              maxTicksLimit: 0 // Limit to zero ticks
-            },
-            min: extremePoints[0].x, // Set min to first point
-            max: extremePoints[extremePoints.length - 1].x // Set max to last point
-          },
-          y: {
-            display: false, // Hide y-axis
-            grid: { display: false },
-            ticks: {
-              display: false,
-              callback: () => null, // Prevent any tick rendering
-              maxTicksLimit: 0 // Limit to zero ticks
-            }
-          }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: false },
-          datalabels: {
-            display: true,
-            color: "black",
-            font: { size: 14 }
-          }
-        },
-        elements: {
-          point: {
-            radius: 0,
-            hitRadius: 0
-          },
-          line: {
-            borderCapStyle: "round"
-          }
-        },
-        layout: {
-          padding: { top: 0, right: 0, bottom: 0, left: 0 }
-        },
-        animation: {
-          duration: 0
-        }
-      },
-      plugins: [ChartDataLabels]
-    });
-
-    console.log("Suggested labels (for debug):", suggestedLabels); // Debug log
   }
 
-  formatDateTime(dateTimeString) {
-    const dateTime = new Date(dateTimeString);
-    return dateTime.toLocaleString("en-US", {
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      month: "short",
-      timeZone: "Asia/Dubai"
-    });
+  async fetchTideData() {
+      const heightsUrl = `https://www.worldtides.info/api/v3?heights&lat=${this.latitude}&lon=${this.longitude}&key=${this.apiKey}&days=5&step=3600`;
+      const extremesUrl = `https://www.worldtides.info/api/v3?extremes&lat=${this.latitude}&lon=${this.longitude}&key=${this.apiKey}&days=5`;
+
+      try {
+          const [heightsResponse, extremesResponse] = await Promise.all([
+              fetch(heightsUrl),
+              fetch(extremesUrl)
+          ]);
+
+          if (!heightsResponse.ok || !extremesResponse.ok) {
+              const errorData = await (heightsResponse.ok ? extremesResponse : heightsResponse).json();
+              console.log('Error details:', errorData);
+              throw new Error(`HTTP error! Status: ${heightsResponse.status || extremesResponse.status}`);
+          }
+
+          const heightsData = await heightsResponse.json();
+          const extremesData = await extremesResponse.json();
+
+          if (heightsData.status !== 200 || extremesData.status !== 200) {
+              throw new Error(heightsData.error || extremesData.error || 'Unknown error from WorldTides API');
+          }
+
+          this.renderChart(heightsData, extremesData);
+      } catch (error) {
+          console.error('Error fetching tide data:', error);
+          this.shadowRoot.innerHTML = '<p>Unable to load tide data</p>';
+      }
+  }
+
+  renderChart(heightsData, extremesData) {
+      const ctx = this.shadowRoot.querySelector('#tideChart').getContext('2d');
+      const heights = heightsData.heights.map(h => h.height);
+      const labels = heightsData.heights.map(h => {
+          const date = new Date(h.date);
+          return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      });
+
+      // Identify day boundaries and labels
+      const days = [];
+      const dayLabels = [];
+      const dayCenters = [];
+      let currentDay = '';
+      heightsData.heights.forEach((h, i) => {
+          const date = new Date(h.date);
+          const day = date.toLocaleDateString();
+          if (day !== currentDay) {
+              currentDay = day;
+              days.push(i);
+              dayLabels.push(date.toLocaleDateString('en-US', { weekday: 'long' }));
+              const nextDayIndex = days[days.length] || heights.length;
+              dayCenters.push(Math.floor((i + (nextDayIndex - 1)) / 2));
+          }
+      });
+
+      // Map extremes to hourly indices and prepare point data
+      const pointData = new Array(heights.length).fill(null);
+      const pointLabels = new Array(heights.length).fill(null);
+      const pointTypes = new Array(heights.length).fill(null);
+      extremesData.extremes.forEach(extreme => {
+          const extremeTime = new Date(extreme.dt * 1000);
+          const closestIndex = heightsData.heights.findIndex(h => {
+              const heightTime = new Date(h.date);
+              return Math.abs(heightTime - extremeTime) < 1800000; // Within 30 minutes
+          });
+          if (closestIndex !== -1) {
+              pointData[closestIndex] = extreme.height;
+              const time = extremeTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              pointLabels[closestIndex] = `${time} (${extreme.height.toFixed(2)}m)`;
+              pointTypes[closestIndex] = extreme.type; // "High" or "Low"
+          }
+      });
+
+      // Background zones for alternating days
+      const backgroundPlugin = {
+          id: 'customBackground',
+          beforeDraw: (chart) => {
+              const { ctx, chartArea, scales } = chart;
+              const { left, right, top, bottom } = chartArea;
+              const xScale = scales.x;
+
+              ctx.save();
+              days.forEach((dayIndex, i) => {
+                  const nextDayIndex = days[i + 1] || labels.length;
+                  const xStart = xScale.getPixelForValue(dayIndex);
+                  const xEnd = xScale.getPixelForValue(nextDayIndex - 1);
+
+                  ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#f0f0f0';
+                  ctx.fillRect(xStart, top, xEnd - xStart, bottom - top);
+              });
+              ctx.restore();
+          }
+      };
+
+      // Annotation plugin for tide labels
+      const annotationPlugin = {
+          id: 'customAnnotations',
+          afterDraw: (chart) => {
+              const { ctx, chartArea, scales } = chart;
+              const xScale = scales.x;
+              const yScale = scales.y;
+
+              ctx.save();
+              ctx.font = '12px Arial';
+              ctx.fillStyle = '#000000';
+              ctx.textAlign = 'center';
+
+              pointLabels.forEach((label, index) => {
+                  if (label) {
+                      const x = xScale.getPixelForValue(index);
+                      const yOffset = pointTypes[index] === 'High' ? -10 : 15;
+                      const y = yScale.getPixelForValue(pointData[index]) + yOffset;
+                      ctx.textBaseline = pointTypes[index] === 'High' ? 'bottom' : 'top';
+                      ctx.fillText(label, x, y);
+                  }
+              });
+              ctx.restore();
+          }
+      };
+
+      Chart.register(backgroundPlugin, annotationPlugin);
+
+      new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: labels,
+              datasets: [
+                  {
+                      label: 'Tide Height (m)',
+                      data: heights,
+                      borderColor: '#007bff',
+                      backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                      fill: true,
+                      tension: 0.4,
+                      pointRadius: 0,
+                      order: 2 // Line drawn first
+                  },
+                  {
+                      label: 'High/Low Tides',
+                      data: pointData,
+                      borderColor: '#ff0000',
+                      backgroundColor: '#ff0000',
+                      pointRadius: 4,
+                      pointHoverRadius: 6,
+                      pointStyle: 'circle',
+                      fill: false,
+                      tension: 0,
+                      order: 1 // Points next
+                  }
+              ]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                  x: {
+                      title: {
+                          display: false // Hide "Time" title
+                      },
+                      ticks: {
+                          callback: function(value, index, values) {
+                              // Place label at the center of each day
+                              const centerIndex = dayCenters.find(center => Math.abs(center - index) < 12); // Within half a day
+                              if (centerIndex === index) {
+                                  return dayLabels[dayCenters.indexOf(centerIndex)];
+                              }
+                              return '';
+                          },
+                          align: 'center',
+                          autoSkip: false, // Show all labels
+                          maxTicksLimit: 5, // One per day
+                          font: {
+                              size: 12
+                          },
+                          stepSize: 24 // One tick per day (24 hours)
+                      },
+                      grid: {
+                          drawOnChartArea: false
+                      }
+                  },
+                  y: {
+                      title: {
+                          display: true,
+                          text: 'Height (m)'
+                      },
+                      beginAtZero: true,
+                      ticks: {
+                          display: false
+                      }
+                  }
+              },
+              plugins: {
+                  legend: {
+                      display: true,
+                      position: 'top'
+                  },
+                  tooltip: {
+                      mode: 'index',
+                      intersect: false
+                  }
+              }
+          },
+          plugins: [backgroundPlugin, annotationPlugin]
+      });
   }
 }
 
-customElements.define("tides-forecast", TidesForecast);
+customElements.define('tides-forecast', TidesForecast);
