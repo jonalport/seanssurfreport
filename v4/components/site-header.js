@@ -63,7 +63,7 @@ class SiteHeader extends HTMLElement {
                     height: 100%;
                     width: auto;
                     max-width: 100%;
-                    opacity: 75%;
+                    opacity: 65%;
                     transition: opacity .25s ease-in-out;
                     object-fit: contain;
                 }
@@ -84,7 +84,7 @@ class SiteHeader extends HTMLElement {
                     height: 100%;
                     width: auto;
                     max-width: 100%;
-                    opacity: 75%;
+                    opacity: 65%;
                     transition: opacity .25s ease-in-out;
                     object-fit: contain;
                 }
@@ -105,7 +105,7 @@ class SiteHeader extends HTMLElement {
                     height: 100%;
                     width: auto;
                     max-width: 100%;
-                    opacity: 75%;
+                    opacity: 65%;
                     transition: opacity .25s ease-in-out;
                     object-fit: contain;
                 }

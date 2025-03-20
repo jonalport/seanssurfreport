@@ -10,7 +10,7 @@ class SiteFooter extends HTMLElement {
       <style>
         footer {
           text-align: center;
-          font-size: 13px;
+          font-size: 0.8rem;
           background-color: #141414;
           color: white;
           padding: 1rem 0;
@@ -28,10 +28,16 @@ class SiteFooter extends HTMLElement {
         .retro-counter {
         padding: 0.2rem 0;
         }
+
+        @media (max-width: 640px) { 
+         footer {
+         font-size: 0.7rem;
+        }   
+        }
       </style>
       
       <footer>
-          <p>If you have suggestions or want to contribute, contact me via <a href="mailto:seanocaster@gmail.com">email</a>
+          <p>For suggestions, contact me via <a href="mailto:seanocaster@gmail.com">email</a>
               or <a href="https://www.instagram.com/foilandwater/">@foilandwater.</a>
           </p>
           <p>    

@@ -106,6 +106,9 @@ window.loadKBCContent = function(main) {
             width: 90%;
             margin: 0 auto;
         }
+        #wind-graph iframe {
+        border: 0 solid #000 !important; /* Overrides the 2px border */
+}
         #forecast-graph {
             width: 90%;
             margin: 0 auto;

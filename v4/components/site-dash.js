@@ -89,7 +89,7 @@ window.loadDashContent = function(main) {
         @media (max-width: 640px) { 
             .cards-grid { 
                 grid-template-columns: 1fr; 
-                width: 90%; 
+                width: 100%; 
             }
             .card-wrapper { 
                 width: 100%; 
