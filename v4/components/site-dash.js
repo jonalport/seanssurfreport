@@ -46,13 +46,13 @@ window.loadDashContent = function(main) {
         }
         section { 
             width: 95%; 
-            margin: 2.5% auto; 
+            margin: 2.5%; 
             flex-grow: 1;
         }
         .cards-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            grid-gap: 25px; 
+            gap: 2.5%;
             width: 100%; 
             margin: 0 auto; 
             flex-grow: 1; /* Make grid stretch to fill section */
@@ -87,7 +87,8 @@ window.loadDashContent = function(main) {
         @media (max-width: 640px) { 
             .cards-grid { 
                 grid-template-columns: 1fr; 
-                width: 100%; 
+                width: 100%;
+                gap: 1%;
             }
             .card-wrapper { 
                 width: 100%; 
