@@ -1,4 +1,3 @@
-// site-dash.js
 window.loadDashContent = function(main) {
     main.innerHTML = `
         <section>
@@ -46,19 +45,17 @@ window.loadDashContent = function(main) {
             flex-direction: column; 
         }
         section { 
-            width: 90%; 
-            margin: 0 auto; 
-            padding: 20px 0; 
+            width: 95%; 
+            margin: 2.5% auto; 
             flex-grow: 1;
         }
         .cards-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            grid-gap: 20px; 
+            grid-gap: 25px; 
             width: 100%; 
             margin: 0 auto; 
             flex-grow: 1; /* Make grid stretch to fill section */
-            min-height: 0; /* Prevent overflow issues */
         }
         .card-wrapper { 
             width: 100%; 
@@ -130,28 +127,43 @@ function loadSpotPage(page, main) {
     // Show site-nav for non-dashboard pages
     nav.style.display = '';
 
-    // Remove any existing spot script
-    const existingScript = document.getElementById(`spot-script-${page}`);
-    if (existingScript) existingScript.remove();
+    // Map page to locationId consistent with site-forecast.js
+    const locationMap = {
+        'kbc': 'kbc',
+        'bos': 'bos',
+        'yas': 'yas',
+        'dosc': 'dosc',
+        'sandy': 'sandy',
+        'mikoko': 'mikoko'
+    };
+    const locationId = locationMap[page] || page;
 
-    // Load the new spot script
-    const script = document.createElement('script');
-    script.src = `components/spot-${page}.js`;
-    script.id = `spot-script-${page}`;
-    script.onload = () => {
-        const loadFunction = window[`load${page.toUpperCase()}Content`];
-        if (typeof loadFunction === 'function') {
-            loadFunction(main);
-        } else {
-            console.error(`Function load${page.toUpperCase()}Content not found`);
+    // Load site-forecast.js if not already loaded, then call loadSiteContent
+    const existingScript = document.getElementById('site-forecast-script');
+    if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = 'components/site-forecast.js';
+        script.id = 'site-forecast-script';
+        console.log(`Loading script: ${script.src}`);
+        script.onload = () => {
+            if (typeof window.loadSiteContent === 'function') {
+                window.loadSiteContent(main, locationId);
+            } else {
+                console.error('loadSiteContent function not found');
+                main.innerHTML = `<p>Error loading content for ${page}</p>`;
+            }
+        };
+        script.onerror = () => {
+            console.error('Failed to load site-forecast.js');
             main.innerHTML = `<p>Error loading content for ${page}</p>`;
-        }
-    };
-    script.onerror = () => {
-        console.error(`Failed to load spot-${page}.js`);
-        main.innerHTML = `<p>Error loading content for ${page}</p>`;
-    };
-    document.body.appendChild(script);
+        };
+        document.body.appendChild(script);
+    } else if (typeof window.loadSiteContent === 'function') {
+        window.loadSiteContent(main, locationId);
+    } else {
+        console.error('loadSiteContent function not available yet');
+        main.innerHTML = `<p>Loading content for ${page}, please wait...</p>`;
+    }
 
     // Update URL hash
     history.pushState({ page }, `Page ${page}`, `#${page}`);

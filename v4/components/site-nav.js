@@ -172,26 +172,42 @@ class SiteNav extends HTMLElement {
             // Show site-nav for non-dashboard pages
             nav.style.display = ''; // Reset to default (block or flex, depending on CSS)
 
-            const existingScript = document.getElementById(`spot-script-${page}`);
-            if (existingScript) existingScript.remove();
+            // Map data-page to locationId
+            const locationMap = {
+                'kbc': 'kbc',
+                'bos': 'bos',
+                'yas': 'yas',
+                'dosc': 'dosc',
+                'sandy': 'sandy',
+                'mikoko': 'mikoko' // Add mikoko if you plan to support it in site-forecast.js
+            };
+            const locationId = locationMap[page] || page;
 
-            const script = document.createElement('script');
-            script.src = `components/spot-${page}.js`;
-            script.id = `spot-script-${page}`;
-            console.log(`Loading script: ${script.src}`);
-            script.onload = () => {
-                const loadFunction = window[`load${page.toUpperCase()}Content`];
-                if (typeof loadFunction === 'function') {
-                    loadFunction(main);
-                } else {
-                    console.error(`Function load${page.toUpperCase()}Content not found`);
-                }
-            };
-            script.onerror = () => {
-                console.error(`Failed to load script for ${page}`);
-                main.innerHTML = `<p>Error loading content for ${page}</p>`;
-            };
-            document.body.appendChild(script);
+            // Load site-forecast.js if not already loaded, then call loadSiteContent
+            const existingScript = document.getElementById('site-forecast-script');
+            if (!existingScript) {
+                const script = document.createElement('script');
+                script.src = 'components/site-forecast.js';
+                script.id = 'site-forecast-script';
+                console.log(`Loading script: ${script.src}`);
+                script.onload = () => {
+                    if (typeof window.loadSiteContent === 'function') {
+                        window.loadSiteContent(main, locationId);
+                    } else {
+                        console.error('loadSiteContent function not found');
+                    }
+                };
+                script.onerror = () => {
+                    console.error('Failed to load site-forecast.js');
+                    main.innerHTML = `<p>Error loading content for ${page}</p>`;
+                };
+                document.body.appendChild(script);
+            } else if (typeof window.loadSiteContent === 'function') {
+                window.loadSiteContent(main, locationId);
+            } else {
+                console.error('loadSiteContent function not available yet');
+                main.innerHTML = `<p>Loading content for ${page}, please wait...</p>`;
+            }
         }
     }
 }
