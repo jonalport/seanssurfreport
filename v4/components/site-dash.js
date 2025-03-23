@@ -35,7 +35,7 @@ window.loadDashContent = function(main) {
         `;
     });
 
-    // Reset styles on .dash-card-wrapper
+    // Reset styles on .dash-card-wrapper and make clickable
     const dashCardWrappers = main.querySelectorAll('.dash-card-wrapper');
     dashCardWrappers.forEach(wrapper => {
         wrapper.style.cssText = `
@@ -52,7 +52,7 @@ window.loadDashContent = function(main) {
     const existingStyle = document.getElementById('dashboard-layout-style');
     if (existingStyle) existingStyle.remove();
 
-    // Add container styles with explicit resets
+    // Add container styles with explicit resets and clickable styling
     const style = document.createElement('style');
     style.id = 'dashboard-layout-style';
     style.textContent = `
@@ -93,6 +93,14 @@ window.loadDashContent = function(main) {
             padding: 0; 
             height: auto;
         }
+        .dash-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block; /* Ensures the link fills the wrapper */
+        }
+        .dash-card-link:hover .dash-card {
+            opacity: 0.9; /* Slight hover effect for feedback */
+        }
         .dash-card { 
             width: 100%;
             aspect-ratio: 2 / 1;
@@ -100,6 +108,7 @@ window.loadDashContent = function(main) {
             padding: 0;
             flex-grow: 0;
             flex-shrink: 0;
+            cursor: pointer; /* Indicate clickability */
         }
         .dash-card-text { 
             font-size: 0.9rem; 
@@ -149,6 +158,19 @@ window.loadDashContent = function(main) {
 
     // Inject Windguru widgets
     injectWindguruWidgets();
+
+    // Add click event listeners for navigation
+    const dashCardLinks = main.querySelectorAll('.dash-card-link');
+    dashCardLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default anchor behavior
+            const page = link.getAttribute('href').substring(1); // Extract page (e.g., 'kbc')
+            const navComponent = document.querySelector('site-nav');
+            if (navComponent && typeof navComponent.loadPage === 'function') {
+                navComponent.loadPage(page); // Use site-nav.js's loadPage
+            }
+        });
+    });
 };
 
 function injectWindguruWidgets() {
@@ -215,19 +237,21 @@ function injectWindguruWidgets() {
 
 function getDashboardCards() {
     const locations = [
-        { image: 'https://worker.seanssurfreport.com/kbc', text: 'Kitesurf Beach Center, UAQ' },
-        { image: 'https://worker.seanssurfreport.com/bos', text: 'Blue Ocean Sports, Jebel Ali' },
-        { image: 'https://worker.seanssurfreport.com/yas', text: 'Yas Kite Area, Abu Dhabi' },
-        { image: 'https://worker.seanssurfreport.com/dosc', text: 'Dubai Offshore Sailing Club' },
-        { image: 'https://worker.seanssurfreport.com/sandy', text: 'Sandy Beach Hotel, Dibba' },
-        { image: './img/offline.jpg', text: 'Mikoko, Umm Al Quwain' }
+        { image: 'https://worker.seanssurfreport.com/kbc', text: 'Kitesurf Beach Center, UAQ', page: 'kbc' },
+        { image: 'https://worker.seanssurfreport.com/bos', text: 'Blue Ocean Sports, Jebel Ali', page: 'bos' },
+        { image: 'https://worker.seanssurfreport.com/yas', text: 'Yas Kite Area, Abu Dhabi', page: 'yas' },
+        { image: 'https://worker.seanssurfreport.com/dosc', text: 'Dubai Offshore Sailing Club', page: 'dosc' },
+        { image: 'https://worker.seanssurfreport.com/sandy', text: 'Sandy Beach Hotel, Dibba', page: 'sandy' },
+        { image: './img/offline.jpg', text: 'Mikoko, Umm Al Quwain', page: 'mikoko' }
     ];
     return locations.map(loc => `
-        <div class="dash-card-wrapper">
-            <div class="dash-card" style="background-image: url('${loc.image}')">
-                <widget-windguru></widget-windguru>
+        <a href="#${loc.page}" class="dash-card-link">
+            <div class="dash-card-wrapper">
+                <div class="dash-card" style="background-image: url('${loc.image}')">
+                    <widget-windguru></widget-windguru>
+                </div>
+                <div class="dash-card-text">${loc.text}</div>
             </div>
-            <div class="dash-card-text">${loc.text}</div>
-        </div>
+        </a>
     `).join('');
 }
