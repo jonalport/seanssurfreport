@@ -3,29 +3,29 @@ class SiteNav extends HTMLElement {
         super();
         this.innerHTML = `
             <div class="nav-container">
-                <div class="card-wrapper" data-page="kbc" draggable="true">
-                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/kbc')"></div>
-                    <div class="card-text">Kitesurf Beach Center, UAQ</div>
+                <div class="nav-card-wrapper" data-page="kbc" draggable="true">
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/kbc')"></div>
+                    <div class="nav-card-text">Kitesurf Beach Center, UAQ</div>
                 </div>
-                <div class="card-wrapper" data-page="bos" draggable="true">
-                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/bos')"></div>
-                    <div class="card-text">Blue Ocean Sports, JA</div>
+                <div class="nav-card-wrapper" data-page="bos" draggable="true">
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/bos')"></div>
+                    <div class="nav-card-text">Blue Ocean Sports, JA</div>
                 </div>
-                <div class="card-wrapper" data-page="yas" draggable="true">
-                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/yas')"></div>
-                    <div class="card-text">Yas Kite Area, Abu Dhabi</div>
+                <div class="nav-card-wrapper" data-page="yas" draggable="true">
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/yas')"></div>
+                    <div class="nav-card-text">Yas Kite Area, Abu Dhabi</div>
                 </div>
-                <div class="card-wrapper" data-page="dosc" draggable="true">
-                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/dosc')"></div>
-                    <div class="card-text">Dubai Offshore Sailing Club</div>
+                <div class="nav-card-wrapper" data-page="dosc" draggable="true">
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/dosc')"></div>
+                    <div class="nav-card-text">Dubai Offshore Sailing Club</div>
                 </div>
-                <div class="card-wrapper" data-page="sandy" draggable="true">
-                    <div class="card" style="background-image: url('https://worker.seanssurfreport.com/sandy')"></div>
-                    <div class="card-text">Sandy Beach Hotel, Dibba</div>
+                <div class="nav-card-wrapper" data-page="sandy" draggable="true">
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/sandy')"></div>
+                    <div class="nav-card-text">Sandy Beach Hotel, Dibba</div>
                 </div>
-                <div class="card-wrapper" data-page="mikoko" draggable="true">
-                    <div class="card" style="background-image: url('./img/offline.jpg')"></div>
-                    <div class="card-text">Mikoko, UAQ</div>
+                <div class="nav-card-wrapper" data-page="mikoko" draggable="true">
+                    <div class="nav-card" style="background-image: url('./img/offline.jpg')"></div>
+                    <div class="nav-card-text">Mikoko, UAQ</div>
                 </div>
             </div>
         `;
@@ -48,7 +48,7 @@ class SiteNav extends HTMLElement {
         `;
 
         const updateAlignment = () => {
-            const contentWidth = Array.from(navContainer.querySelectorAll('.card-wrapper'))
+            const contentWidth = Array.from(navContainer.querySelectorAll('.nav-card-wrapper'))
                 .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20;
             const containerWidth = navContainer.offsetWidth;
             navContainer.style.justifyContent = contentWidth <= containerWidth ? 'center' : 'flex-start';
@@ -58,7 +58,7 @@ class SiteNav extends HTMLElement {
         updateAlignment();
         window.addEventListener('resize', updateAlignment);
 
-        this.querySelectorAll('.card-wrapper').forEach(wrapper => {
+        this.querySelectorAll('.nav-card-wrapper').forEach(wrapper => {
             wrapper.style.cssText = `
                 flex: 0 0 auto;
                 width: 200px;
@@ -69,7 +69,7 @@ class SiteNav extends HTMLElement {
             `;
         });
 
-        this.querySelectorAll('.card').forEach(card => {
+        this.querySelectorAll('.nav-card').forEach(card => {
             const bgImage = card.style.backgroundImage || '';
             card.style.cssText = `
                 ${bgImage ? `background-image: ${bgImage};` : ''}
@@ -83,7 +83,7 @@ class SiteNav extends HTMLElement {
             `;
         });
 
-        this.querySelectorAll('.card-text').forEach(text => {
+        this.querySelectorAll('.nav-card-text').forEach(text => {
             text.style.cssText = `
                 font-size: 0.8rem;
                 padding: 8px;
@@ -102,7 +102,7 @@ class SiteNav extends HTMLElement {
         let draggedItem = null;
 
         container.addEventListener('dragstart', (e) => {
-            const wrapper = e.target.closest('.card-wrapper');
+            const wrapper = e.target.closest('.nav-card-wrapper');
             if (!wrapper) return;
             draggedItem = wrapper;
             setTimeout(() => wrapper.style.opacity = '0.5', 0);
@@ -119,10 +119,10 @@ class SiteNav extends HTMLElement {
 
         container.addEventListener('drop', (e) => {
             e.preventDefault();
-            const targetWrapper = e.target.closest('.card-wrapper');
+            const targetWrapper = e.target.closest('.nav-card-wrapper');
             if (!targetWrapper || !draggedItem || draggedItem === targetWrapper) return;
 
-            const allWrappers = Array.from(container.querySelectorAll('.card-wrapper'));
+            const allWrappers = Array.from(container.querySelectorAll('.nav-card-wrapper'));
             const draggedIndex = allWrappers.indexOf(draggedItem);
             const targetIndex = allWrappers.indexOf(targetWrapper);
 
@@ -135,7 +135,7 @@ class SiteNav extends HTMLElement {
     }
 
     handleCardClick(event) {
-        const wrapper = event.target.closest('.card-wrapper');
+        const wrapper = event.target.closest('.nav-card-wrapper');
         if (!wrapper) return;
 
         const page = wrapper.dataset.page;
@@ -147,6 +147,15 @@ class SiteNav extends HTMLElement {
         const main = document.querySelector('site-main');
         const nav = document.querySelector('site-nav');
         if (!main || !nav) return;
+
+        // Clean up forecast styles if navigating away from a forecast page
+        const currentPage = window.location.hash.slice(1);
+        const forecastPages = ['kbc', 'bos', 'yas', 'dosc', 'sandy', 'mikoko'];
+        if (forecastPages.includes(currentPage) && page !== currentPage) {
+            if (typeof window.unloadSiteContent === 'function') {
+                window.unloadSiteContent();
+            }
+        }
 
         if (page === 'dashboard') {
             const existingScript = document.getElementById('site-dash-script');
@@ -169,8 +178,9 @@ class SiteNav extends HTMLElement {
             };
             document.body.appendChild(script);
         } else {
-            // Show site-nav for non-dashboard pages
-            nav.style.display = ''; // Reset to default (block or flex, depending on CSS)
+            // Show site-nav and reset its layout
+            nav.style.display = ''; // Reset to default display
+            this.resetNavLayout(); // Reset layout to prevent height issues
 
             // Map data-page to locationId
             const locationMap = {
@@ -179,7 +189,7 @@ class SiteNav extends HTMLElement {
                 'yas': 'yas',
                 'dosc': 'dosc',
                 'sandy': 'sandy',
-                'mikoko': 'mikoko' // Add mikoko if you plan to support it in site-forecast.js
+                'mikoko': 'mikoko'
             };
             const locationId = locationMap[page] || page;
 
@@ -209,6 +219,70 @@ class SiteNav extends HTMLElement {
                 main.innerHTML = `<p>Loading content for ${page}, please wait...</p>`;
             }
         }
+    }
+
+    resetNavLayout() {
+        const navContainer = this.querySelector('.nav-container');
+        // Force a reflow to reset layout calculations
+        navContainer.style.display = 'none';
+        void navContainer.offsetHeight; // Trigger reflow
+        navContainer.style.display = 'flex';
+
+        // Reapply critical styles to ensure consistency
+        navContainer.style.cssText = `
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 10px;
+            gap: 20px;
+            white-space: nowrap;
+            height: 100%;
+            align-items: stretch;
+            box-sizing: border-box;
+        `;
+
+        this.querySelectorAll('.nav-card-wrapper').forEach(wrapper => {
+            wrapper.style.cssText = `
+                flex: 0 0 auto;
+                width: 200px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                cursor: move;
+            `;
+        });
+
+        this.querySelectorAll('.nav-card').forEach(card => {
+            const bgImage = card.style.backgroundImage || '';
+            card.style.cssText = `
+                ${bgImage ? `background-image: ${bgImage};` : ''}
+                flex: 1;
+                background-color: #fff;
+                border-radius: 8px 8px 0 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            `;
+        });
+
+        this.querySelectorAll('.nav-card-text').forEach(text => {
+            text.style.cssText = `
+                font-size: 0.8rem;
+                padding: 8px;
+                background-color: #fff;
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                text-align: center;
+                white-space: nowrap;
+                color: #000;
+            `;
+        });
+
+        // Recalculate alignment
+        const contentWidth = Array.from(navContainer.querySelectorAll('.nav-card-wrapper'))
+            .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20;
+        const containerWidth = navContainer.offsetWidth;
+        navContainer.style.justifyContent = contentWidth <= containerWidth ? 'center' : 'flex-start';
     }
 }
 

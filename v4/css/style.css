@@ -39,13 +39,11 @@ site-feed {
     transition: max-height 0.3s ease-in-out;
     overflow: hidden;
     height: auto;
-    /* Content-driven */
     flex-shrink: 0;
 }
 
 site-nav {
     height: 130px;
-    /* Fixed height */
     background-color: #e6e6e6;
     overflow: hidden;
     flex-shrink: 0;
@@ -53,23 +51,13 @@ site-nav {
 
 site-main {
     height: auto;
-    /* Scales with content */
     overflow-y: auto;
-    /* Scroll if content overflows */
     flex-shrink: 0;
-    /* Prevents shrinking below content height */
-    /* Removed flex: 1 to stop it from taking remaining space */
 }
 
 site-footer {
     height: auto;
-    /* Scales with content */
     flex-shrink: 0;
-    /* Prevents shrinking */
-}
-
-section {
-    /* margin: 1rem auto; */
 }
 
 section>div:first-child>div>p {

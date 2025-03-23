@@ -124,7 +124,7 @@ window.loadSiteContent = function(main, locationId) {
         const style = document.createElement('style');
         style.id = 'site-forecast-styles';
         style.textContent = `
-            section { width: 90%; display: flex; flex-direction: column; gap: 10px; }
+            section { width: 90%; display: flex; flex-direction: column; gap: 10px; margin: 1rem auto; }
             .content-block { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; height: auto; box-sizing: border-box; }
             .content-block > div:not(.title-content) { width: 100%; max-width: 600px; text-align: center; margin-bottom: 10px; }
             .content-block > div:last-child { margin-bottom: 0; }
@@ -137,4 +137,17 @@ window.loadSiteContent = function(main, locationId) {
         `;
         document.head.appendChild(style);
     }
+};
+
+// Cleanup function to remove forecast-specific styles and scripts
+window.unloadSiteContent = function() {
+    // Remove the forecast styles
+    const forecastStyles = document.getElementById('site-forecast-styles');
+    if (forecastStyles) forecastStyles.remove();
+
+    // Optionally, clean up Windguru scripts if they're still in the DOM
+    const windScripts = document.querySelectorAll('script[id^="wglive_"]');
+    windScripts.forEach(script => script.remove());
+    const forecastScripts = document.querySelectorAll('script[id^="wg_fwdg_"]');
+    forecastScripts.forEach(script => script.remove());
 };
