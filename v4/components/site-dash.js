@@ -1,4 +1,13 @@
 window.loadDashContent = function(main) {
+    // Full reset: Clear content and styles
+    main.innerHTML = '';
+    main.removeAttribute('style');
+
+    // Remove all non-dashboard styles to eliminate interference
+    const stylesToRemove = document.querySelectorAll('style:not(#dashboard-layout-style)');
+    stylesToRemove.forEach(style => style.remove());
+
+    // Load dashboard content
     main.innerHTML = `
         <section>
             <div class="cards-grid">
@@ -7,7 +16,7 @@ window.loadDashContent = function(main) {
         </section>
     `;
 
-    // Apply styles programmatically to mirror site-nav.js
+    // Reset and apply styles to .card
     const cards = main.querySelectorAll('.card');
     cards.forEach(card => {
         const bgImage = card.style.backgroundImage || '';
@@ -21,7 +30,23 @@ window.loadDashContent = function(main) {
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            position: relative; /* For positioning widget */
+            position: relative;
+            margin: 0;
+            padding: 0;
+        `;
+    });
+
+    // Reset styles on .card-wrapper to ensure no lingering effects
+    const cardWrappers = main.querySelectorAll('.card-wrapper');
+    cardWrappers.forEach(wrapper => {
+        wrapper.style.cssText = `
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            height: auto;
         `;
     });
 
@@ -29,7 +54,7 @@ window.loadDashContent = function(main) {
     const existingStyle = document.getElementById('dashboard-layout-style');
     if (existingStyle) existingStyle.remove();
 
-    // Add container styles and widget styling
+    // Add container styles with explicit resets
     const style = document.createElement('style');
     style.id = 'dashboard-layout-style';
     style.textContent = `
@@ -45,23 +70,34 @@ window.loadDashContent = function(main) {
             flex-direction: column; 
         }
         section { 
-            width: 95%; 
-            margin: 2.5%; 
+            width: 90%;
+            margin: 2vh auto; 
             flex-grow: 1;
         }
         .cards-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            gap: 2.5%;
+            gap: 2vh;
             width: 100%; 
-            margin: 0 auto; 
-            flex-grow: 1; /* Make grid stretch to fill section */
+            margin: 0 auto;
+            flex-grow: 1;
         }
         .card-wrapper { 
             width: 100%; 
             display: flex; 
             flex-direction: column; 
             text-decoration: none; 
+            margin: 0 !important;
+            padding: 0 !important;
+            height: auto;
+        }
+        .card { 
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            margin: 0;
+            padding: 0;
+            flex-grow: 0; /* Prevent stretching beyond aspect ratio */
+            flex-shrink: 0;
         }
         .card-text { 
             font-size: 0.9rem; 
@@ -72,14 +108,17 @@ window.loadDashContent = function(main) {
             text-align: center; 
             white-space: nowrap; 
             color: #000; 
+            margin: 0;
+            flex-grow: 0; /* Fixed height based on content */
+            flex-shrink: 0;
         }
         widget-windguru { 
-            width: 14%; /* 14% of the card's width */
-            aspect-ratio: 1 / 1; /* Maintains square shape */
+            width: 14%;
+            aspect-ratio: 1 / 1;
             position: absolute; 
-            bottom: 5%; /* Relative to card height */
-            left: 2.5%; /* Relative to card width */
-            z-index: 10; /* Above background image */
+            bottom: 5%;
+            left: 2.5%;
+            z-index: 10;
         }
         site-footer { 
             flex-shrink: 0; 
@@ -88,10 +127,10 @@ window.loadDashContent = function(main) {
             .cards-grid { 
                 grid-template-columns: 1fr; 
                 width: 100%;
-                gap: 1%;
+                gap: 2vh;
             }
             .card-wrapper { 
-                width: 100%; 
+                width: 100%;
             }
         }
     `;
@@ -110,14 +149,24 @@ window.loadDashContent = function(main) {
     const cardLinks = main.querySelectorAll('.card-wrapper');
     cardLinks.forEach(link => {
         link.addEventListener('click', (event) => {
-            event.preventDefault(); // Stop default navigation
-            const page = link.getAttribute('href').substring(1); // Extract page from /kbc, /bos, etc.
+            event.preventDefault();
+            const page = link.getAttribute('href').substring(1);
             loadSpotPage(page, main);
         });
     });
 
-    // Inject Windguru widgets
-    injectWindguruWidgets();
+    // Log heights for debugging
+    cardWrappers.forEach((wrapper, index) => {
+        console.log(`Card ${index} - .card-wrapper height: ${wrapper.offsetHeight}px`);
+        const card = wrapper.querySelector('.card');
+        const cardText = wrapper.querySelector('.card-text');
+        console.log(`Card ${index} - .card height: ${card.offsetHeight}px`);
+        console.log(`Card ${index} - .card-text height: ${cardText.offsetHeight}px`);
+    });
+
+    // Temporarily disabled Windguru widgets to test height issue
+    // TO RE-ENABLE: Uncomment the line below after testing
+injectWindguruWidgets();
 };
 
 // Function to load spot pages into site-main

@@ -69,13 +69,13 @@ site-footer {
 }
 
 section {
-    margin: 1rem auto;
+    /* margin: 1rem auto; */
 }
 
 section>div:first-child>div>p {
     font-size: 0.9rem;
     text-align: center;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
 }
 

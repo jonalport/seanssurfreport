@@ -18,7 +18,7 @@ class SiteHeader extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    height: 80px;
+                    height: 70px;
                     width: 100%;
                     background-color: #141414;
                 }
@@ -48,7 +48,7 @@ class SiteHeader extends HTMLElement {
                     width: auto;
                     max-width: 100%;
                     object-fit: contain;
-                    padding: 16px 0;
+                    padding: 17px 0;
                 }
 
                 .icon-dash {

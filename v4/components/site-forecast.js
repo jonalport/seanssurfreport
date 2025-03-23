@@ -124,7 +124,7 @@ window.loadSiteContent = function(main, locationId) {
         const style = document.createElement('style');
         style.id = 'site-forecast-styles';
         style.textContent = `
-            section { width: 95%; display: flex; flex-direction: column; gap: 10px; }
+            section { width: 90%; display: flex; flex-direction: column; gap: 10px; }
             .content-block { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; height: auto; box-sizing: border-box; }
             .content-block > div:not(.title-content) { width: 100%; max-width: 600px; text-align: center; margin-bottom: 10px; }
             .content-block > div:last-child { margin-bottom: 0; }
