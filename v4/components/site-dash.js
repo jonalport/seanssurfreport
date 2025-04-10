@@ -294,11 +294,11 @@ function injectWindguruWidgets() {
 
 function getDashboardCards() {
     const locations = [
-        { image: 'https://worker.seanssurfreport.com/kbc', text: 'Kitesurf Beach Center, UAQ', page: 'kbc' },
-        { image: 'https://worker.seanssurfreport.com/bos', text: 'Blue Ocean Sports, Jebel Ali', page: 'bos' },
-        { image: 'https://worker.seanssurfreport.com/yas', text: 'Yas Kite Area, Abu Dhabi', page: 'yas' },
-        { image: 'https://worker.seanssurfreport.com/dosc', text: 'Dubai Offshore Sailing Club', page: 'dosc' },
-        { image: 'https://worker.seanssurfreport.com/sandy', text: 'Sandy Beach Hotel, Dibba', page: 'sandy' },
+        { image: `https://worker.seanssurfreport.com/kbc?t=${Date.now()}`, text: 'Kitesurf Beach Center, UAQ', page: 'kbc' },
+        { image: `https://worker.seanssurfreport.com/bos?t=${Date.now()}`, text: 'Blue Ocean Sports, Jebel Ali', page: 'bos' },
+        { image: `https://worker.seanssurfreport.com/yas?t=${Date.now()}`, text: 'Yas Kite Area, Abu Dhabi', page: 'yas' },
+        { image: `https://worker.seanssurfreport.com/dosc?t=${Date.now()}`, text: 'Dubai Offshore Sailing Club', page: 'dosc' },
+        { image: `https://worker.seanssurfreport.com/sandy?t=${Date.now()}`, text: 'Sandy Beach Hotel, Dibba', page: 'sandy' },
         { image: './img/offline.jpg', text: 'Mikoko, Umm Al Quwain', page: 'mikoko' }
     ];
     return locations.map(loc => `
