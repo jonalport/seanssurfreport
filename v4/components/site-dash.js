@@ -96,10 +96,10 @@ window.loadDashContent = function(main) {
         .dash-card-link {
             text-decoration: none;
             color: inherit;
-            display: block; /* Ensures the link fills the wrapper */
+            display: block;
         }
         .dash-card-link:hover .dash-card {
-            opacity: 0.9; /* Slight hover effect for feedback */
+            opacity: 0.9;
         }
         .dash-card { 
             width: 100%;
@@ -108,7 +108,7 @@ window.loadDashContent = function(main) {
             padding: 0;
             flex-grow: 0;
             flex-shrink: 0;
-            cursor: pointer; /* Indicate clickability */
+            cursor: pointer;
         }
         .dash-card-text { 
             font-size: 0.9rem; 
@@ -163,16 +163,73 @@ window.loadDashContent = function(main) {
     const dashCardLinks = main.querySelectorAll('.dash-card-link');
     dashCardLinks.forEach(link => {
         link.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent default anchor behavior
-            const page = link.getAttribute('href').substring(1); // Extract page (e.g., 'kbc')
+            event.preventDefault();
+            const page = link.getAttribute('href').substring(1);
             const navComponent = document.querySelector('site-nav');
             if (navComponent && typeof navComponent.loadPage === 'function') {
-                navComponent.loadPage(page); // Use site-nav.js's loadPage
+                navComponent.loadPage(page);
             }
         });
     });
+
+    // Auto-refresh the dashboard every 60 seconds
+    setInterval(() => {
+        main.innerHTML = `
+            <section>
+                <div class="dash-card-grid">
+                    ${getDashboardCards()}
+                </div>
+            </section>
+        `;
+        // Re-apply styles to the new dash-card elements
+        const newDashCards = main.querySelectorAll('.dash-card');
+        newDashCards.forEach(card => {
+            const bgImage = card.style.backgroundImage || '';
+            card.style.cssText = `
+                ${bgImage ? `background-image: ${bgImage};` : ''}
+                width: 100%;
+                aspect-ratio: 2 / 1;
+                background-color: #fff;
+                border-radius: 8px 8px 0 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                margin: 0;
+                padding: 0;
+            `;
+        });
+        // Re-apply styles to the new dash-card-wrapper elements
+        const newDashCardWrappers = main.querySelectorAll('.dash-card-wrapper');
+        newDashCardWrappers.forEach(wrapper => {
+            wrapper.style.cssText = `
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                height: auto;
+            `;
+        });
+        // Re-inject Windguru widgets
+        injectWindguruWidgets();
+        // Re-attach click event listeners
+        const newDashCardLinks = main.querySelectorAll('.dash-card-link');
+        newDashCardLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const page = link.getAttribute('href').substring(1);
+                const navComponent = document.querySelector('site-nav');
+                if (navComponent && typeof navComponent.loadPage === 'function') {
+                    navComponent.loadPage(page);
+                }
+            });
+        });
+    }, 60000); // 60,000 milliseconds = 60 seconds
 };
 
+// Keep the injectWindguruWidgets and getDashboardCards functions as they are
 function injectWindguruWidgets() {
     const injectWidget = (spot, uid, index) => {
         if (!spot || !uid || spot === 'blank' || uid === 'blank') return;
@@ -217,7 +274,7 @@ function injectWindguruWidgets() {
                                 document.body.removeChild(tempContainer);
                             }
                         }
-                    }
+ rach                    }
                 };
             };
             if (document.readyState === 'complete') {
