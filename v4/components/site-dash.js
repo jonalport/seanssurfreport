@@ -6,7 +6,7 @@ window.loadDashContent = function(main) {
     // Remove all non-dashboard styles to prevent conflicts
     document.querySelectorAll('style:not(#dashboard-layout-style)').forEach(style => style.remove());
 
-    // Load dashboard content
+    // Load initial dashboard content
     main.innerHTML = `
         <section>
             <div class="dash-card-grid">
@@ -16,37 +16,39 @@ window.loadDashContent = function(main) {
     `;
 
     // Apply styles programmatically to dash-card elements
-    const dashCards = main.querySelectorAll('.dash-card');
-    dashCards.forEach(card => {
-        const bgImage = card.style.backgroundImage || '';
-        card.style.cssText = `
-            ${bgImage ? `background-image: ${bgImage};` : ''}
-            width: 100%;
-            aspect-ratio: 2 / 1;
-            background-color: #fff;
-            border-radius: 8px 8px 0 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-            margin: 0;
-            padding: 0;
-        `;
-    });
+    const applyDashCardStyles = () => {
+        const dashCards = main.querySelectorAll('.dash-card');
+        dashCards.forEach(card => {
+            const bgImage = card.style.backgroundImage || '';
+            card.style.cssText = `
+                ${bgImage ? `background-image: ${bgImage};` : ''}
+                width: 100%;
+                aspect-ratio: 2 / 1;
+                background-color: #fff;
+                border-radius: 8px 8px 0 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                margin: 0;
+                padding: 0;
+            `;
+        });
 
-    // Reset styles on .dash-card-wrapper and make clickable
-    const dashCardWrappers = main.querySelectorAll('.dash-card-wrapper');
-    dashCardWrappers.forEach(wrapper => {
-        wrapper.style.cssText = `
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            padding: 0;
-            height: auto;
-        `;
-    });
+        const dashCardWrappers = main.querySelectorAll('.dash-card-wrapper');
+        dashCardWrappers.forEach(wrapper => {
+            wrapper.style.cssText = `
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                height: auto;
+            `;
+        });
+    };
+    applyDashCardStyles();
 
     // Remove existing dashboard styles if present
     const existingStyle = document.getElementById('dashboard-layout-style');
@@ -156,67 +158,13 @@ window.loadDashContent = function(main) {
     // Update URL hash
     history.pushState({ page: 'dashboard' }, 'Dashboard', '#dashboard');
 
-    // Inject Windguru widgets
+    // Inject Windguru widgets once on initial load
     injectWindguruWidgets();
 
     // Add click event listeners for navigation
-    const dashCardLinks = main.querySelectorAll('.dash-card-link');
-    dashCardLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            const page = link.getAttribute('href').substring(1);
-            const navComponent = document.querySelector('site-nav');
-            if (navComponent && typeof navComponent.loadPage === 'function') {
-                navComponent.loadPage(page);
-            }
-        });
-    });
-
-    // Auto-refresh the dashboard every 60 seconds
-    setInterval(() => {
-        main.innerHTML = `
-            <section>
-                <div class="dash-card-grid">
-                    ${getDashboardCards()}
-                </div>
-            </section>
-        `;
-        // Re-apply styles to the new dash-card elements
-        const newDashCards = main.querySelectorAll('.dash-card');
-        newDashCards.forEach(card => {
-            const bgImage = card.style.backgroundImage || '';
-            card.style.cssText = `
-                ${bgImage ? `background-image: ${bgImage};` : ''}
-                width: 100%;
-                aspect-ratio: 2 / 1;
-                background-color: #fff;
-                border-radius: 8px 8px 0 0;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                position: relative;
-                margin: 0;
-                padding: 0;
-            `;
-        });
-        // Re-apply styles to the new dash-card-wrapper elements
-        const newDashCardWrappers = main.querySelectorAll('.dash-card-wrapper');
-        newDashCardWrappers.forEach(wrapper => {
-            wrapper.style.cssText = `
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                margin: 0;
-                padding: 0;
-                height: auto;
-            `;
-        });
-        // Re-inject Windguru widgets
-        injectWindguruWidgets();
-        // Re-attach click event listeners
-        const newDashCardLinks = main.querySelectorAll('.dash-card-link');
-        newDashCardLinks.forEach(link => {
+    const attachClickListeners = () => {
+        const dashCardLinks = main.querySelectorAll('.dash-card-link');
+        dashCardLinks.forEach(link => {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
                 const page = link.getAttribute('href').substring(1);
@@ -226,6 +174,49 @@ window.loadDashContent = function(main) {
                 }
             });
         });
+    };
+    attachClickListeners();
+
+    // Function to preload images and update them seamlessly
+    const preloadAndUpdateImages = () => {
+        const locations = [
+            { image: `https://worker.seanssurfreport.com/kbc?t=${Date.now()}`, page: 'kbc' },
+            { image: `https://worker.seanssurfreport.com/bos?t=${Date.now()}`, page: 'bos' },
+            { image: `https://worker.seanssurfreport.com/yas?t=${Date.now()}`, page: 'yas' },
+            { image: `https://worker.seanssurfreport.com/dosc?t=${Date.now()}`, page: 'dosc' },
+            { image: `https://worker.seanssurfreport.com/sandy?t=${Date.now()}`, page: 'sandy' },
+            { image: './img/offline.jpg', page: 'mikoko' }
+        ];
+
+        const imagePromises = locations.map(loc => {
+            if (loc.image.startsWith('http')) { // Only preload remote images
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = loc.image;
+                    img.onload = () => resolve({ page: loc.page, image: loc.image });
+                    img.onerror = () => resolve({ page: loc.page, image: loc.image }); // Resolve even on error
+                });
+            } else {
+                return Promise.resolve({ page: loc.page, image: loc.image });
+            }
+        });
+
+        Promise.all(imagePromises).then(loadedImages => {
+            const dashCards = main.querySelectorAll('.dash-card');
+            dashCards.forEach(card => {
+                const link = card.closest('.dash-card-link');
+                const page = link.getAttribute('href').substring(1); // Extract page from href
+                const newImage = loadedImages.find(img => img.page === page);
+                if (newImage) {
+                    card.style.backgroundImage = `url('${newImage.image}')`;
+                }
+            });
+        });
+    };
+
+    // Auto-refresh images every 60 seconds (without re-injecting widgets)
+    setInterval(() => {
+        preloadAndUpdateImages();
     }, 60000); // 60,000 milliseconds = 60 seconds
 };
 
@@ -274,7 +265,7 @@ function injectWindguruWidgets() {
                                 document.body.removeChild(tempContainer);
                             }
                         }
- rach                    }
+                    }
                 };
             };
             if (document.readyState === 'complete') {
