@@ -138,7 +138,11 @@ class SiteFeed extends HTMLElement {
                 return `
                     <div class="post-preview">
                         <a href="${topic.url}" target="_blank">[${categoryName}] ${titleWords}${topic.title.split(' ').length > 6 ? '...' : ''}</a>
-                        <small>${new Date(topic.date).toLocaleDateString()}</small>
+                        <small>${new Date(topic.date).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        })}</small>
                     </div>
                 `;
             }).join('');
