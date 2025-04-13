@@ -484,7 +484,7 @@ const linksHtml = `
     <div class="links-block">
         ${location.info_website && location.info_website !== "" ? `<a href="${location.info_website}" class="link-item" target="_blank" rel="noopener noreferrer">Website</a>` : ''}
         ${location.info_pin && location.info_pin !== "" ? `<a href="${location.info_pin}" class="link-item" target="_blank" rel="noopener noreferrer">Location</a>` : ''}
-        ${location.info_official_wa_group && location.info_official_wa_group !== "" ? `<a href="${location.info_official_wa_group}" class="link-item" target="_blank" rel="noopener noreferrer">Official WhatsApp Group</a>` : ''}
+        ${location.info_official_wa_group && location.info_official_wa_group !== "" ? `<a href="${location.info_official_wa_group}" class="link-item" target="_blank" rel="noopener noreferrer">WhatsApp Group</a>` : ''}
         ${location.info_contact && location.info_contact !== "" ? `<a href="tel:${location.info_contact}" class="link-item">Contact</a>` : ''}
     </div>
 `;
