@@ -711,7 +711,7 @@ if (!document.querySelector('style#site-forecast-styles')) {
         }
         
         /* Mobile-specific styles for links block */
-        @media (max-width: 680px) {
+        @media (max-width: 640px) {
             .links-block {
                 flex-wrap: wrap;
                 gap: 8px;
