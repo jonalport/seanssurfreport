@@ -358,7 +358,7 @@ customElements.define("location-card", LocationCard);
 const locations = {
     'kbc': {
         name: 'Kitesurf Beach Center, UAQ',
-        description: 'Located an hour NE of Dubai in the emirate of Umm Al Quwain, KBC is well located to receive good wind and swell when the conditions align. You will also find a nice community of local riders and some incredible food on the restaurants menu - <a href="https://kitesurfbeachcenter.ae" target="_blank" rel="noopener noreferrer">website</a> This is the google pin, beware of the camera on the beach road just before you reach, it catches everyone - <a href="https://maps.app.goo.gl/VZhkFiuGVY2ercHN7" target="_blank" rel="noopener noreferrer">location</a>',
+        description: 'Located an hour NE of Dubai in the emirate of Umm Al Quwain, KBC is well located to receive good wind and swell when the conditions align. You will also find a nice community of local riders and some incredible food on the restaurants menu - <a href="https://kitesurfbeachcenter.ae" target="_blank" rel="noopener noreferrer">website</a> This is the google pin, beware of the camera on the beach road just before you reach, it catches everyone - <a href="https://maps.app.goo.gl/rqajQ7EsVUbLREWH6" target="_blank" rel="noopener noreferrer">location</a>',
         cameraUrl: 'https://worker.seanssurfreport.com/kbc',
         windScriptId: 'wglive_2146_1617178001640',
         windArgs: ["spot=2146", "uid=wglive_2146_1617178001640", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=300", "msize=300", "m=3", "show=n,g,c"],
@@ -435,15 +435,21 @@ window.loadSiteContent = function(main, locationId) {
   // Define the title block HTML, including the slider for KBC
   const titleBlockHtml = isKbc ? `
       <div class="title-content-wrapper">
-          <span class="title-content">Live Camera</span>
-          <label class="video-toggle-block">
-              <span class="video-toggle-label">Video</span>
-              <input type="checkbox" id="video-toggle">
-              <span class="slider"></span>
-          </label>
+          <div class="title-content-block">
+              <span class="title-content">Live Camera</span>
+          </div>
+          <span class="video-toggle-wrapper">
+              <label class="video-toggle-block">
+                  <span class="video-toggle-label">Video</span>
+                  <input type="checkbox" id="video-toggle">
+                  <span class="slider"></span>
+              </label>
+          </span>
       </div>
   ` : `
-      <div class="title-content">Live Camera</div>
+      <div class="title-content-block">
+          <div class="title-content">Live Camera</div>
+      </div>
   `;
 
   // Set the HTML content
@@ -628,22 +634,35 @@ window.loadSiteContent = function(main, locationId) {
       style.textContent = `
           section { width: 90%; display: flex; flex-direction: column; gap: 10px; margin: 1rem auto; }
           .content-block { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; height: auto; box-sizing: border-box; }
-          .content-block > div:not(.title-content):not(.title-content-wrapper) { width: 100%; max-width: 600px; text-align: center; margin-bottom: 10px; }
+          .content-block > div:not(.title-content):not(.title-content-wrapper) { width: 100%; text-align: center; margin-bottom: 10px; }
           .content-block > div:last-child { margin-bottom: 0; }
-          #camera-image > div { max-width: none; }
+          #camera-image > div { width: 100%; }
           .title-block { font-size: 0.9rem; font-weight: 400; padding: 5px; }
           .title-content { background-color: #000; color: #fff; display: inline-block; padding: 5px 15px; border-radius: 50px; width: auto; line-height: 1; white-space: nowrap; font-family: 'Roboto', sans-serif; }
-          p { font-size: 0.95rem; text-align: center; width: 95%; }
+          p { font-size: 0.95rem; text-align: center; }
           #wind-graph { width: 100%; margin: 0 auto; }
           #wind-graph iframe { border: 0 solid #000 !important; }
           #forecast-graph { width: 100%; margin: 0 auto; }
           
           /* KBC-specific styles */
           .title-content-wrapper {
+              width: 100%;
               display: flex;
-              align-items: center;
               justify-content: center;
-              gap: 10px;
+              align-items: center;
+              position: relative;
+          }
+          .title-content-block {
+              display: inline-block;
+              text-align: center;
+          }
+          .video-toggle-wrapper {
+              position: absolute;
+              margin-left: 15px; /* 20px gap to the right of the centered title */
+              display: inline-flex;
+              align-items: center;
+              left: 50%;
+              transform: translateX(calc(50% + 20px)); /* Position right of title's center */
           }
           .video-toggle-block {
               display: flex;
