@@ -24,9 +24,9 @@ const locations = {
       forecastScriptId: 'wg_fwdg_1136989_3_1668852348455',
       forecastArgs: ["s=1136989", "m=100", "mw=84", "uid=wg_fwdg_1136989_3_1668852348455", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"],
       info_website: "https://www.blue-ocean-sports.com/",
-      info_pin: "https://maps.app.goo.gl/nWqMdt78aZHb6Lqe6",
+      info_pin: "",
       info_official_wa_group: "",
-      info_contact: "+971522602703"
+      info_contact: ""
   },
   'yas': {
       name: 'Yas Kite & Wing Area, Abu Dhabi',
@@ -708,6 +708,20 @@ if (!document.querySelector('style#site-forecast-styles')) {
         .link-item:hover {
             background-color: #2a4ba8;
             color: #fff;
+        }
+        
+        /* Mobile-specific styles for links block */
+        @media (max-width: 680px) {
+            .links-block {
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 0 10px;
+            }
+            .link-item {
+                flex: 1 1 45%; /* Allow items to take up roughly half the width, accounting for gap */
+                text-align: center;
+                box-sizing: border-box;
+            }
         }
         
         /* Video toggle styles */
