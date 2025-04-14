@@ -37,9 +37,9 @@ const locations = {
       forecastScriptId: 'wg_fwdg_207_100_1710778742102',
       forecastArgs: ["s=207", "m=100", "mw=84", "uid=wg_fwdg_207_100_1710778742102", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,PERPW,TMPE,CDC,APCP1s"],
       info_website: "https://kitetribe.ae/",
-      info_pin: "",
-      info_official_wa_group: "",
-      info_contact: ""
+      info_pin: "https://maps.app.goo.gl/DJKYRT7iARUnhEcJ9",
+      info_official_wa_group: "https://chat.whatsapp.com/FbcV73ahha0EK9mAhQ2rMO",
+      info_contact: "https://wa.me/971505626383"
   },
   'dosc': {
       name: 'Dubai Offshore Sailing Club',
@@ -83,8 +83,8 @@ const locations = {
   },
 };
 
-// Define the custom element for location-card
-class LocationCard extends HTMLElement {
+// Define the custom element for camera-photo
+class CameraPhoto extends HTMLElement {
 constructor() {
   super();
   this.attachShadow({ mode: "open" });
@@ -94,32 +94,19 @@ constructor() {
   const title = this.getAttribute("title") || "";
   const emitdata = this.getAttribute("emitdata");
   const linkUrl = this.getAttribute("link-url") || "#";
-  const hideRefreshBtn = this.getAttribute("hide-refresh");
 
   const refreshInterval =
     parseInt(this.getAttribute("refresh-interval")) || 60000; // Default: 1 minute
 
   this.imageClickCallback = this.getAttribute("image-click-callback");
   const titleHtml = emitdata
-    ? `<span class="location-card text-body-primary fw-bold d-sm-block">${title}</span>`
+    ? `<span class="camera-photo text-body-primary fw-bold d-sm-block">${title}</span>`
     : `<a href="${linkUrl}" role="link" target="_blank" rel="noopener noreferrer">
-        <span class="location-card text-body-primary fw-bold d-sm-block">${title}</span>
+        <span class="camera-photo text-body-primary fw-bold d-sm-block">${title}</span>
       </a>`;
 
   const thumbnailClass = title ? "thumbnail" : "";
   const titlePadding = title ? "" : "p-0";
-
-  const refreshButton = hideRefreshBtn
-    ? ""
-    : `<button id="refreshButton" class="refresh btn btn-sm">
-        Refresh
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-          class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-          <path
-            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-        </svg>
-      </button>`;
 
   // Create the card structure with a placeholder image initially
   this.shadowRoot.innerHTML = `
@@ -136,19 +123,6 @@ constructor() {
 
       .card:focus {
         outline: 2px solid #5d5dff;
-      }
-
-      .card-body {
-        // padding: 0;
-      }
-
-      .card-body span {
-          font-size: 0.9rem;
-          text-decoration: none!important;
-      }
-
-      .card-body a {
-        text-decoration: none;
       }
 
       .card:hover {
@@ -176,76 +150,8 @@ constructor() {
         background-size: cover;
       }
 
-      .thumbnail {
-        height: 250px; 
-      }
-
-      @media (max-width: 680px){
-        .thumbnail {
-          max-height: 200px;
-        }
-      }
-      
-      .thumbnail:hover {
-        filter: brightness(1.3)!important;
-        cursor: pointer;
-      }
-      
-      .viewtype {
-        position: relative;
-      }
-      
-      .viewtype img {
-        margin-bottom: 1rem;
-      }
-      
-      /** image refresh button */
-      
-      .card a {
-        position: relative;
-        color: #444;
-        text-decoration: none;
-        font-weight: 900;
-        text-transform: uppercase;
-        margin: 0;
-        margin-top: -2px;
-        padding: 0;
-      }
-
       #thumbnail {
           position: relative;
-      }
-      
-      .refresh {
-        display: none;
-        position: absolute;
-        z-index: 1000;
-        top: 10px;
-        right: 10px;
-        padding: 2px 10px;
-        background: #3c67d7;
-        color: white
-      }
-      
-      .cam .refresh {
-        display: none;
-        position: absolute;
-        z-index: 10000;
-        top: 60px;
-        right: 15px;
-        padding: 2px 10px;
-        background: var(--primary);
-        color: white
-      }
-      
-      .refresh:hover {
-        color: white;
-        background-color: var(--secondary_gray);
-      }
-      
-      .card:hover .refresh,
-      .cam:hover .refresh {
-        display: inline-block;
       }
       
       /** Loading Skeleton */
@@ -261,14 +167,6 @@ constructor() {
       .card.is-loading .card-img-top {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-      }
-
-      .location-card:focus {
-        outline: 2px solid #5d5dff;
-      }
-
-      a[role=button] {
-        text-decoration: none!important;
       }
 
       .slide-in-blurred-top {
@@ -313,7 +211,6 @@ constructor() {
                   class="object-fit-cover card-img-top ${thumbnailClass}" 
                   src="${imageUrl || './img/blurred.png'}"   
                 />
-                ${refreshButton}
             </div>
           <div class="card-body px-2 shadow-sm ${titlePadding}">
               <div class="d-flex justify-content-center align-items-center">
@@ -342,12 +239,6 @@ constructor() {
     }, refreshInterval);
   }
 
-  // Bind the refresh button click event
-  if (!hideRefreshBtn) {
-    this.shadowRoot
-      .getElementById("refreshButton")
-      .addEventListener("click", () => this.handleRefreshButtonClick());
-  }
   if (this.emitdata) {
     this.shadowRoot
       .getElementById("card")
@@ -422,10 +313,6 @@ refreshImage(e) {
     setTimeout(() => (imgElement.style.opacity = "1"), 1000);
 }
 
-handleRefreshButtonClick() {
-  this.refreshImage();
-}
-
 handleCardClick() {
   // Placeholder for keyboard interaction; can be expanded if needed
   this.handleImageClick();
@@ -437,7 +324,7 @@ disconnectedCallback() {
 }
 }
 
-customElements.define("location-card", LocationCard);
+customElements.define("camera-photo", CameraPhoto);
 
 window.loadSiteContent = function(main, locationId) {
 const location = locations[locationId];
@@ -500,10 +387,10 @@ main.innerHTML = `
         <div id="camera-title" class="content-block title-block">${titleBlockHtml}</div>
         <div id="camera-image" class="content-block">
             <div style="position: relative;">
-                <location-card 
+                <camera-photo 
                     refresh-interval="60000"
                     hide-refresh="true">
-                </location-card>
+                </camera-photo>
                 ${videoHtml}
             </div>
         </div>
@@ -515,17 +402,17 @@ main.innerHTML = `
 `;
 
 // Set the image-url dynamically after the element is in the DOM
-const locationCard = main.querySelector('location-card');
-if (locationCard) {
+const cameraPhoto = main.querySelector('camera-photo');
+if (cameraPhoto) {
     const timestamp = new Date().getTime();
-    locationCard.setAttribute('image-url', `${location.url_photo}?t=${timestamp}`);
+    cameraPhoto.setAttribute('image-url', `${location.url_photo}?t=${timestamp}`);
 }
 
 // Add toggle functionality for locations with video
 if (hasVideo) {
     const videoToggle = main.querySelector('#video-toggle');
     const videoElement = main.querySelector(`#${locationId}-video`);
-    const locationCardElement = main.querySelector('location-card');
+    const cameraPhotoElement = main.querySelector('camera-photo');
 
     // Load hls.js dynamically
     const hlsScript = document.createElement('script');
@@ -545,7 +432,7 @@ if (hasVideo) {
 
         if (videoToggle.checked) {
             // Keep image visible, hide video
-            locationCardElement.style.display = 'block';
+            cameraPhotoElement.style.display = 'block';
             videoElement.style.display = 'none';
 
             // Initialize HLS
@@ -557,7 +444,7 @@ if (hasVideo) {
                 hls.on(Hls.Events.MANIFEST_PARSED, () => {
                     // Wait for play event to switch to video
                     const onPlay = () => {
-                        locationCardElement.style.display = 'none';
+                        cameraPhotoElement.style.display = 'none';
                         videoElement.style.display = 'block';
                         videoElement.removeEventListener('play', onPlay);
                         // Start 2-minute timer to auto-toggle off
@@ -569,21 +456,21 @@ if (hasVideo) {
                     videoElement.addEventListener('play', onPlay);
                     videoElement.play().catch((error) => {
                         console.error('Video playback failed:', error);
-                        locationCardElement.style.display = 'block';
+                        cameraPhotoElement.style.display = 'block';
                         videoElement.style.display = 'none';
                         videoElement.removeEventListener('play', onPlay);
                     });
                 });
                 hls.on(Hls.Events.ERROR, (event, data) => {
                     console.error('HLS error:', data);
-                    locationCardElement.style.display = 'block';
+                    cameraPhotoElement.style.display = 'block';
                     videoElement.style.display = 'none';
                 });
             } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
                 // Native HLS support (e.g., Safari)
                 videoElement.src = videoSrc;
                 const onPlay = () => {
-                    locationCardElement.style.display = 'none';
+                    cameraPhotoElement.style.display = 'none';
                     videoElement.style.display = 'block';
                     videoElement.removeEventListener('play', onPlay);
                     // Start 2-minute timer to auto-toggle off
@@ -596,23 +483,23 @@ if (hasVideo) {
                 videoElement.addEventListener('loadedmetadata', () => {
                     videoElement.play().catch((error) => {
                         console.error('Video playback failed:', error);
-                        locationCardElement.style.display = 'block';
+                        cameraPhotoElement.style.display = 'block';
                         videoElement.style.display = 'none';
                         videoElement.removeEventListener('play', onPlay);
                     });
                 }, { once: true });
                 videoElement.addEventListener('error', () => {
-                    locationCardElement.style.display = 'block';
+                    cameraPhotoElement.style.display = 'block';
                     videoElement.style.display = 'none';
                 }, { once: true });
             } else {
                 // No HLS support
-                locationCardElement.style.display = 'block';
+                cameraPhotoElement.style.display = 'block';
                 videoElement.style.display = 'none';
             }
         } else {
             // Show image, hide video
-            locationCardElement.style.display = 'block';
+            cameraPhotoElement.style.display = 'block';
             videoElement.style.display = 'none';
             // Clean up HLS
             if (hls) {
