@@ -114,7 +114,6 @@ class SiteHeader extends HTMLElement {
                     opacity: 100%;
                 }
 
-                /* Responsive adjustments for 600px and below */
                 @media (max-width: 640px) {
                     .logo-group {
                         gap: 15px;

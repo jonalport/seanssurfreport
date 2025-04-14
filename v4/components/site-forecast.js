@@ -12,7 +12,7 @@ const locations = {
       forecastArgs: ["s=687932", "m=100", "mw=84", "uid=wg_fwdg_687932_100_1617177954510", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=240", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMPE,CDC,APCP1s"],
       info_website: "https://www.kitesurfbeachcenter.ae",
       info_pin: "https://maps.app.goo.gl/rqajQ7EsVUbLREWH6",
-      info_official_wa_group: "insert_link_here",
+      info_official_wa_group: "https://chat.whatsapp.com/Fw1ABlBFiLN4Ye73svvtVZ",
       info_contact: "+971555073060"
   },
   'bos': {
