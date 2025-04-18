@@ -8,10 +8,16 @@ window.loadCommunityContent = function(main) {
         ></iframe>
     `;
 
-    // Hide the site-footer
+    // Hide the site-footer (target the custom element and its shadow root)
     const footer = document.querySelector('site-footer');
     if (footer) {
+        // Hide the host element
         footer.style.display = 'none';
+        // Optionally, hide the shadow root's footer content
+        const shadowFooter = footer.shadowRoot?.querySelector('footer');
+        if (shadowFooter) {
+            shadowFooter.style.display = 'none';
+        }
     }
 
     // Add styles (only once, if not already added)
@@ -41,6 +47,9 @@ window.loadCommunityContent = function(main) {
                 border: none;
                 margin: 0 auto;
             }
+            site-footer {
+                display: none !important; /* Ensure footer is hidden */
+            }
         `;
         document.head.appendChild(style);
     }
@@ -54,6 +63,10 @@ window.unloadCommunityContent = function() {
     // Restore the site-footer
     const footer = document.querySelector('site-footer');
     if (footer) {
-        footer.style.display = '';
+        footer.style.display = ''; // Reset to default
+        const shadowFooter = footer.shadowRoot?.querySelector('footer');
+        if (shadowFooter) {
+            shadowFooter.style.display = ''; // Reset shadow footer
+        }
     }
 };
