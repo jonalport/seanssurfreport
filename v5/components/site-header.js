@@ -213,25 +213,44 @@ class SiteHeader extends HTMLElement {
         event.preventDefault();
         const main = document.querySelector('site-main');
         if (!main) return;
-
-        // Clear existing content in site-main
+    
+        // Clean up any existing content and styles
         main.innerHTML = '';
-
+        main.removeAttribute('style');
+    
         // Create iframe
         const iframe = document.createElement('iframe');
         iframe.src = 'https://community.seanssurfreport.com';
         iframe.style.width = '100%';
-        iframe.style.height = '100%';
         iframe.style.border = 'none';
         iframe.title = 'Community Forum';
-
-        // Ensure site-main has proper styling to accommodate full-size iframe
-        main.style.height = '100vh'; // Adjust to viewport height or as needed
-        main.style.width = '100%';
-        main.style.overflow = 'hidden'; // Prevent scrollbars if not needed
-
+        iframe.style.minHeight = '1000px'; // Fallback height to ensure content visibility
+    
         // Append iframe to site-main
         main.appendChild(iframe);
+    
+        // Ensure site-main and body allow scrolling
+        main.style.minHeight = '100vh'; // Allow main to expand beyond viewport
+        main.style.overflowY = 'auto'; // Enable scrolling if content overflows
+        main.style.display = 'flex';
+        main.style.flexDirection = 'column';
+    
+        // Add listener for iframe content height (optional, if Discourse supports postMessage)
+        window.addEventListener('message', (event) => {
+            if (event.origin === 'https://community.seanssurfreport.com' && event.data.height) {
+                iframe.style.height = `${event.data.height}px`;
+            }
+        }, false);
+    
+        // Ensure site-nav is visible and reset
+        const nav = document.querySelector('site-nav');
+        if (nav) {
+            nav.style.display = '';
+            if (nav.resetNavLayout) nav.resetNavLayout();
+        }
+    
+        // Update URL hash
+        history.pushState({ page: 'community' }, 'Community', '#community');
     }
 }
 
