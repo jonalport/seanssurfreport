@@ -27,11 +27,11 @@ body {
 site-main {
     flex-grow: 1;
     /* Allow site-main to expand with content */
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    overflow-y: auto;
-    /* Ensure scrolling is possible */
+    height: auto;
+    /* Ensure natural height based on content */
+    overflow-y: visible;
+    /* Prevent scrollbar on site-main */
 }
 
 site-footer {

@@ -224,24 +224,26 @@ class SiteHeader extends HTMLElement {
         iframe.style.width = '100%';
         iframe.style.border = 'none';
         iframe.title = 'Community Forum';
-        iframe.style.minHeight = '1000px'; // Fallback height for content
+        iframe.style.minHeight = '1500px'; // Large fallback height to approximate content
+        iframe.style.height = 'auto'; // Allow iframe to expand to content height
+        iframe.style.display = 'block';
     
         // Append iframe to site-main
         main.appendChild(iframe);
     
-        // Ensure site-main grows with content
-        main.style.minHeight = '100vh'; // Minimum height to fill viewport
-        main.style.display = 'flex';
-        main.style.flexDirection = 'column';
-        main.style.overflowY = 'auto'; // Allow scrolling if content overflows
+        // Ensure site-main expands with content and has no scrollbar
+        main.style.minHeight = '100vh'; // Ensure at least viewport height
+        main.style.height = 'auto'; // Allow natural expansion
+        main.style.display = 'block'; // Use block to prevent flex-related constraints
+        main.style.overflowY = 'visible'; // Prevent scrollbar on site-main
     
-        // Optional: Listen for iframe content height via postMessage
+        // Attempt to dynamically adjust iframe height via postMessage
         window.addEventListener('message', (event) => {
             if (event.origin === 'https://community.seanssurfreport.com' && event.data.height) {
                 iframe.style.height = `${event.data.height}px`;
-                iframe.style.minHeight = 'auto'; // Override fallback if dynamic height is received
+                iframe.style.minHeight = 'auto'; // Override fallback if dynamic height received
             }
-        }, false);
+        }, { once: true }); // Single-use listener to avoid multiple bindings
     
         // Ensure site-nav is visible and reset
         const nav = document.querySelector('site-nav');
