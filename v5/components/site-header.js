@@ -223,10 +223,10 @@ class SiteHeader extends HTMLElement {
 
         // Clear existing content and load iframe
         main.innerHTML = `
-            <section style="width: 90%; margin: 2vh auto; flex-grow: 1;">
+            <section style="width: 100%; height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column;">
                 <iframe 
                     src="https://community.seanssurfreport.com/" 
-                    style="width: 100%; height: 80vh; border: none; border-radius: 8px;"
+                    style="width: 100%; height: 100%; border: none; border-radius: 0;"
                     title="Community Forum"
                     sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 ></iframe>
