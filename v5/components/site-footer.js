@@ -14,6 +14,8 @@ class SiteFooter extends HTMLElement {
           background-color: #141414;
           color: white;
           padding: 1rem 0;
+          position: static; /* Ensure footer stays in document flow */
+          z-index: 1; /* Low z-index to stay below other content */
         }
         
         footer p {
@@ -25,14 +27,15 @@ class SiteFooter extends HTMLElement {
           text-decoration: underline;
           color: #87b280;
         }
+
         .retro-counter {
-        padding: 0.2rem 0;
+          padding: 0.2rem 0;
         }
 
         @media (max-width: 640px) { 
-         footer {
-         font-size: 0.7rem;
-        }   
+          footer {
+            font-size: 0.7rem;
+          }   
         }
       </style>
       
@@ -43,9 +46,9 @@ class SiteFooter extends HTMLElement {
           <p>    
               Developed by <a href="https://www.devkylo.com/">Kyle Robinson</a>. A special thanks to <a href="https://www.instagram.com/jonalport/">Jon Alport</a>.
           </p>
-        <div class="retro-counter">
-          <span id="hit-counter">Loading...</span>
-        </div>
+          <div class="retro-counter">
+            <span id="hit-counter">Loading...</span>
+          </div>
       </footer>
     `;
 
