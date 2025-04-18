@@ -1,0 +1,100 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    /* Ensures page is at least viewport height */
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 400;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    --primary: black;
+    --secondary_blue: #5d5dff;
+    --secondary_gray: #6d757d;
+    --secondary_lightgray: #c8d1db;
+}
+
+site-header {
+    height: 80px;
+    flex-shrink: 0;
+}
+
+site-feed {
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
+    height: auto;
+    flex-shrink: 0;
+}
+
+site-nav {
+    height: 130px;
+    background-color: #e6e6e6;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+site-main {
+    height: auto;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+site-footer {
+    height: auto;
+    flex-shrink: 0;
+}
+
+section>div:first-child>div>p {
+    font-size: 0.9rem;
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+h2 {
+    font-size: 0.9rem;
+    display: block;
+    color: white;
+    background: var(--primary);
+    padding: 0.2rem 2rem;
+    text-align: center;
+    width: 180px;
+    margin: 1vh auto;
+    font-weight: 500;
+}
+
+h2 a {
+    text-decoration: none;
+    color: white;
+}
+
+h2 a:link,
+h2 a:visited,
+h2 a:hover,
+h2 a:active {
+    color: white;
+}
