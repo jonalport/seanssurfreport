@@ -2,7 +2,7 @@ window.loadCommunityContent = function(main) {
     main.innerHTML = `
         <iframe 
             src="https://community.seanssurfreport.com" 
-            style="width: 100%; height: 100%; border: none;" 
+            style="width: 100%; height: 100%; border: none; overflow: hidden;" 
             title="Sean's Surf Report Community"
         ></iframe>
     `;
@@ -18,9 +18,19 @@ window.loadCommunityContent = function(main) {
         const style = document.createElement('style');
         style.id = 'site-community-styles';
         style.textContent = `
+            site-main {
+                width: 100%;
+                height: 100vh; /* Ensure the parent takes full viewport height */
+                overflow: auto; /* Scrollbar on the main container, not the iframe */
+                margin: 0;
+                padding: 0;
+            }
             iframe {
                 display: block;
                 margin: 0 auto;
+                width: 100%;
+                height: 100%;
+                overflow: hidden; /* Explicitly disable iframe scrollbars */
             }
         `;
         document.head.appendChild(style);
