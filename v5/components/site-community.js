@@ -11,14 +11,18 @@ window.loadCommunityContent = function(main) {
     // Get the iframe and set its height dynamically
     const iframe = main.querySelector('iframe');
     function resizeIframe() {
-        // Attempt to access the iframe's content height
         try {
-            const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-            iframe.style.height = `${contentHeight}px`;
+            // Access iframe content height with a slight delay to ensure content is loaded
+            setTimeout(() => {
+                const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+                iframe.style.height = `${contentHeight}px`;
+                // Ensure iframe scrollbars are disabled
+                iframe.contentWindow.document.body.style.overflow = 'hidden';
+            }, 100); // Adjust delay if needed
         } catch (e) {
             console.error('Cannot access iframe content height:', e);
-            // Fallback to a reasonable height if cross-origin restrictions apply
-            iframe.style.height = '1000px'; // Adjust as needed
+            // Fallback height for cross-origin content
+            iframe.style.height = '2000px'; // Adjust based on typical content height
         }
     }
 
@@ -48,11 +52,12 @@ window.loadCommunityContent = function(main) {
                 min-height: 100%;
                 margin: 0;
                 padding: 0;
-                overflow: auto; /* Main page handles scrolling */
+                overflow-y: auto; /* Main page handles vertical scrolling */
+                overflow-x: hidden; /* Prevent horizontal scrollbar */
             }
             site-main {
                 width: 100%;
-                min-height: 100vh; /* Minimum height, but can grow */
+                min-height: 100vh; /* Minimum height, can grow */
                 margin: 0;
                 padding: 0;
                 overflow: visible; /* Allow site-main to expand */
