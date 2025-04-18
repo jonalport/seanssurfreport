@@ -216,7 +216,7 @@ class SiteHeader extends HTMLElement {
     
         // Clean up any existing content and styles
         main.innerHTML = '';
-        main.removeAttribute('style');
+        main.removeAttribute('style'); // Reset inline styles
     
         // Create iframe
         const iframe = document.createElement('iframe');
@@ -224,21 +224,22 @@ class SiteHeader extends HTMLElement {
         iframe.style.width = '100%';
         iframe.style.border = 'none';
         iframe.title = 'Community Forum';
-        iframe.style.minHeight = '1000px'; // Fallback height to ensure content visibility
+        iframe.style.minHeight = '1000px'; // Fallback height for content
     
         // Append iframe to site-main
         main.appendChild(iframe);
     
-        // Ensure site-main and body allow scrolling
-        main.style.minHeight = '100vh'; // Allow main to expand beyond viewport
-        main.style.overflowY = 'auto'; // Enable scrolling if content overflows
+        // Ensure site-main grows with content
+        main.style.minHeight = '100vh'; // Minimum height to fill viewport
         main.style.display = 'flex';
         main.style.flexDirection = 'column';
+        main.style.overflowY = 'auto'; // Allow scrolling if content overflows
     
-        // Add listener for iframe content height (optional, if Discourse supports postMessage)
+        // Optional: Listen for iframe content height via postMessage
         window.addEventListener('message', (event) => {
             if (event.origin === 'https://community.seanssurfreport.com' && event.data.height) {
                 iframe.style.height = `${event.data.height}px`;
+                iframe.style.minHeight = 'auto'; // Override fallback if dynamic height is received
             }
         }, false);
     
