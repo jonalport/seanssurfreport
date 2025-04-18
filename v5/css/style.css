@@ -7,14 +7,14 @@
 
 html,
 body {
-    height: 100vh;
-    /* Ensure full viewport height */
+    height: 100%;
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
 
 body {
     min-height: 100vh;
+    /* Ensures page is at least viewport height */
     display: flex;
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
@@ -31,7 +31,7 @@ body {
 }
 
 site-header {
-    height: 70px;
+    height: 80px;
     flex-shrink: 0;
 }
 
@@ -50,23 +50,14 @@ site-nav {
 }
 
 site-main {
-    flex-grow: 1;
-    width: 100%;
-    min-height: 0;
-    /* Prevents flex shrinkage issues */
+    height: auto;
     overflow-y: auto;
-    /* Main scrollbar for the page */
-    position: relative;
-    /* Keeps content in flow */
+    flex-shrink: 0;
 }
 
 site-footer {
     height: auto;
     flex-shrink: 0;
-    position: static;
-    /* Stays in document flow */
-    z-index: 1;
-    /* Below other content */
 }
 
 section>div:first-child>div>p {

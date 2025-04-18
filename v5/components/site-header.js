@@ -164,7 +164,7 @@ class SiteHeader extends HTMLElement {
                 <a class="icon-forecast" href="/forecast">
                     <img src="./img/icon_02_forecast.png" alt="Forecast">
                 </a>
-                <a class="icon-community" href="#community">
+                <a class="icon-community" href="#">
                     <img src="./img/icon_03_community.png" alt="Community">
                 </a>
             </div>
@@ -214,33 +214,24 @@ class SiteHeader extends HTMLElement {
         const main = document.querySelector('site-main');
         if (!main) return;
 
-        // Clean up any existing forecast content
-        const forecastPages = ['kbc', 'bos', 'yas', 'dosc', 'sandy', 'mikoko'];
-        const currentPage = window.location.hash.slice(1);
-        if (forecastPages.includes(currentPage) && typeof window.unloadSiteContent === 'function') {
-            window.unloadSiteContent(main);
-        }
+        // Clear existing content in site-main
+        main.innerHTML = '';
 
-        // Clear existing content and load iframe
-        main.innerHTML = `
-            <section style="width: 100%; height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column; overflow: hidden;">
-                <iframe 
-                    src="https://community.seanssurfreport.com/" 
-                    style="width: 100%; height: 100%; min-height: 100%; border: none; border-radius: 0; overflow: hidden;"
-                    title="Community Forum"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                ></iframe>
-            </section>
-        `;
+        // Create iframe
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://community.seanssurfreport.com';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.title = 'Community Forum';
 
-        // Hide site-nav to maximize vertical space
-        const nav = document.querySelector('site-nav');
-        if (nav) {
-            nav.style.display = 'none';
-        }
+        // Ensure site-main has proper styling to accommodate full-size iframe
+        main.style.height = '100vh'; // Adjust to viewport height or as needed
+        main.style.width = '100%';
+        main.style.overflow = 'hidden'; // Prevent scrollbars if not needed
 
-        // Update URL hash
-        history.pushState({ page: 'community' }, 'Community', '#community');
+        // Append iframe to site-main
+        main.appendChild(iframe);
     }
 }
 
