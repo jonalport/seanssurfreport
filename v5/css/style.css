@@ -7,7 +7,8 @@
 
 html,
 body {
-    height: 100%;
+    height: 100vh;
+    /* Ensure full viewport height */
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
@@ -54,18 +55,18 @@ site-main {
     min-height: 0;
     /* Prevents flex shrinkage issues */
     overflow-y: auto;
-    /* Allows main site scrolling */
+    /* Main scrollbar for the page */
     position: relative;
-    /* Ensures content stays within flex layout */
+    /* Keeps content in flow */
 }
 
 site-footer {
     height: auto;
     flex-shrink: 0;
     position: static;
-    /* Explicitly prevent fixed/sticky positioning */
+    /* Stays in document flow */
     z-index: 1;
-    /* Low z-index to stay below other content */
+    /* Below other content */
 }
 
 section>div:first-child>div>p {

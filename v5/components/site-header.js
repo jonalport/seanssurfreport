@@ -226,17 +226,17 @@ class SiteHeader extends HTMLElement {
             <section style="width: 100%; height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column; overflow: hidden;">
                 <iframe 
                     src="https://community.seanssurfreport.com/" 
-                    style="width: 100%; height: 100%; border: none; border-radius: 0; overflow: hidden;"
+                    style="width: 100%; height: 100%; min-height: 100%; border: none; border-radius: 0; overflow: hidden;"
                     title="Community Forum"
                     sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 ></iframe>
             </section>
         `;
 
-        // Show site-nav
+        // Hide site-nav to maximize vertical space
         const nav = document.querySelector('site-nav');
         if (nav) {
-            nav.style.display = '';
+            nav.style.display = 'none';
         }
 
         // Update URL hash
