@@ -213,47 +213,25 @@ class SiteHeader extends HTMLElement {
         event.preventDefault();
         const main = document.querySelector('site-main');
         if (!main) return;
-    
-        // Clean up any existing content and styles
-        main.innerHTML = '';
-        main.removeAttribute('style'); // Reset inline styles
-    
-        // Create iframe
-        const iframe = document.createElement('iframe');
-        iframe.src = 'https://community.seanssurfreport.com';
-        iframe.style.width = '100%';
-        iframe.style.border = 'none';
-        iframe.title = 'Community Forum';
-        iframe.style.minHeight = '1500px'; // Large fallback height to approximate content
-        iframe.style.height = 'auto'; // Allow iframe to expand to content height
-        iframe.style.display = 'block';
-    
-        // Append iframe to site-main
-        main.appendChild(iframe);
-    
-        // Ensure site-main expands with content and has no scrollbar
-        main.style.minHeight = '100vh'; // Ensure at least viewport height
-        main.style.height = 'auto'; // Allow natural expansion
-        main.style.display = 'block'; // Use block to prevent flex-related constraints
-        main.style.overflowY = 'visible'; // Prevent scrollbar on site-main
-    
-        // Attempt to dynamically adjust iframe height via postMessage
-        window.addEventListener('message', (event) => {
-            if (event.origin === 'https://community.seanssurfreport.com' && event.data.height) {
-                iframe.style.height = `${event.data.height}px`;
-                iframe.style.minHeight = 'auto'; // Override fallback if dynamic height received
+
+        const existingScript = document.getElementById('site-community-script');
+        if (existingScript) existingScript.remove();
+
+        const script = document.createElement('script');
+        script.src = 'components/site-community.js';
+        script.id = 'site-community-script';
+        script.onload = () => {
+            if (window.loadCommunityContent && typeof window.loadCommunityContent === 'function') {
+                window.loadCommunityContent(main);
+            } else {
+                console.error('loadCommunityContent function not found');
             }
-        }, { once: true }); // Single-use listener to avoid multiple bindings
-    
-        // Ensure site-nav is visible and reset
-        const nav = document.querySelector('site-nav');
-        if (nav) {
-            nav.style.display = '';
-            if (nav.resetNavLayout) nav.resetNavLayout();
-        }
-    
-        // Update URL hash
-        history.pushState({ page: 'community' }, 'Community', '#community');
+        };
+        script.onerror = () => {
+            console.error('Failed to load site-community.js');
+            main.innerHTML = '<p>Error loading community page</p>';
+        };
+        document.body.appendChild(script);
     }
 }
 

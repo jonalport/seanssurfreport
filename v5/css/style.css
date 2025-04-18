@@ -13,31 +13,21 @@ body {
 }
 
 body {
+    min-height: 100vh;
+    /* Ensures page is at least viewport height */
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: #333;
     font-weight: 400;
     width: 100%;
-}
-
-site-main {
-    flex-grow: 1;
-    /* Allow site-main to expand with content */
-    width: 100%;
-    height: auto;
-    /* Ensure natural height based on content */
-    overflow-y: visible;
-    /* Prevent scrollbar on site-main */
-}
-
-site-footer {
-    flex-shrink: 0;
-    /* Prevent footer from shrinking */
-    width: 100%;
+    margin: 0;
+    padding: 0;
+    --primary: black;
+    --secondary_blue: #5d5dff;
+    --secondary_gray: #6d757d;
+    --secondary_lightgray: #c8d1db;
 }
 
 site-header {
@@ -59,7 +49,16 @@ site-nav {
     flex-shrink: 0;
 }
 
+site-main {
+    height: auto;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
 
+site-footer {
+    height: auto;
+    flex-shrink: 0;
+}
 
 section>div:first-child>div>p {
     font-size: 0.9rem;
