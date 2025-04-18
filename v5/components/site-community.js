@@ -11,26 +11,44 @@ window.loadCommunityContent = function(main) {
     // Get the iframe and set its height dynamically
     const iframe = main.querySelector('iframe');
     function resizeIframe() {
-        try {
-            // Access iframe content height with a slight delay to ensure content is loaded
-            setTimeout(() => {
+        // Retry mechanism to handle delayed content loading
+        let attempts = 0;
+        const maxAttempts = 5;
+        function tryResize() {
+            try {
                 const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-                iframe.style.height = `${contentHeight}px`;
-                // Ensure iframe scrollbars are disabled
-                iframe.contentWindow.document.body.style.overflow = 'hidden';
-            }, 100); // Adjust delay if needed
-        } catch (e) {
-            console.error('Cannot access iframe content height:', e);
-            // Fallback height for cross-origin content
-            iframe.style.height = '2000px'; // Adjust based on typical content height
+                if (contentHeight > 0) {
+                    iframe.style.height = `${contentHeight}px`;
+                    // Ensure iframe scrollbars are disabled
+                    iframe.contentWindow.document.body.style.overflow = 'hidden';
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(tryResize, 200); // Retry after 200ms
+                } else {
+                    console.warn('No valid content height after retries, using fallback');
+                    iframe.style.height = '4000px'; // Fallback height
+                }
+            } catch (e) {
+                console.error('Cannot access iframe content height:', e);
+                // Fallback height for cross-origin content
+                iframe.style.height = '4000px'; // Adjust based on content
+            }
         }
+        tryResize();
     }
 
     // Initial resize after iframe loads
     iframe.addEventListener('load', resizeIframe);
 
-    // Resize on window resize to handle dynamic content
+    // Resize on window resize
     window.addEventListener('resize', resizeIframe);
+
+    // Optional: Listen for postMessage if you control the iframe content
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'iframeHeight') {
+            iframe.style.height = `${event.data.height}px`;
+        }
+    });
 
     // Hide the site-footer
     const footer = document.querySelector('site-footer');
@@ -58,6 +76,7 @@ window.loadCommunityContent = function(main) {
             site-main {
                 width: 100%;
                 min-height: 100vh; /* Minimum height, can grow */
+                height: auto; /* Allow expansion */
                 margin: 0;
                 padding: 0;
                 overflow: visible; /* Allow site-main to expand */
@@ -83,8 +102,9 @@ window.unloadCommunityContent = function() {
     const communityStyles = document.getElementById('site-community-styles');
     if (communityStyles) communityStyles.remove();
 
-    // Remove resize event listener
+    // Remove event listeners
     window.removeEventListener('resize', resizeIframe);
+    window.removeEventListener('message', resizeIframe);
 
     // Restore the site-footer
     const footer = document.querySelector('site-footer');
