@@ -2,7 +2,7 @@ window.loadCommunityContent = function(main) {
     main.innerHTML = `
         <iframe 
             src="https://community.seanssurfreport.com" 
-            style="width: 100%; height: 100%; border: none; background-color: #ADD8E6;" 
+            style="width: 100%; height: 1200px; border: none;" 
             title="Sean's Surf Report Community"
         ></iframe>
     `;
