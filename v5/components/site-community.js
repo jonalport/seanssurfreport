@@ -11,11 +11,17 @@ window.loadCommunityContent = function (main) {
   // Get the iframe
   const iframe = main.querySelector("iframe");
   let heightTimeout;
+  let lastHeight = 0;
+  const maxHeight = 4000; // Strict cap
+
   function setIframeHeight(height) {
+    // Ignore minor changes or excessive heights
+    if (Math.abs(height - lastHeight) < 30 || height > maxHeight) return;
     clearTimeout(heightTimeout);
     heightTimeout = setTimeout(() => {
       console.log("Setting iframe height:", height);
       iframe.style.height = `${height}px`;
+      lastHeight = height;
     }, 100); // Debounce 100ms
   }
 
