@@ -16,7 +16,7 @@ window.loadCommunityContent = function (main) {
     heightTimeout = setTimeout(() => {
       console.log("Setting iframe height:", height);
       iframe.style.height = `${height}px`;
-    }, 100); // Debounce to use the latest height
+    }, 100); // Debounce 100ms
   }
 
   // Listen for postMessage from Discourse
@@ -27,18 +27,16 @@ window.loadCommunityContent = function (main) {
     }
   });
 
-  // Fallback height in case postMessage fails
-  function applyFallbackHeight() {
-    console.warn("No postMessage received, applying fallback height");
-    iframe.style.height = "2000px"; // Fallback height
-  }
+  // Fallback height if no postMessage is received
+  setTimeout(() => {
+    if (!iframe.style.height || iframe.style.height === "500px") {
+      console.warn("No postMessage received, applying fallback height");
+      iframe.style.height = "2000px";
+    }
+  }, 5000); // Wait 5 seconds
 
-  // Set fallback after a delay if no postMessage is received
-  setTimeout(applyFallbackHeight, 5000); // Wait 5 seconds for postMessage
-
-  // Resize on window resize
+  // Request height on window resize
   window.addEventListener("resize", () => {
-    // Request new height from Discourse
     try {
       iframe.contentWindow.postMessage(
         { type: "requestHeight" },
@@ -46,7 +44,7 @@ window.loadCommunityContent = function (main) {
       );
     } catch (e) {
       console.error("Cannot request height:", e);
-      applyFallbackHeight();
+      setIframeHeight(2000); // Fallback
     }
   });
 
@@ -104,8 +102,8 @@ window.unloadCommunityContent = function () {
   if (communityStyles) communityStyles.remove();
 
   // Remove event listeners
-  window.removeEventListener("resize", resizeIframe);
-  window.removeEventListener("message", resizeIframe);
+  window.removeEventListener("message", setIframeHeight);
+  window.removeEventListener("resize", setIframeHeight);
 
   // Restore the site-footer
   const footer = document.querySelector("site-footer");
