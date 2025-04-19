@@ -8,50 +8,45 @@ window.loadCommunityContent = function (main) {
         ></iframe>
     `;
 
-  // Get the iframe and set its height dynamically
+  // Get the iframe
   const iframe = main.querySelector("iframe");
-  function resizeIframe() {
-    let attempts = 0;
-    const maxAttempts = 10;
-    function tryResize() {
-      try {
-        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-        console.log("Iframe content height:", contentHeight);
-        if (contentHeight > 150) {
-          // Avoid small default heights
-          iframe.style.height = `${contentHeight}px`;
-          iframe.contentWindow.document.body.style.overflow = "hidden";
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          console.log(
-            `Attempt ${attempts}: Content height too small (${contentHeight}px), retrying...`
-          );
-          setTimeout(tryResize, 300);
-        } else {
-          console.warn("No valid content height after retries, using fallback");
-          iframe.style.height = "2000px"; // Reduced fallback height
-        }
-      } catch (e) {
-        console.error("Cannot access iframe content height:", e);
-        iframe.style.height = "2000px"; // Fallback for cross-origin
-        console.log("Applied fallback height of 2000px");
-      }
-    }
-    tryResize();
+  let heightTimeout;
+  function setIframeHeight(height) {
+    clearTimeout(heightTimeout);
+    heightTimeout = setTimeout(() => {
+      console.log("Setting iframe height:", height);
+      iframe.style.height = `${height}px`;
+    }, 100); // Debounce to use the latest height
   }
-
-  // Initial resize after iframe loads
-  iframe.addEventListener("load", resizeIframe);
-
-  // Resize on window resize
-  window.addEventListener("resize", resizeIframe);
 
   // Listen for postMessage from Discourse
   window.addEventListener("message", (event) => {
     if (event.origin !== "https://community.seanssurfreport.com") return; // Security check
     if (event.data.type === "iframeHeight") {
-      console.log("Received postMessage height:", event.data.height);
-      iframe.style.height = `${event.data.height}px`;
+      setIframeHeight(event.data.height);
+    }
+  });
+
+  // Fallback height in case postMessage fails
+  function applyFallbackHeight() {
+    console.warn("No postMessage received, applying fallback height");
+    iframe.style.height = "2000px"; // Fallback height
+  }
+
+  // Set fallback after a delay if no postMessage is received
+  setTimeout(applyFallbackHeight, 5000); // Wait 5 seconds for postMessage
+
+  // Resize on window resize
+  window.addEventListener("resize", () => {
+    // Request new height from Discourse
+    try {
+      iframe.contentWindow.postMessage(
+        { type: "requestHeight" },
+        "https://community.seanssurfreport.com"
+      );
+    } catch (e) {
+      console.error("Cannot request height:", e);
+      applyFallbackHeight();
     }
   });
 
