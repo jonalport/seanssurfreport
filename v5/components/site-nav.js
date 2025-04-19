@@ -44,7 +44,7 @@ class SiteNav extends HTMLElement {
 
         this.addEventListener('click', this.handleCardClick.bind(this));
         this.setupDragAndDrop();
-        this.injectWindguruWidgets(); // Inject widgets on construction
+        this.injectWindguruWidgets();
     }
 
     connectedCallback() {
@@ -112,7 +112,7 @@ class SiteNav extends HTMLElement {
 
         this.querySelectorAll('widget-windguru').forEach(widget => {
             widget.style.cssText = `
-                width: 28%;
+                width: 20%;
                 aspect-ratio: 1 / 1;
                 position: absolute;
                 bottom: 5%;
@@ -177,13 +177,11 @@ class SiteNav extends HTMLElement {
             })(window, document);
         };
 
-        // Inject widgets for each location, matching site-dash.js
         injectWidget('2146', 'wglive_2146_1706848056699', 0); // KBC
         injectWidget('3568', 'wglive_3568_1706847920748', 1); // BOS
         injectWidget('3858', 'wglive_3858_1710779222995', 2); // YAS
         injectWidget('4065', 'wglive_4065_1715855101032', 3); // DOSC
         injectWidget('2014', 'wglive_2014_1713422960240', 4); // SANDY
-        // No widget for Mikoko (index 5), as it uses an offline image and no Windguru data
     }
 
     setupDragAndDrop() {
@@ -237,12 +235,17 @@ class SiteNav extends HTMLElement {
         const nav = document.querySelector('site-nav');
         if (!main || !nav) return;
 
-        // Clean up forecast styles if navigating away from a forecast page
         const currentPage = window.location.hash.slice(1);
         const forecastPages = ['kbc', 'bos', 'yas', 'dosc', 'sandy', 'mikoko'];
-        if (forecastPages.includes(currentPage) && page !== currentPage) {
+        if (forecastPages.includes(currentPage) && !forecastPages.includes(page)) {
             if (typeof window.unloadSiteContent === 'function') {
                 window.unloadSiteContent();
+            }
+        }
+
+        if (currentPage === 'community' && page !== 'community') {
+            if (typeof window.unloadCommunityContent === 'function') {
+                window.unloadCommunityContent();
             }
         }
 
@@ -253,10 +256,10 @@ class SiteNav extends HTMLElement {
             const script = document.createElement('script');
             script.src = 'components/site-dash.js';
             script.id = 'site-dash-script';
-            console.log(`Loading script: ${script.src}`);
             script.onload = () => {
                 if (typeof window.loadDashContent === 'function') {
                     window.loadDashContent(main);
+                    window.setSectionVisibility('dashboard');
                 } else {
                     console.error('loadDashContent function not found');
                 }
@@ -266,12 +269,32 @@ class SiteNav extends HTMLElement {
                 main.innerHTML = `<p>Error loading dashboard</p>`;
             };
             document.body.appendChild(script);
-        } else {
-            // Show site-nav and reset its layout
-            nav.style.display = ''; // Reset to default display
-            this.resetNavLayout(); // Reset layout to prevent height issues
+        } else if (page === 'community') {
+            const existingScript = document.getElementById('site-community-script');
+            if (existingScript) existingScript.remove();
 
-            // Map data-page to locationId
+            const script = document.createElement('script');
+            script.src = 'components/site-community.js';
+            script.id = 'site-community-script';
+            script.onload = () => {
+                if (typeof window.loadCommunityContent === 'function') {
+                    window.loadCommunityContent(main);
+                    window.setSectionVisibility('community');
+                } else {
+                    console.error('loadCommunityContent function not found');
+                }
+            };
+            script.onerror = () => {
+                console.error('Failed to load site-community.js');
+                main.innerHTML = `<p>Error loading community page</p>`;
+            };
+            document.body.appendChild(script);
+        } else {
+            const pageType = forecastPages.includes(page) ? 'forecast' : 'unknown';
+            window.setSectionVisibility(pageType);
+            nav.style.display = pageType === 'forecast' ? '' : 'none';
+            this.resetNavLayout();
+
             const locationMap = {
                 'kbc': 'kbc',
                 'bos': 'bos',
@@ -282,13 +305,11 @@ class SiteNav extends HTMLElement {
             };
             const locationId = locationMap[page] || page;
 
-            // Load site-forecast.js if not already loaded, then call loadSiteContent
             const existingScript = document.getElementById('site-forecast-script');
             if (!existingScript) {
                 const script = document.createElement('script');
                 script.src = 'components/site-forecast.js';
                 script.id = 'site-forecast-script';
-                console.log(`Loading script: ${script.src}`);
                 script.onload = () => {
                     if (typeof window.loadSiteContent === 'function') {
                         window.loadSiteContent(main, locationId);
@@ -312,12 +333,10 @@ class SiteNav extends HTMLElement {
 
     resetNavLayout() {
         const navContainer = this.querySelector('.nav-container');
-        // Force a reflow to reset layout calculations
         navContainer.style.display = 'none';
-        void navContainer.offsetHeight; // Trigger reflow
+        void navContainer.offsetHeight;
         navContainer.style.display = 'flex';
 
-        // Reapply critical styles to ensure consistency
         navContainer.style.cssText = `
             display: flex;
             overflow-x: auto;
@@ -379,7 +398,6 @@ class SiteNav extends HTMLElement {
             `;
         });
 
-        // Recalculate alignment
         const contentWidth = Array.from(navContainer.querySelectorAll('.nav-card-wrapper'))
             .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20;
         const containerWidth = navContainer.offsetWidth;
@@ -391,7 +409,7 @@ customElements.define('site-nav', SiteNav);
 
 window.addEventListener('popstate', (event) => {
     const nav = document.querySelector('site-nav');
-    if (event.state && event.state.page) {
+    if (event.state && event.state.page && nav) {
         nav.loadPage(event.state.page);
     }
 });
@@ -399,5 +417,7 @@ window.addEventListener('popstate', (event) => {
 window.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('site-nav');
     const hash = window.location.hash.slice(1) || 'dashboard';
-    nav.loadPage(hash);
+    if (nav) {
+        nav.loadPage(hash);
+    }
 });

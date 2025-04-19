@@ -158,13 +158,13 @@ class SiteHeader extends HTMLElement {
                 <a class="logo-site" href="/v5/">
                     <img src="./img/logo.png" alt="Sean's surf report">
                 </a>
-                <a class="icon-dash" href="/dashboard">
+                <a class="icon-dash" href="#dashboard">
                     <img src="./img/icon_01_dash.png" alt="Dashboard">
                 </a>
-                <a class="icon-forecast" href="/forecast">
+                <a class="icon-forecast" href="#kbc">
                     <img src="./img/icon_02_forecast.png" alt="Forecast">
                 </a>
-                <a class="icon-community" href="#">
+                <a class="icon-community" href="#community">
                     <img src="./img/icon_03_community.png" alt="Community">
                 </a>
             </div>
@@ -182,18 +182,50 @@ class SiteHeader extends HTMLElement {
       .addEventListener("click", this.handleCommunityClick.bind(this));
   }
 
+  // Centralized function to control section visibility
+  setSectionVisibility(page) {
+    const nav = document.querySelector("site-nav");
+    const feed = document.querySelector("site-feed");
+    const footer = document.querySelector("site-footer");
+    const shadowFooter = footer?.shadowRoot?.querySelector("footer");
+
+    switch (page) {
+      case "dashboard":
+        if (nav) nav.style.display = "none";
+        if (feed) feed.style.display = "";
+        if (footer) footer.style.display = "";
+        if (shadowFooter) shadowFooter.style.display = "";
+        break;
+      case "forecast":
+        if (nav) nav.style.display = "";
+        if (feed) feed.style.display = "";
+        if (footer) footer.style.display = "";
+        if (shadowFooter) shadowFooter.style.display = "";
+        break;
+      case "community":
+        if (nav) nav.style.display = "none";
+        if (feed) feed.style.display = "none";
+        if (footer) footer.style.display = "none";
+        if (shadowFooter) shadowFooter.style.display = "none";
+        break;
+      default:
+        console.warn(`Unknown page: ${page}, resetting to default visibility`);
+        if (nav) nav.style.display = "";
+        if (feed) feed.style.display = "";
+        if (footer) footer.style.display = "";
+        if (shadowFooter) shadowFooter.style.display = "";
+    }
+  }
+
   handleDashClick(event) {
     event.preventDefault();
     const main = document.querySelector("site-main");
-    const feed = document.querySelector("site-feed");
     if (!main) return;
 
-    // Unload community content if active
     if (typeof window.unloadCommunityContent === "function") {
       window.unloadCommunityContent();
     }
 
-    // Load dashboard
     const existingScript = document.getElementById("site-dash-script");
     if (existingScript) existingScript.remove();
 
@@ -206,6 +238,7 @@ class SiteHeader extends HTMLElement {
         typeof window.loadDashContent === "function"
       ) {
         window.loadDashContent(main);
+        this.setSectionVisibility('dashboard');
       } else {
         console.error("loadDashContent function not found");
       }
@@ -215,32 +248,20 @@ class SiteHeader extends HTMLElement {
       main.innerHTML = "<p>Error loading dashboard</p>";
     };
     document.body.appendChild(script);
-
-    // Show site-feed
-    if (feed) {
-      feed.style.display = "";
-    }
   }
 
   handleForecastClick(event) {
     event.preventDefault();
     const main = document.querySelector("site-main");
     const nav = document.querySelector("site-nav");
-    const feed = document.querySelector("site-feed");
     if (!nav || !main) return;
 
-    // Unload community content if active
     if (typeof window.unloadCommunityContent === "function") {
       window.unloadCommunityContent();
     }
 
-    // Load forecast
     nav.loadPage("kbc");
-
-    // Show site-feed
-    if (feed) {
-      feed.style.display = "";
-    }
+    this.setSectionVisibility('forecast');
   }
 
   handleCommunityClick(event) {
@@ -248,7 +269,6 @@ class SiteHeader extends HTMLElement {
     const main = document.querySelector("site-main");
     if (!main) return;
 
-    // Unload any existing community script
     const existingScript = document.getElementById("site-community-script");
     if (existingScript) existingScript.remove();
 
@@ -261,6 +281,7 @@ class SiteHeader extends HTMLElement {
         typeof window.loadCommunityContent === "function"
       ) {
         window.loadCommunityContent(main);
+        this.setSectionVisibility('community');
       } else {
         console.error("loadCommunityContent function not found");
       }
@@ -274,3 +295,13 @@ class SiteHeader extends HTMLElement {
 }
 
 customElements.define("site-header", SiteHeader);
+
+// Expose setSectionVisibility globally
+window.setSectionVisibility = function(page) {
+  const header = document.querySelector("site-header");
+  if (header && header.setSectionVisibility) {
+    header.setSectionVisibility(page);
+  } else {
+    console.error("setSectionVisibility not available in site-header");
+  }
+};

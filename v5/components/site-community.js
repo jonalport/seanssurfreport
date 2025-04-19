@@ -8,33 +8,28 @@ window.loadCommunityContent = function (main) {
         ></iframe>
     `;
 
-  // Get the iframe
   const iframe = main.querySelector("iframe");
   let heightTimeout;
   let lastHeight = 0;
-  const maxHeight = 3200; // Match Discourse cap
+  const maxHeight = 3200;
 
-  // Define setIframeHeight in a shared scope
   function setIframeHeight(height) {
-    // Ignore minor changes or excessive heights
     if (Math.abs(height - lastHeight) < 30 || height > maxHeight) return;
     clearTimeout(heightTimeout);
     heightTimeout = setTimeout(() => {
       console.log("Setting iframe height:", height);
       iframe.style.height = `${height}px`;
       lastHeight = height;
-    }, 100); // Debounce 100ms
+    }, 100);
   }
 
-  // Store the message handler for cleanup
   const messageHandler = (event) => {
-    if (event.origin !== "https://community.seanssurfreport.com") return; // Security check
+    if (event.origin !== "https://community.seanssurfreport.com") return;
     if (event.data.type === "iframeHeight") {
       setIframeHeight(event.data.height);
     }
   };
 
-  // Store the resize handler for cleanup
   const resizeHandler = () => {
     try {
       iframe.contentWindow.postMessage(
@@ -43,39 +38,22 @@ window.loadCommunityContent = function (main) {
       );
     } catch (e) {
       console.error("Cannot request height:", e);
-      setIframeHeight(2000); // Fallback
+      setIframeHeight(2000);
     }
   };
 
-  // Add event listeners
   window.addEventListener("message", messageHandler);
   window.addEventListener("resize", resizeHandler);
 
-  // Fallback height if no postMessage is received
   setTimeout(() => {
     if (!iframe.style.height || iframe.style.height === "500px") {
       console.warn("No postMessage received, applying fallback height");
-      setIframeHeight(2000); // Fallback
+      setIframeHeight(2000);
     }
-  }, 5000); // Wait 5 seconds
+  }, 5000);
 
-  // Hide the site-footer
-  const footer = document.querySelector("site-footer");
-  if (footer) {
-    footer.style.display = "none";
-    const shadowFooter = footer.shadowRoot?.querySelector("footer");
-    if (shadowFooter) {
-      shadowFooter.style.display = "none";
-    }
-  }
+  window.setSectionVisibility('community');
 
-  // Hide the site-feed
-  const feed = document.querySelector("site-feed");
-  if (feed) {
-    feed.style.display = "none";
-  }
-
-  // Add styles (only once, if not already added)
   if (!document.querySelector("style#site-community-styles")) {
     const style = document.createElement("style");
     style.id = "site-community-styles";
@@ -85,47 +63,41 @@ window.loadCommunityContent = function (main) {
                 min-height: 100%;
                 margin: 0;
                 padding: 0;
-                overflow-y: auto; /* Main page handles vertical scrolling */
-                overflow-x: hidden; /* Prevent horizontal scrollbar */
+                overflow-y: auto;
+                overflow-x: hidden;
             }
             site-main {
                 width: 100%;
-                min-height: 100vh; /* Minimum height, can grow */
-                height: auto; /* Allow expansion */
+                min-height: 100vh;
+                height: auto;
                 margin: 0;
                 padding: 0;
-                overflow: visible; /* Allow site-main to expand */
+                overflow: visible;
                 box-sizing: border-box;
             }
             iframe {
                 display: block;
                 width: 100%;
-                overflow: hidden !important; /* No iframe scrollbars */
+                overflow: hidden !important;
                 border: none;
                 margin: 0 auto;
-                min-height: 500px; /* Prevent collapsing to 150px */
+                min-height: 500px;
             }
-            site-footer {
-                display: none !important; /* Ensure footer is hidden */
-            }
-            site-feed {
-                display: none !important; /* Ensure feed is hidden */
+            site-footer, site-feed, site-nav {
+                display: none !important;
             }
         `;
     document.head.appendChild(style);
   }
 
-  // Store handlers for cleanup
   window.loadCommunityContent.messageHandler = messageHandler;
   window.loadCommunityContent.resizeHandler = resizeHandler;
 };
 
-// Cleanup function to remove community-specific styles and restore footer and feed
 window.unloadCommunityContent = function () {
   const communityStyles = document.getElementById("site-community-styles");
   if (communityStyles) communityStyles.remove();
 
-  // Remove event listeners using stored handlers
   if (window.loadCommunityContent.messageHandler) {
     window.removeEventListener(
       "message",
@@ -139,23 +111,6 @@ window.unloadCommunityContent = function () {
     );
   }
 
-  // Clean up stored handlers
   delete window.loadCommunityContent.messageHandler;
   delete window.loadCommunityContent.resizeHandler;
-
-  // Restore the site-footer
-  const footer = document.querySelector("site-footer");
-  if (footer) {
-    footer.style.display = "";
-    const shadowFooter = footer.shadowRoot?.querySelector("footer");
-    if (shadowFooter) {
-      shadowFooter.style.display = "";
-    }
-  }
-
-  // Restore the site-feed
-  const feed = document.querySelector("site-feed");
-  if (feed) {
-    feed.style.display = "";
-  }
 };
