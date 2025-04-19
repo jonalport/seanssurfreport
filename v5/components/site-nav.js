@@ -58,17 +58,46 @@ class SiteNav extends HTMLElement {
             height: 100%;
             align-items: stretch;
             box-sizing: border-box;
+            justify-content: center; /* Default to center */
         `;
 
         const updateAlignment = () => {
             const contentWidth = Array.from(navContainer.querySelectorAll('.nav-card-wrapper'))
                 .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20;
             const containerWidth = navContainer.offsetWidth;
-            navContainer.style.justifyContent = contentWidth <= containerWidth ? 'center' : 'flex-start';
+            // Only switch to flex-start if content overflows
+            navContainer.style.justifyContent = contentWidth > containerWidth ? 'flex-start' : 'center';
         };
 
-        navContainer.scrollLeft = 0;
-        updateAlignment();
+        // Wait for images to load before checking alignment
+        const images = this.querySelectorAll('.nav-card');
+        let loadedImages = 0;
+        const totalImages = images.length;
+
+        const checkAlignment = () => {
+            requestAnimationFrame(() => {
+                navContainer.scrollLeft = 0;
+                updateAlignment();
+            });
+        };
+
+        if (totalImages === 0) {
+            checkAlignment(); // No images to wait for
+        } else {
+            images.forEach(img => {
+                // Create a temporary image to listen for load events
+                const tempImg = new Image();
+                const bgImage = img.style.backgroundImage.slice(5, -2); // Extract URL from `url('...')`
+                tempImg.src = bgImage;
+                tempImg.onload = tempImg.onerror = () => {
+                    loadedImages++;
+                    if (loadedImages === totalImages) {
+                        checkAlignment();
+                    }
+                };
+            });
+        }
+
         window.addEventListener('resize', updateAlignment);
 
         this.querySelectorAll('.nav-card-wrapper').forEach(wrapper => {
@@ -300,8 +329,6 @@ class SiteNav extends HTMLElement {
         const navContainer = this.querySelector('.nav-container');
         navContainer.style.display = 'none';
         void navContainer.offsetHeight;
-        navContainer.style.display = 'flex';
-
         navContainer.style.cssText = `
             display: flex;
             overflow-x: auto;
@@ -311,6 +338,7 @@ class SiteNav extends HTMLElement {
             height: 100%;
             align-items: stretch;
             box-sizing: border-box;
+            justify-content: center; /* Default to center */
         `;
 
         this.querySelectorAll('.nav-card-wrapper').forEach(wrapper => {
