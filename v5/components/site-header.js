@@ -160,7 +160,6 @@ class SiteHeader extends HTMLElement {
       .querySelector(".icon-community")
       .addEventListener("click", this.handleCommunityClick.bind(this));
 
-    // Initialize image cache
     this.imageCache = {
       kbc: { url: 'https://worker.seanssurfreport.com/kbc', timestamp: null, element: null },
       bos: { url: 'https://worker.seanssurfreport.com/bos', timestamp: null, element: null },
@@ -175,31 +174,47 @@ class SiteHeader extends HTMLElement {
 
   initializeImageCache() {
     const cacheContainer = this.shadowRoot.querySelector('#image-cache');
+    console.log('Initializing image cache');
     Object.entries(this.imageCache).forEach(([location, data]) => {
       const img = document.createElement('img');
       img.dataset.location = location;
       img.src = data.url;
+      img.onerror = () => {
+        console.error(`Failed to load image for ${location}: ${data.url}. Falling back to offline image.`);
+        img.src = './img/offline.jpg';
+      };
+      img.onload = () => console.log(`Successfully loaded image for ${location}: ${data.url}`);
       cacheContainer.appendChild(img);
       this.imageCache[location].element = img;
-      // Initial metadata fetch for non-static images
       if (data.url.startsWith('http')) {
         this.fetchImageMetadata(location, data.url);
       }
     });
 
-    // Start metadata check interval
     this.metadataInterval = setInterval(() => this.checkImageMetadata(), 60000);
   }
 
   async fetchImageMetadata(location, url) {
     try {
-      const response = await fetch(url, { method: 'HEAD' });
+      let response = await fetch(url, { method: 'HEAD' });
       if (response.ok) {
         const timestamp = response.headers.get('X-Upload-Timestamp');
+        console.log(`Fetched metadata for ${location}: Timestamp = ${timestamp || 'none'}`);
         return timestamp || null;
+      } else if (response.status === 405) {
+        response = await fetch(url, { method: 'GET' });
+        if (response.ok) {
+          const timestamp = response.headers.get('X-Upload-Timestamp');
+          console.log(`Fetched metadata via GET for ${location}: Timestamp = ${timestamp || 'none'}`);
+          return timestamp || null;
+        } else {
+          console.error(`GET request failed for ${location}: Status ${response.status}`);
+        }
+      } else {
+        console.error(`HEAD request failed for ${location}: Status ${response.status}`);
       }
     } catch (error) {
-      console.error(`Error fetching metadata for ${location}:`, error);
+      console.error(`Error fetching metadata for ${location}: ${error.message}`);
     }
     return null;
   }
@@ -207,12 +222,12 @@ class SiteHeader extends HTMLElement {
   async checkImageMetadata() {
     console.log('Checking image metadata for all locations');
     for (const [location, data] of Object.entries(this.imageCache)) {
-      if (!data.url.startsWith('http')) continue; // Skip static images (mikoko)
+      if (!data.url.startsWith('http')) continue;
       const newTimestamp = await this.fetchImageMetadata(location, data.url);
       if (newTimestamp && newTimestamp !== data.timestamp) {
         console.log(`Image metadata changed for ${location}. Old timestamp: ${data.timestamp || 'none'}, New timestamp: ${newTimestamp}. Refreshing image.`);
         data.timestamp = newTimestamp;
-        data.element.src = `${data.url}?t=${Date.now()}`; // Force refresh
+        data.element.src = `${data.url}?t=${Date.now()}`;
       }
     }
   }
@@ -220,9 +235,10 @@ class SiteHeader extends HTMLElement {
   getLocationImage(location) {
     const data = this.imageCache[location];
     if (data && data.element) {
+      console.log(`Returning image URL for ${location}: ${data.element.src}`);
       return data.element.src;
     }
-    console.warn(`No image found for location: ${location}`);
+    console.warn(`No image found for location: ${location}. Returning offline image.`);
     return './img/offline.jpg';
   }
 
@@ -287,11 +303,9 @@ class SiteHeader extends HTMLElement {
         tempContainer.appendChild(script);
 
         script.onload = function () {
-          console.log(`Windguru script loaded: ${uid}, attaching to index ${index}`);
           if (widgetElements.length > index) {
             const widgetContent = script.nextSibling || document.querySelector(`#${uid} + *`);
             if (widgetContent) {
-              console.log(`Attaching widget content for ${uid} to index ${index}`);
               widgetElements[index].innerHTML = '';
               widgetElements[index].appendChild(widgetContent);
               widgetContent.style.width = '100%';
@@ -303,17 +317,11 @@ class SiteHeader extends HTMLElement {
               if (tempContainer.parentNode && !tempContainer.children.length) {
                 document.body.removeChild(tempContainer);
               }
-            } else {
-              console.error(`No widget content found for ${uid}`);
             }
-          } else {
-            console.error(`No widget element at index ${index} for ${uid}, total elements: ${widgetElements.length}`);
           }
         };
 
-        script.onerror = function () {
-          console.error(`Failed to load Windguru script: ${uid}`);
-        };
+        script.onerror = function () {};
       };
       if (document.readyState === 'complete') {
         loader();
@@ -360,14 +368,41 @@ class SiteHeader extends HTMLElement {
     event.preventDefault();
     const main = document.querySelector("site-main");
     const nav = document.querySelector("site-nav");
-    if (!nav || !main) return;
+    if (!nav || !main) {
+      console.error("site-nav or site-main not found");
+      return;
+    }
 
     if (typeof window.unloadCommunityContent === "function") {
       window.unloadCommunityContent();
     }
 
-    nav.loadPage("kbc");
-    this.setSectionVisibility('forecast');
+    if (typeof nav.loadPage === "function") {
+      nav.loadPage("kbc");
+      this.setSectionVisibility('forecast');
+    } else {
+      console.error("nav.loadPage is not a function, loading site-forecast.js manually");
+      const existingScript = document.getElementById('site-forecast-script');
+      if (existingScript) existingScript.remove();
+
+      const script = document.createElement("script");
+      script.src = "components/site-forecast.js";
+      script.id = "site-forecast-script";
+      script.onload = () => {
+        if (typeof window.loadSiteContent === "function") {
+          window.loadSiteContent(main, "kbc");
+          this.setSectionVisibility('forecast');
+        } else {
+          console.error("loadSiteContent function not found");
+          main.innerHTML = "<p>Error loading forecast page</p>";
+        }
+      };
+      script.onerror = () => {
+        console.error("Failed to load site-forecast.js");
+        main.innerHTML = "<p>Error loading forecast page</p>";
+      };
+      document.body.appendChild(script);
+    }
   }
 
   handleCommunityClick(event) {
@@ -406,7 +441,6 @@ class SiteHeader extends HTMLElement {
 
 customElements.define("site-header", SiteHeader);
 
-// Expose setSectionVisibility, injectWindguruWidget, and getLocationImage globally
 window.setSectionVisibility = function(page) {
   const header = document.querySelector("site-header");
   if (header && header.setSectionVisibility) {

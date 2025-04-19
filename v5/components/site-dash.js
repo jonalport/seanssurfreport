@@ -29,6 +29,7 @@ window.loadDashContent = function(main) {
           position: relative;
           margin: 0;
           padding: 0;
+          display: block;
         `;
       });
   
@@ -161,9 +162,7 @@ window.loadDashContent = function(main) {
       }
   
       widgetInitializationTimeout = setTimeout(() => {
-        console.log('Cleaning up existing Windguru scripts');
         document.querySelectorAll('script[id^="wglive_"]').forEach(script => {
-          console.log(`Removing Windguru script: ${script.id}`);
           script.remove();
         });
   
@@ -172,12 +171,6 @@ window.loadDashContent = function(main) {
         });
   
         const widgetElements = document.querySelectorAll('.dash-card widget-windguru.dash-widget');
-        console.log(`Dashboard widget elements found: ${widgetElements.length}`);
-  
-        widgetElements.forEach((widget, idx) => {
-          const parent = widget.closest('.dash-card-link')?.getAttribute('href') || 'unknown';
-          console.log(`Widget ${idx}: Parent link = ${parent}`);
-        });
   
         if (widgetElements.length !== 5 && retryCount < maxRetries) {
           console.warn(`Expected 5 dashboard widget elements, found ${widgetElements.length}, retrying in 1000ms (attempt ${retryCount + 1}/${maxRetries})`);
@@ -188,7 +181,6 @@ window.loadDashContent = function(main) {
         if (widgetElements.length !== 5) {
           console.error(`Incorrect number of dashboard widget elements (${widgetElements.length}), falling back to generic selector`);
           const fallbackElements = document.querySelectorAll('widget-windguru.dash-widget');
-          console.log(`Fallback widget elements found: ${fallbackElements.length}`);
           if (fallbackElements.length === 5) {
             injectWindguruWidgets(fallbackElements);
           } else {
@@ -202,12 +194,9 @@ window.loadDashContent = function(main) {
     };
   
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      console.log('DOM ready, initializing widgets');
       initializeWidgets();
     } else {
-      console.log('Waiting for DOMContentLoaded to initialize widgets');
       document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded fired, initializing widgets');
         initializeWidgets();
       }, { once: true });
     }
@@ -221,6 +210,8 @@ window.loadDashContent = function(main) {
           const navComponent = document.querySelector('site-nav');
           if (navComponent && typeof navComponent.loadPage === 'function') {
             navComponent.loadPage(page);
+          } else {
+            console.error('navComponent.loadPage is not available');
           }
         });
       });
@@ -229,15 +220,10 @@ window.loadDashContent = function(main) {
   };
   
   function injectWindguruWidgets(widgetElements) {
-    console.log('Injecting Windguru widget: wglive_2146_1706848056699 at index 0');
     window.injectWindguruWidget('2146', 'wglive_2146_1706848056699', 0, widgetElements);
-    console.log('Injecting Windguru widget: wglive_3568_1706847920748 at index 1');
     window.injectWindguruWidget('3568', 'wglive_3568_1706847920748', 1, widgetElements);
-    console.log('Injecting Windguru widget: wglive_3858_1710779222995 at index 2');
     window.injectWindguruWidget('3858', 'wglive_3858_1710779222995', 2, widgetElements);
-    console.log('Injecting Windguru widget: wglive_4065_1715855101032 at index 3');
     window.injectWindguruWidget('4065', 'wglive_4065_1715855101032', 3, widgetElements);
-    console.log('Injecting Windguru widget: wglive_2014_1713422960240 at index 4');
     window.injectWindguruWidget('2014', 'wglive_2014_1713422960240', 4, widgetElements);
   }
   
@@ -250,6 +236,9 @@ window.loadDashContent = function(main) {
       { image: window.getLocationImage('sandy'), text: 'Sandy Beach Hotel, Dibba', page: 'sandy' },
       { image: window.getLocationImage('mikoko'), text: 'Mikoko, Umm Al Quwain', page: 'mikoko' }
     ];
+    locations.forEach(loc => {
+      console.log(`Dashboard card image for ${loc.page}: ${loc.image}`);
+    });
     return locations.map(loc => `
       <a href="#${loc.page}" class="dash-card-link">
         <div class="dash-card-wrapper">

@@ -1,4 +1,3 @@
-// Configure location specific data here
 const locations = {
   'kbc': {
     name: 'Kitesurf Beach Center, UAQ',
@@ -123,6 +122,7 @@ class CameraPhoto extends HTMLElement {
           transition: transform 0.3s ease, filter 0.3s ease;
           background: url(./img/blurred.png);
           background-size: cover;
+          display: block;
         }
         .loaded {
           opacity: 1; 
@@ -198,6 +198,10 @@ class CameraPhoto extends HTMLElement {
       this.handleImageLoad({ target: imgElement });
     } else if (imageUrl) {
       imgElement.onload = (e) => this.handleImageLoad(e);
+      imgElement.onerror = () => {
+        console.error(`Failed to load image for CameraPhoto: ${imageUrl}. Falling back to placeholder.`);
+        imgElement.src = './img/blurred.png';
+      };
     }
 
     if (this.emitdata) {
@@ -229,6 +233,10 @@ class CameraPhoto extends HTMLElement {
     if (imageUrl && imgElement.src !== imageUrl) {
       imgElement.src = imageUrl;
       imgElement.onload = (e) => this.handleImageLoad(e);
+      imgElement.onerror = () => {
+        console.error(`Failed to load updated image for CameraPhoto: ${imageUrl}. Falling back to placeholder.`);
+        imgElement.src = './img/blurred.png';
+      };
     }
   }
 
@@ -237,7 +245,6 @@ class CameraPhoto extends HTMLElement {
   }
 
   handleImageClick() {
-    console.log("clicked");
     const imageUrl = this.getAttribute("image-url");
     const linkUrl = this.getAttribute("link-url");
     const emitData = this.getAttribute("emitdata");
