@@ -155,7 +155,7 @@ class SiteHeader extends HTMLElement {
             </style>
 
             <div class="logo-group">
-                <a class="logo-site" href="/v4/">
+                <a class="logo-site" href="/v5/">
                     <img src="./img/logo.png" alt="Sean's surf report">
                 </a>
                 <a class="icon-dash" href="/dashboard">

@@ -4,27 +4,39 @@ class SiteNav extends HTMLElement {
         this.innerHTML = `
             <div class="nav-container">
                 <div class="nav-card-wrapper" data-page="kbc" draggable="true">
-                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/kbc')"></div>
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/kbc')">
+                        <widget-windguru></widget-windguru>
+                    </div>
                     <div class="nav-card-text">Kitesurf Beach Center, UAQ</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="bos" draggable="true">
-                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/bos')"></div>
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/bos')">
+                        <widget-windguru></widget-windguru>
+                    </div>
                     <div class="nav-card-text">Blue Ocean Sports, JA</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="yas" draggable="true">
-                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/yas')"></div>
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/yas')">
+                        <widget-windguru></widget-windguru>
+                    </div>
                     <div class="nav-card-text">Yas Kite Area, Abu Dhabi</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="dosc" draggable="true">
-                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/dosc')"></div>
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/dosc')">
+                        <widget-windguru></widget-windguru>
+                    </div>
                     <div class="nav-card-text">Dubai Offshore Sailing Club</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="sandy" draggable="true">
-                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/sandy')"></div>
+                    <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/sandy')">
+                        <widget-windguru></widget-windguru>
+                    </div>
                     <div class="nav-card-text">Sandy Beach Hotel, Dibba</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="mikoko" draggable="true">
-                    <div class="nav-card" style="background-image: url('./img/offline.jpg')"></div>
+                    <div class="nav-card" style="background-image: url('./img/offline.jpg')">
+                        <widget-windguru></widget-windguru>
+                    </div>
                     <div class="nav-card-text">Mikoko, UAQ</div>
                 </div>
             </div>
@@ -32,6 +44,7 @@ class SiteNav extends HTMLElement {
 
         this.addEventListener('click', this.handleCardClick.bind(this));
         this.setupDragAndDrop();
+        this.injectWindguruWidgets(); // Inject widgets on construction
     }
 
     connectedCallback() {
@@ -80,6 +93,7 @@ class SiteNav extends HTMLElement {
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
+                position: relative;
             `;
         });
 
@@ -95,6 +109,81 @@ class SiteNav extends HTMLElement {
                 color: #000;
             `;
         });
+
+        this.querySelectorAll('widget-windguru').forEach(widget => {
+            widget.style.cssText = `
+                width: 28%;
+                aspect-ratio: 1 / 1;
+                position: absolute;
+                bottom: 5%;
+                left: 2.5%;
+                z-index: 10;
+            `;
+        });
+    }
+
+    injectWindguruWidgets() {
+        const injectWidget = (spot, uid, index) => {
+            if (!spot || !uid || spot === 'blank' || uid === 'blank') return;
+            (function (window, document) {
+                var loader = function () {
+                    var arg = [
+                        `spot=${spot}`,
+                        `uid=${uid}`,
+                        "color=light",
+                        "wj=knots",
+                        "tj=c",
+                        "avg_min=0",
+                        "gsize=400",
+                        "msize=400",
+                        "m=3",
+                        "arrow=y",
+                        "show=n,g,c,f,m"
+                    ];
+                    var script = document.createElement("script");
+                    script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+                    script.id = uid;
+
+                    const tempContainer = document.createElement('div');
+                    tempContainer.style.display = 'none';
+                    document.body.appendChild(tempContainer);
+                    tempContainer.appendChild(script);
+
+                    script.onload = function () {
+                        const widgetElements = document.querySelectorAll('widget-windguru');
+                        if (widgetElements.length > index) {
+                            const widgetContent = script.nextSibling || document.querySelector(`#${uid} + *`);
+                            if (widgetContent) {
+                                widgetElements[index].innerHTML = '';
+                                widgetElements[index].appendChild(widgetContent);
+                                widgetContent.style.width = '100%';
+                                widgetContent.style.height = '100%';
+
+                                if (script.parentNode === tempContainer) {
+                                    tempContainer.removeChild(script);
+                                }
+                                if (tempContainer.parentNode && !tempContainer.children.length) {
+                                    document.body.removeChild(tempContainer);
+                                }
+                            }
+                        }
+                    };
+                };
+                if (document.readyState === 'complete') {
+                    loader();
+                } else {
+                    window.addEventListener('load', loader, false);
+                }
+            })(window, document);
+        };
+
+        // Inject widgets for each location, matching site-dash.js
+        injectWidget('2146', 'wglive_2146_1706848056699', 0); // KBC
+        injectWidget('3568', 'wglive_3568_1706847920748', 1); // BOS
+        injectWidget('3858', 'wglive_3858_1710779222995', 2); // YAS
+        injectWidget('4065', 'wglive_4065_1715855101032', 3); // DOSC
+        injectWidget('2014', 'wglive_2014_1713422960240', 4); // SANDY
+        // No widget for Mikoko (index 5), as it uses an offline image and no Windguru data
     }
 
     setupDragAndDrop() {
@@ -262,6 +351,7 @@ class SiteNav extends HTMLElement {
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
+                position: relative;
             `;
         });
 
@@ -275,6 +365,17 @@ class SiteNav extends HTMLElement {
                 text-align: center;
                 white-space: nowrap;
                 color: #000;
+            `;
+        });
+
+        this.querySelectorAll('widget-windguru').forEach(widget => {
+            widget.style.cssText = `
+                width: 20%;
+                aspect-ratio: 1 / 1;
+                position: absolute;
+                bottom: 5%;
+                left: 2.5%;
+                z-index: 10;
             `;
         });
 
