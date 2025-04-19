@@ -14,6 +14,7 @@ window.loadCommunityContent = function (main) {
   let lastHeight = 0;
   const maxHeight = 3200; // Match Discourse cap
 
+  // Define setIframeHeight in a shared scope
   function setIframeHeight(height) {
     // Ignore minor changes or excessive heights
     if (Math.abs(height - lastHeight) < 30 || height > maxHeight) return;
@@ -25,24 +26,16 @@ window.loadCommunityContent = function (main) {
     }, 100); // Debounce 100ms
   }
 
-  // Listen for postMessage from Discourse
-  window.addEventListener("message", (event) => {
+  // Store the message handler for cleanup
+  const messageHandler = (event) => {
     if (event.origin !== "https://community.seanssurfreport.com") return; // Security check
     if (event.data.type === "iframeHeight") {
       setIframeHeight(event.data.height);
     }
-  });
+  };
 
-  // Fallback height if no postMessage is received
-  setTimeout(() => {
-    if (!iframe.style.height || iframe.style.height === "500px") {
-      console.warn("No postMessage received, applying fallback height");
-      setIframeHeight(2000); // Fallback
-    }
-  }, 5000); // Wait 5 seconds
-
-  // Request height on window resize
-  window.addEventListener("resize", () => {
+  // Store the resize handler for cleanup
+  const resizeHandler = () => {
     try {
       iframe.contentWindow.postMessage(
         { type: "requestHeight" },
@@ -52,7 +45,19 @@ window.loadCommunityContent = function (main) {
       console.error("Cannot request height:", e);
       setIframeHeight(2000); // Fallback
     }
-  });
+  };
+
+  // Add event listeners
+  window.addEventListener("message", messageHandler);
+  window.addEventListener("resize", resizeHandler);
+
+  // Fallback height if no postMessage is received
+  setTimeout(() => {
+    if (!iframe.style.height || iframe.style.height === "500px") {
+      console.warn("No postMessage received, applying fallback height");
+      setIframeHeight(2000); // Fallback
+    }
+  }, 5000); // Wait 5 seconds
 
   // Hide the site-footer
   const footer = document.querySelector("site-footer");
@@ -109,6 +114,10 @@ window.loadCommunityContent = function (main) {
         `;
     document.head.appendChild(style);
   }
+
+  // Store handlers for cleanup
+  window.loadCommunityContent.messageHandler = messageHandler;
+  window.loadCommunityContent.resizeHandler = resizeHandler;
 };
 
 // Cleanup function to remove community-specific styles and restore footer and feed
@@ -116,9 +125,23 @@ window.unloadCommunityContent = function () {
   const communityStyles = document.getElementById("site-community-styles");
   if (communityStyles) communityStyles.remove();
 
-  // Remove event listeners
-  window.removeEventListener("message", setIframeHeight);
-  window.removeEventListener("resize", setIframeHeight);
+  // Remove event listeners using stored handlers
+  if (window.loadCommunityContent.messageHandler) {
+    window.removeEventListener(
+      "message",
+      window.loadCommunityContent.messageHandler
+    );
+  }
+  if (window.loadCommunityContent.resizeHandler) {
+    window.removeEventListener(
+      "resize",
+      window.loadCommunityContent.resizeHandler
+    );
+  }
+
+  // Clean up stored handlers
+  delete window.loadCommunityContent.messageHandler;
+  delete window.loadCommunityContent.resizeHandler;
 
   // Restore the site-footer
   const footer = document.querySelector("site-footer");
