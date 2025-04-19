@@ -1,5 +1,5 @@
-window.loadCommunityContent = function(main) {
-    main.innerHTML = `
+window.loadCommunityContent = function (main) {
+  main.innerHTML = `
         <iframe 
             src="https://community.seanssurfreport.com" 
             style="width: 100%; border: none; overflow: hidden;" 
@@ -8,45 +8,67 @@ window.loadCommunityContent = function(main) {
         ></iframe>
     `;
 
-    // Get the iframe and set its height dynamically
-    const iframe = main.querySelector('iframe');
-    function resizeIframe() {
-        try {
-            // Access iframe content height with a slight delay to ensure content is loaded
-            setTimeout(() => {
-                const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-                iframe.style.height = `${contentHeight}px`;
-                // Ensure iframe scrollbars are disabled
-                iframe.contentWindow.document.body.style.overflow = 'hidden';
-            }, 100); // Adjust delay if needed
-        } catch (e) {
-            console.error('Cannot access iframe content height:', e);
-            // Fallback height for cross-origin content
-            iframe.style.height = '2000px'; // Adjust based on typical content height
+  // Get the iframe and set its height dynamically
+  const iframe = main.querySelector("iframe");
+  function resizeIframe() {
+    let attempts = 0;
+    const maxAttempts = 10; // Retry up to 10 times
+    function tryResize() {
+      try {
+        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+        console.log("Iframe content height:", contentHeight); // Debug log
+        if (contentHeight > 150) {
+          // Avoid small default heights
+          iframe.style.height = `${contentHeight}px`;
+          iframe.contentWindow.document.body.style.overflow = "hidden";
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          console.log(
+            `Attempt ${attempts}: Content height too small (${contentHeight}px), retrying...`
+          );
+          setTimeout(tryResize, 300); // Retry after 300ms
+        } else {
+          console.warn("No valid content height after retries, using fallback");
+          iframe.style.height = "5000px"; // Fallback height
         }
+      } catch (e) {
+        console.error("Cannot access iframe content height:", e);
+        iframe.style.height = "5000px"; // Fallback for cross-origin
+        console.log("Applied fallback height of 5000px");
+      }
     }
+    tryResize();
+  }
 
-    // Initial resize after iframe loads
-    iframe.addEventListener('load', resizeIframe);
+  // Initial resize after iframe loads
+  iframe.addEventListener("load", resizeIframe);
 
-    // Resize on window resize to handle dynamic content
-    window.addEventListener('resize', resizeIframe);
+  // Resize on window resize
+  window.addEventListener("resize", resizeIframe);
 
-    // Hide the site-footer
-    const footer = document.querySelector('site-footer');
-    if (footer) {
-        footer.style.display = 'none';
-        const shadowFooter = footer.shadowRoot?.querySelector('footer');
-        if (shadowFooter) {
-            shadowFooter.style.display = 'none';
-        }
+  // Optional: Listen for postMessage if you control the iframe content
+  window.addEventListener("message", (event) => {
+    if (event.data.type === "iframeHeight") {
+      console.log("Received postMessage height:", event.data.height);
+      iframe.style.height = `${event.data.height}px`;
     }
+  });
 
-    // Add styles (only once, if not already added)
-    if (!document.querySelector('style#site-community-styles')) {
-        const style = document.createElement('style');
-        style.id = 'site-community-styles';
-        style.textContent = `
+  // Hide the site-footer
+  const footer = document.querySelector("site-footer");
+  if (footer) {
+    footer.style.display = "none";
+    const shadowFooter = footer.shadowRoot?.querySelector("footer");
+    if (shadowFooter) {
+      shadowFooter.style.display = "none";
+    }
+  }
+
+  // Add styles (only once, if not already added)
+  if (!document.querySelector("style#site-community-styles")) {
+    const style = document.createElement("style");
+    style.id = "site-community-styles";
+    style.textContent = `
             html, body {
                 height: auto;
                 min-height: 100%;
@@ -58,6 +80,7 @@ window.loadCommunityContent = function(main) {
             site-main {
                 width: 100%;
                 min-height: 100vh; /* Minimum height, can grow */
+                height: auto; /* Allow expansion */
                 margin: 0;
                 padding: 0;
                 overflow: visible; /* Allow site-main to expand */
@@ -69,30 +92,32 @@ window.loadCommunityContent = function(main) {
                 overflow: hidden !important; /* No iframe scrollbars */
                 border: none;
                 margin: 0 auto;
+                min-height: 500px; /* Prevent collapsing to 150px */
             }
             site-footer {
                 display: none !important; /* Ensure footer is hidden */
             }
         `;
-        document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+  }
 };
 
 // Cleanup function to remove community-specific styles and restore footer
-window.unloadCommunityContent = function() {
-    const communityStyles = document.getElementById('site-community-styles');
-    if (communityStyles) communityStyles.remove();
+window.unloadCommunityContent = function () {
+  const communityStyles = document.getElementById("site-community-styles");
+  if (communityStyles) communityStyles.remove();
 
-    // Remove resize event listener
-    window.removeEventListener('resize', resizeIframe);
+  // Remove event listeners
+  window.removeEventListener("resize", resizeIframe);
+  window.removeEventListener("message", resizeIframe);
 
-    // Restore the site-footer
-    const footer = document.querySelector('site-footer');
-    if (footer) {
-        footer.style.display = '';
-        const shadowFooter = footer.shadowRoot?.querySelector('footer');
-        if (shadowFooter) {
-            shadowFooter.style.display = '';
-        }
+  // Restore the site-footer
+  const footer = document.querySelector("site-footer");
+  if (footer) {
+    footer.style.display = "";
+    const shadowFooter = footer.shadowRoot?.querySelector("footer");
+    if (shadowFooter) {
+      shadowFooter.style.display = "";
     }
+  }
 };
