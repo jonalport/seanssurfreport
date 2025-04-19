@@ -64,6 +64,12 @@ window.loadCommunityContent = function (main) {
     }
   }
 
+  // Hide the site-feed
+  const feed = document.querySelector("site-feed");
+  if (feed) {
+    feed.style.display = "none";
+  }
+
   // Add styles (only once, if not already added)
   if (!document.querySelector("style#site-community-styles")) {
     const style = document.createElement("style");
@@ -97,12 +103,15 @@ window.loadCommunityContent = function (main) {
             site-footer {
                 display: none !important; /* Ensure footer is hidden */
             }
+            site-feed {
+                display: none !important; /* Ensure feed is hidden */
+            }
         `;
     document.head.appendChild(style);
   }
 };
 
-// Cleanup function to remove community-specific styles and restore footer
+// Cleanup function to remove community-specific styles and restore footer and feed
 window.unloadCommunityContent = function () {
   const communityStyles = document.getElementById("site-community-styles");
   if (communityStyles) communityStyles.remove();
@@ -119,5 +128,11 @@ window.unloadCommunityContent = function () {
     if (shadowFooter) {
       shadowFooter.style.display = "";
     }
+  }
+
+  // Restore the site-feed
+  const feed = document.querySelector("site-feed");
+  if (feed) {
+    feed.style.display = "";
   }
 };

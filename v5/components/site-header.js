@@ -1,9 +1,9 @@
 class SiteHeader extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
 
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
                   integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
                   crossorigin="anonymous">
@@ -170,69 +170,107 @@ class SiteHeader extends HTMLElement {
             </div>
         `;
 
-        // Add event listeners for the buttons
-        this.shadowRoot.querySelector('.icon-dash').addEventListener('click', this.handleDashClick.bind(this));
-        this.shadowRoot.querySelector('.icon-forecast').addEventListener('click', this.handleForecastClick.bind(this));
-        this.shadowRoot.querySelector('.icon-community').addEventListener('click', this.handleCommunityClick.bind(this));
+    // Add event listeners for the buttons
+    this.shadowRoot
+      .querySelector(".icon-dash")
+      .addEventListener("click", this.handleDashClick.bind(this));
+    this.shadowRoot
+      .querySelector(".icon-forecast")
+      .addEventListener("click", this.handleForecastClick.bind(this));
+    this.shadowRoot
+      .querySelector(".icon-community")
+      .addEventListener("click", this.handleCommunityClick.bind(this));
+  }
+
+  handleDashClick(event) {
+    event.preventDefault();
+    const main = document.querySelector("site-main");
+    const feed = document.querySelector("site-feed");
+    if (!main) return;
+
+    // Unload community content if active
+    if (typeof window.unloadCommunityContent === "function") {
+      window.unloadCommunityContent();
     }
 
-    handleDashClick(event) {
-        event.preventDefault();
-        const main = document.querySelector('site-main');
-        if (!main) return;
+    // Load dashboard
+    const existingScript = document.getElementById("site-dash-script");
+    if (existingScript) existingScript.remove();
 
-        const existingScript = document.getElementById('site-dash-script');
-        if (existingScript) existingScript.remove();
+    const script = document.createElement("script");
+    script.src = "components/site-dash.js";
+    script.id = "site-dash-script";
+    script.onload = () => {
+      if (
+        window.loadDashContent &&
+        typeof window.loadDashContent === "function"
+      ) {
+        window.loadDashContent(main);
+      } else {
+        console.error("loadDashContent function not found");
+      }
+    };
+    script.onerror = () => {
+      console.error("Failed to load site-dash.js");
+      main.innerHTML = "<p>Error loading dashboard</p>";
+    };
+    document.body.appendChild(script);
 
-        const script = document.createElement('script');
-        script.src = 'components/site-dash.js';
-        script.id = 'site-dash-script';
-        script.onload = () => {
-            if (window.loadDashContent && typeof window.loadDashContent === 'function') {
-                window.loadDashContent(main);
-            } else {
-                console.error('loadDashContent function not found');
-            }
-        };
-        script.onerror = () => {
-            console.error('Failed to load site-dash.js');
-            main.innerHTML = '<p>Error loading dashboard</p>';
-        };
-        document.body.appendChild(script);
+    // Show site-feed
+    if (feed) {
+      feed.style.display = "";
+    }
+  }
+
+  handleForecastClick(event) {
+    event.preventDefault();
+    const main = document.querySelector("site-main");
+    const nav = document.querySelector("site-nav");
+    const feed = document.querySelector("site-feed");
+    if (!nav || !main) return;
+
+    // Unload community content if active
+    if (typeof window.unloadCommunityContent === "function") {
+      window.unloadCommunityContent();
     }
 
-    handleForecastClick(event) {
-        event.preventDefault();
-        const nav = document.querySelector('site-nav');
-        if (!nav) return;
+    // Load forecast
+    nav.loadPage("kbc");
 
-        nav.loadPage('kbc');
+    // Show site-feed
+    if (feed) {
+      feed.style.display = "";
     }
+  }
 
-    handleCommunityClick(event) {
-        event.preventDefault();
-        const main = document.querySelector('site-main');
-        if (!main) return;
+  handleCommunityClick(event) {
+    event.preventDefault();
+    const main = document.querySelector("site-main");
+    if (!main) return;
 
-        const existingScript = document.getElementById('site-community-script');
-        if (existingScript) existingScript.remove();
+    // Unload any existing community script
+    const existingScript = document.getElementById("site-community-script");
+    if (existingScript) existingScript.remove();
 
-        const script = document.createElement('script');
-        script.src = 'components/site-community.js';
-        script.id = 'site-community-script';
-        script.onload = () => {
-            if (window.loadCommunityContent && typeof window.loadCommunityContent === 'function') {
-                window.loadCommunityContent(main);
-            } else {
-                console.error('loadCommunityContent function not found');
-            }
-        };
-        script.onerror = () => {
-            console.error('Failed to load site-community.js');
-            main.innerHTML = '<p>Error loading community page</p>';
-        };
-        document.body.appendChild(script);
-    }
+    const script = document.createElement("script");
+    script.src = "components/site-community.js";
+    script.id = "site-community-script";
+    script.onload = () => {
+      if (
+        window.loadCommunityContent &&
+        typeof window.loadCommunityContent === "function"
+      ) {
+        window.loadCommunityContent(main);
+      } else {
+        console.error("loadCommunityContent function not found");
+      }
+    };
+    script.onerror = () => {
+      console.error("Failed to load site-community.js");
+      main.innerHTML = "<p>Error loading community page</p>";
+    };
+    document.body.appendChild(script);
+  }
 }
 
-customElements.define('site-header', SiteHeader);
+customElements.define("site-header", SiteHeader);
