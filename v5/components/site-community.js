@@ -12,11 +12,11 @@ window.loadCommunityContent = function (main) {
   const iframe = main.querySelector("iframe");
   function resizeIframe() {
     let attempts = 0;
-    const maxAttempts = 10; // Retry up to 10 times
+    const maxAttempts = 10;
     function tryResize() {
       try {
         const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-        console.log("Iframe content height:", contentHeight); // Debug log
+        console.log("Iframe content height:", contentHeight);
         if (contentHeight > 150) {
           // Avoid small default heights
           iframe.style.height = `${contentHeight}px`;
@@ -26,15 +26,15 @@ window.loadCommunityContent = function (main) {
           console.log(
             `Attempt ${attempts}: Content height too small (${contentHeight}px), retrying...`
           );
-          setTimeout(tryResize, 300); // Retry after 300ms
+          setTimeout(tryResize, 300);
         } else {
           console.warn("No valid content height after retries, using fallback");
-          iframe.style.height = "5000px"; // Fallback height
+          iframe.style.height = "2000px"; // Reduced fallback height
         }
       } catch (e) {
         console.error("Cannot access iframe content height:", e);
-        iframe.style.height = "5000px"; // Fallback for cross-origin
-        console.log("Applied fallback height of 5000px");
+        iframe.style.height = "2000px"; // Fallback for cross-origin
+        console.log("Applied fallback height of 2000px");
       }
     }
     tryResize();
@@ -46,8 +46,9 @@ window.loadCommunityContent = function (main) {
   // Resize on window resize
   window.addEventListener("resize", resizeIframe);
 
-  // Optional: Listen for postMessage if you control the iframe content
+  // Listen for postMessage from Discourse
   window.addEventListener("message", (event) => {
+    if (event.origin !== "https://community.seanssurfreport.com") return; // Security check
     if (event.data.type === "iframeHeight") {
       console.log("Received postMessage height:", event.data.height);
       iframe.style.height = `${event.data.height}px`;
