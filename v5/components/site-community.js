@@ -31,7 +31,7 @@ window.loadCommunityContent = function (main) {
   setTimeout(() => {
     if (!iframe.style.height || iframe.style.height === "500px") {
       console.warn("No postMessage received, applying fallback height");
-      iframe.style.height = "2000px";
+      setIframeHeight(2000); // Fallback
     }
   }, 5000); // Wait 5 seconds
 
