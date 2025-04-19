@@ -190,7 +190,7 @@ class SiteNav extends HTMLElement {
     if (!main || !nav) return;
 
     const currentPage = window.location.hash.slice(1);
-    const forecastPages = ['kbc', 'bos', 'yas', 'dosc', 'sandy', 'mikoko'];
+    const forecastPages = ['kbc', 'bos', 'yas', 'dosc', 'sandy', `mikoko`];
     if (forecastPages.includes(currentPage) && !forecastPages.includes(page)) {
       if (typeof window.unloadSiteContent === 'function') {
         window.unloadSiteContent();
@@ -217,6 +217,8 @@ class SiteNav extends HTMLElement {
         if (typeof window.loadDashContent === 'function') {
           window.loadDashContent(main);
           window.setSectionVisibility('dashboard');
+        } else {
+          main.innerHTML = `<p>Error loading dashboard</p>`;
         }
       };
       script.onerror = () => {
@@ -237,6 +239,8 @@ class SiteNav extends HTMLElement {
         if (typeof window.loadCommunityContent === 'function') {
           window.loadCommunityContent(main);
           window.setSectionVisibility('community');
+        } else {
+          main.innerHTML = `<p>Error loading community page</p>`;
         }
       };
       script.onerror = () => {
@@ -273,6 +277,8 @@ class SiteNav extends HTMLElement {
         script.onload = () => {
           if (typeof window.loadSiteContent === 'function') {
             window.loadSiteContent(main, locationId);
+          } else {
+            main.innerHTML = `<p>Error loading content for ${page}</p>`;
           }
         };
         script.onerror = () => {

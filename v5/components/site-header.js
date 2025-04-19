@@ -189,7 +189,9 @@ class SiteHeader extends HTMLElement {
       }
     });
 
-    this.metadataInterval = setInterval(() => this.checkImageMetadata(), 60000);
+    this.metadataInterval = setInterval(() => {
+      this.checkImageMetadata().catch(() => {});
+    }, 60000);
   }
 
   async fetchImageMetadata(location, url) {
@@ -339,6 +341,8 @@ class SiteHeader extends HTMLElement {
       ) {
         window.loadDashContent(main);
         this.setSectionVisibility('dashboard');
+      } else {
+        main.innerHTML = "<p>Error loading dashboard</p>";
       }
     };
     script.onerror = () => {
@@ -351,9 +355,7 @@ class SiteHeader extends HTMLElement {
     event.preventDefault();
     const main = document.querySelector("site-main");
     const nav = document.querySelector("site-nav");
-    if (!nav || !main) {
-      return;
-    }
+    if (!nav || !main) return;
 
     if (typeof window.unloadCommunityContent === "function") {
       window.unloadCommunityContent();
@@ -402,6 +404,8 @@ class SiteHeader extends HTMLElement {
       ) {
         window.loadCommunityContent(main);
         this.setSectionVisibility('community');
+      } else {
+        main.innerHTML = "<p>Error loading community page</p>";
       }
     };
     script.onerror = () => {
