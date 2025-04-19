@@ -170,7 +170,6 @@ class SiteHeader extends HTMLElement {
             </div>
         `;
 
-    // Add event listeners for the buttons
     this.shadowRoot
       .querySelector(".icon-dash")
       .addEventListener("click", this.handleDashClick.bind(this));
@@ -182,7 +181,6 @@ class SiteHeader extends HTMLElement {
       .addEventListener("click", this.handleCommunityClick.bind(this));
   }
 
-  // Centralized function to control section visibility
   setSectionVisibility(page) {
     const nav = document.querySelector("site-nav");
     const feed = document.querySelector("site-feed");
@@ -215,6 +213,69 @@ class SiteHeader extends HTMLElement {
         if (footer) footer.style.display = "";
         if (shadowFooter) shadowFooter.style.display = "";
     }
+  }
+
+  injectWindguruWidget(spot, uid, index, widgetElements = document.querySelectorAll('widget-windguru')) {
+    if (!spot || !uid || spot === 'blank' || uid === 'blank') return;
+    (function (window, document) {
+      var loader = function () {
+        var arg = [
+          `spot=${spot}`,
+          `uid=${uid}`,
+          "color=light",
+          "wj=knots",
+          "tj=c",
+          "avg_min=0",
+          "gsize=400",
+          "msize=400",
+          "m=3",
+          "arrow=y",
+          "show=n,g,c,f,m"
+        ];
+        var script = document.createElement("script");
+        script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
+        script.id = uid;
+
+        const tempContainer = document.createElement('div');
+        tempContainer.style.display = 'none';
+        document.body.appendChild(tempContainer);
+        tempContainer.appendChild(script);
+
+        script.onload = function () {
+          console.log(`Windguru script loaded: ${uid}, attaching to index ${index}`);
+          if (widgetElements.length > index) {
+            const widgetContent = script.nextSibling || document.querySelector(`#${uid} + *`);
+            if (widgetContent) {
+              console.log(`Attaching widget content for ${uid} to index ${index}`);
+              widgetElements[index].innerHTML = '';
+              widgetElements[index].appendChild(widgetContent);
+              widgetContent.style.width = '100%';
+              widgetContent.style.height = '100%';
+
+              if (script.parentNode === tempContainer) {
+                tempContainer.removeChild(script);
+              }
+              if (tempContainer.parentNode && !tempContainer.children.length) {
+                document.body.removeChild(tempContainer);
+              }
+            } else {
+              console.error(`No widget content found for ${uid}`);
+            }
+          } else {
+            console.error(`No widget element at index ${index} for ${uid}, total elements: ${widgetElements.length}`);
+          }
+        };
+
+        script.onerror = function () {
+          console.error(`Failed to load Windguru script: ${uid}`);
+        };
+      };
+      if (document.readyState === 'complete') {
+        loader();
+      } else {
+        window.addEventListener('load', loader, { once: true });
+      }
+    })(window, document);
   }
 
   handleDashClick(event) {
@@ -296,12 +357,21 @@ class SiteHeader extends HTMLElement {
 
 customElements.define("site-header", SiteHeader);
 
-// Expose setSectionVisibility globally
+// Expose setSectionVisibility and injectWindguruWidget globally
 window.setSectionVisibility = function(page) {
   const header = document.querySelector("site-header");
   if (header && header.setSectionVisibility) {
     header.setSectionVisibility(page);
   } else {
     console.error("setSectionVisibility not available in site-header");
+  }
+};
+
+window.injectWindguruWidget = function(spot, uid, index, widgetElements) {
+  const header = document.querySelector("site-header");
+  if (header && header.injectWindguruWidget) {
+    header.injectWindguruWidget(spot, uid, index, widgetElements);
+  } else {
+    console.error("injectWindguruWidget not available in site-header");
   }
 };

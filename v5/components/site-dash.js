@@ -1,12 +1,9 @@
 window.loadDashContent = function(main) {
-    // Full reset: Clear content and styles
     main.innerHTML = '';
     main.removeAttribute('style');
 
-    // Remove all non-dashboard styles to prevent conflicts
     document.querySelectorAll('style:not(#dashboard-layout-style)').forEach(style => style.remove());
 
-    // Load initial dashboard content
     main.innerHTML = `
         <section>
             <div class="dash-card-grid">
@@ -15,7 +12,6 @@ window.loadDashContent = function(main) {
         </section>
     `;
 
-    // Apply styles programmatically to dash-card elements
     const applyDashCardStyles = () => {
         const dashCards = main.querySelectorAll('.dash-card');
         dashCards.forEach(card => {
@@ -50,11 +46,9 @@ window.loadDashContent = function(main) {
     };
     applyDashCardStyles();
 
-    // Remove existing dashboard styles if present
     const existingStyle = document.getElementById('dashboard-layout-style');
     if (existingStyle) existingStyle.remove();
 
-    // Add container styles with explicit resets and clickable styling
     const style = document.createElement('style');
     style.id = 'dashboard-layout-style';
     style.textContent = `
@@ -125,7 +119,7 @@ window.loadDashContent = function(main) {
             flex-grow: 0;
             flex-shrink: 0;
         }
-        widget-windguru { 
+        widget-windguru.dash-widget { 
             width: 14%;
             aspect-ratio: 1 / 1;
             position: absolute; 
@@ -149,19 +143,81 @@ window.loadDashContent = function(main) {
     `;
     document.head.appendChild(style);
 
-    // Hide site-nav when loading dashboard
     const nav = document.querySelector('site-nav');
     if (nav) {
         nav.style.display = 'none';
+        // Clear site-nav widget content
+        nav.querySelectorAll('widget-windguru').forEach(widget => {
+            widget.innerHTML = '';
+        });
     }
 
-    // Update URL hash
     history.pushState({ page: 'dashboard' }, 'Dashboard', '#dashboard');
 
-    // Inject Windguru widgets once on initial load
-    injectWindguruWidgets();
+    let widgetInitializationTimeout = null;
 
-    // Add click event listeners for navigation
+    const initializeWidgets = (retryCount = 0, maxRetries = 3) => {
+        // Debounce to prevent multiple calls during live reload
+        if (widgetInitializationTimeout) {
+            clearTimeout(widgetInitializationTimeout);
+        }
+
+        widgetInitializationTimeout = setTimeout(() => {
+            // Clean up existing Windguru scripts
+            console.log('Cleaning up existing Windguru scripts');
+            document.querySelectorAll('script[id^="wglive_"]').forEach(script => {
+                console.log(`Removing Windguru script: ${script.id}`);
+                script.remove();
+            });
+
+            // Clear all widget content
+            document.querySelectorAll('widget-windguru').forEach(widget => {
+                widget.innerHTML = '';
+            });
+
+            // Use scoped selector for dashboard widgets
+            const widgetElements = document.querySelectorAll('.dash-card widget-windguru.dash-widget');
+            console.log(`Dashboard widget elements found: ${widgetElements.length}`);
+
+            // Log context of each widget element
+            widgetElements.forEach((widget, idx) => {
+                const parent = widget.closest('.dash-card-link')?.getAttribute('href') || 'unknown';
+                console.log(`Widget ${idx}: Parent link = ${parent}`);
+            });
+
+            if (widgetElements.length !== 5 && retryCount < maxRetries) {
+                console.warn(`Expected 5 dashboard widget elements, found ${widgetElements.length}, retrying in 1000ms (attempt ${retryCount + 1}/${maxRetries})`);
+                initializeWidgets(retryCount + 1, maxRetries);
+                return;
+            }
+
+            if (widgetElements.length !== 5) {
+                console.error(`Incorrect number of dashboard widget elements (${widgetElements.length}), falling back to generic selector`);
+                const fallbackElements = document.querySelectorAll('widget-windguru.dash-widget');
+                console.log(`Fallback widget elements found: ${fallbackElements.length}`);
+                if (fallbackElements.length === 5) {
+                    injectWindguruWidgets(fallbackElements);
+                } else {
+                    console.error('Insufficient widget elements for dashboard, aborting widget initialization');
+                    return;
+                }
+            } else {
+                injectWindguruWidgets(widgetElements);
+            }
+        }, 100);
+    };
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        console.log('DOM ready, initializing widgets');
+        initializeWidgets();
+    } else {
+        console.log('Waiting for DOMContentLoaded to initialize widgets');
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded fired, initializing widgets');
+            initializeWidgets();
+        }, { once: true });
+    }
+
     const attachClickListeners = () => {
         const dashCardLinks = main.querySelectorAll('.dash-card-link');
         dashCardLinks.forEach(link => {
@@ -177,7 +233,6 @@ window.loadDashContent = function(main) {
     };
     attachClickListeners();
 
-    // Function to preload images and update them seamlessly
     const preloadAndUpdateImages = () => {
         const locations = [
             { image: `https://worker.seanssurfreport.com/kbc?t=${Date.now()}`, page: 'kbc' },
@@ -189,12 +244,12 @@ window.loadDashContent = function(main) {
         ];
 
         const imagePromises = locations.map(loc => {
-            if (loc.image.startsWith('http')) { // Only preload remote images
+            if (loc.image.startsWith('http')) {
                 return new Promise((resolve) => {
                     const img = new Image();
                     img.src = loc.image;
                     img.onload = () => resolve({ page: loc.page, image: loc.image });
-                    img.onerror = () => resolve({ page: loc.page, image: loc.image }); // Resolve even on error
+                    img.onerror = () => resolve({ page: loc.page, image: loc.image });
                 });
             } else {
                 return Promise.resolve({ page: loc.page, image: loc.image });
@@ -205,7 +260,7 @@ window.loadDashContent = function(main) {
             const dashCards = main.querySelectorAll('.dash-card');
             dashCards.forEach(card => {
                 const link = card.closest('.dash-card-link');
-                const page = link.getAttribute('href').substring(1); // Extract page from href
+                const page = link.getAttribute('href').substring(1);
                 const newImage = loadedImages.find(img => img.page === page);
                 if (newImage) {
                     card.style.backgroundImage = `url('${newImage.image}')`;
@@ -214,73 +269,22 @@ window.loadDashContent = function(main) {
         });
     };
 
-    // Auto-refresh images every 60 seconds (without re-injecting widgets)
     setInterval(() => {
         preloadAndUpdateImages();
-    }, 60000); // 60,000 milliseconds = 60 seconds
+    }, 60000);
 };
 
-// Keep the injectWindguruWidgets and getDashboardCards functions as they are
-function injectWindguruWidgets() {
-    const injectWidget = (spot, uid, index) => {
-        if (!spot || !uid || spot === 'blank' || uid === 'blank') return;
-        (function (window, document) {
-            var loader = function () {
-                var arg = [
-                    `spot=${spot}`,
-                    `uid=${uid}`,
-                    "color=light",
-                    "wj=knots",
-                    "tj=c",
-                    "avg_min=0",
-                    "gsize=400",
-                    "msize=400",
-                    "m=3",
-                    "arrow=y",
-                    "show=n,g,c,f,m"
-                ];
-                var script = document.createElement("script");
-                script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                script.id = uid;
-
-                const tempContainer = document.createElement('div');
-                tempContainer.style.display = 'none';
-                document.body.appendChild(tempContainer);
-                tempContainer.appendChild(script);
-
-                script.onload = function () {
-                    const widgetKbcElements = document.querySelectorAll('widget-windguru');
-                    if (widgetKbcElements.length > index) {
-                        const widgetContent = script.nextSibling || document.querySelector(`#${uid} + *`);
-                        if (widgetContent) {
-                            widgetKbcElements[index].innerHTML = '';
-                            widgetKbcElements[index].appendChild(widgetContent);
-                            widgetContent.style.width = '100%';
-                            widgetContent.style.height = '100%';
-
-                            if (script.parentNode === tempContainer) {
-                                tempContainer.removeChild(script);
-                            }
-                            if (tempContainer.parentNode && !tempContainer.children.length) {
-                                document.body.removeChild(tempContainer);
-                            }
-                        }
-                    }
-                };
-            };
-            if (document.readyState === 'complete') {
-                loader();
-            } else {
-                window.addEventListener('load', loader, false);
-            }
-        })(window, document);
-    };
-
-    injectWidget('2146', 'wglive_2146_1706848056699', 0); // KBC
-    injectWidget('3568', 'wglive_3568_1706847920748', 1); // BOS
-    injectWidget('3858', 'wglive_3858_1710779222995', 2); // YAS
-    injectWidget('4065', 'wglive_4065_1715855101032', 3); // DOSC
-    injectWidget('2014', 'wglive_2014_1713422960240', 4); // SANDY
+function injectWindguruWidgets(widgetElements) {
+    console.log('Injecting Windguru widget: wglive_2146_1706848056699 at index 0');
+    window.injectWindguruWidget('2146', 'wglive_2146_1706848056699', 0, widgetElements);
+    console.log('Injecting Windguru widget: wglive_3568_1706847920748 at index 1');
+    window.injectWindguruWidget('3568', 'wglive_3568_1706847920748', 1, widgetElements);
+    console.log('Injecting Windguru widget: wglive_3858_1710779222995 at index 2');
+    window.injectWindguruWidget('3858', 'wglive_3858_1710779222995', 2, widgetElements);
+    console.log('Injecting Windguru widget: wglive_4065_1715855101032 at index 3');
+    window.injectWindguruWidget('4065', 'wglive_4065_1715855101032', 3, widgetElements);
+    console.log('Injecting Windguru widget: wglive_2014_1713422960240 at index 4');
+    window.injectWindguruWidget('2014', 'wglive_2014_1713422960240', 4, widgetElements);
 }
 
 function getDashboardCards() {
@@ -296,7 +300,7 @@ function getDashboardCards() {
         <a href="#${loc.page}" class="dash-card-link">
             <div class="dash-card-wrapper">
                 <div class="dash-card" style="background-image: url('${loc.image}')">
-                    <widget-windguru></widget-windguru>
+                    ${loc.page !== 'mikoko' ? '<widget-windguru class="dash-widget"></widget-windguru>' : ''}
                 </div>
                 <div class="dash-card-text">${loc.text}</div>
             </div>

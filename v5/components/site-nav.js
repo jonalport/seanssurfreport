@@ -5,37 +5,37 @@ class SiteNav extends HTMLElement {
             <div class="nav-container">
                 <div class="nav-card-wrapper" data-page="kbc" draggable="true">
                     <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/kbc')">
-                        <widget-windguru></widget-windguru>
+                        <widget-windguru class="nav-widget"></widget-windguru>
                     </div>
                     <div class="nav-card-text">Kitesurf Beach Center, UAQ</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="bos" draggable="true">
                     <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/bos')">
-                        <widget-windguru></widget-windguru>
+                        <widget-windguru class="nav-widget"></widget-windguru>
                     </div>
                     <div class="nav-card-text">Blue Ocean Sports, JA</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="yas" draggable="true">
                     <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/yas')">
-                        <widget-windguru></widget-windguru>
+                        <widget-windguru class="nav-widget"></widget-windguru>
                     </div>
                     <div class="nav-card-text">Yas Kite Area, Abu Dhabi</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="dosc" draggable="true">
                     <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/dosc')">
-                        <widget-windguru></widget-windguru>
+                        <widget-windguru class="nav-widget"></widget-windguru>
                     </div>
                     <div class="nav-card-text">Dubai Offshore Sailing Club</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="sandy" draggable="true">
                     <div class="nav-card" style="background-image: url('https://worker.seanssurfreport.com/sandy')">
-                        <widget-windguru></widget-windguru>
+                        <widget-windguru class="nav-widget"></widget-windguru>
                     </div>
                     <div class="nav-card-text">Sandy Beach Hotel, Dibba</div>
                 </div>
                 <div class="nav-card-wrapper" data-page="mikoko" draggable="true">
                     <div class="nav-card" style="background-image: url('./img/offline.jpg')">
-                        <widget-windguru></widget-windguru>
+                        <widget-windguru class="nav-widget"></widget-windguru>
                     </div>
                     <div class="nav-card-text">Mikoko, UAQ</div>
                 </div>
@@ -110,7 +110,7 @@ class SiteNav extends HTMLElement {
             `;
         });
 
-        this.querySelectorAll('widget-windguru').forEach(widget => {
+        this.querySelectorAll('widget-windguru.nav-widget').forEach(widget => {
             widget.style.cssText = `
                 width: 20%;
                 aspect-ratio: 1 / 1;
@@ -123,65 +123,14 @@ class SiteNav extends HTMLElement {
     }
 
     injectWindguruWidgets() {
-        const injectWidget = (spot, uid, index) => {
-            if (!spot || !uid || spot === 'blank' || uid === 'blank') return;
-            (function (window, document) {
-                var loader = function () {
-                    var arg = [
-                        `spot=${spot}`,
-                        `uid=${uid}`,
-                        "color=light",
-                        "wj=knots",
-                        "tj=c",
-                        "avg_min=0",
-                        "gsize=400",
-                        "msize=400",
-                        "m=3",
-                        "arrow=y",
-                        "show=n,g,c,f,m"
-                    ];
-                    var script = document.createElement("script");
-                    script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-                    script.id = uid;
-
-                    const tempContainer = document.createElement('div');
-                    tempContainer.style.display = 'none';
-                    document.body.appendChild(tempContainer);
-                    tempContainer.appendChild(script);
-
-                    script.onload = function () {
-                        const widgetElements = document.querySelectorAll('widget-windguru');
-                        if (widgetElements.length > index) {
-                            const widgetContent = script.nextSibling || document.querySelector(`#${uid} + *`);
-                            if (widgetContent) {
-                                widgetElements[index].innerHTML = '';
-                                widgetElements[index].appendChild(widgetContent);
-                                widgetContent.style.width = '100%';
-                                widgetContent.style.height = '100%';
-
-                                if (script.parentNode === tempContainer) {
-                                    tempContainer.removeChild(script);
-                                }
-                                if (tempContainer.parentNode && !tempContainer.children.length) {
-                                    document.body.removeChild(tempContainer);
-                                }
-                            }
-                        }
-                    };
-                };
-                if (document.readyState === 'complete') {
-                    loader();
-                } else {
-                    window.addEventListener('load', loader, false);
-                }
-            })(window, document);
-        };
-
-        injectWidget('2146', 'wglive_2146_1706848056699', 0); // KBC
-        injectWidget('3568', 'wglive_3568_1706847920748', 1); // BOS
-        injectWidget('3858', 'wglive_3858_1710779222995', 2); // YAS
-        injectWidget('4065', 'wglive_4065_1715855101032', 3); // DOSC
-        injectWidget('2014', 'wglive_2014_1713422960240', 4); // SANDY
+        const widgetElements = this.querySelectorAll('widget-windguru.nav-widget');
+        console.log(`Site-nav widget elements found: ${widgetElements.length}`);
+        // Use unique IDs for site-nav widgets to avoid conflicts with dashboard
+        window.injectWindguruWidget('2146', 'wglive_2146_nav_1706848056699', 0, widgetElements); // KBC
+        window.injectWindguruWidget('3568', 'wglive_3568_nav_1706847920748', 1, widgetElements); // BOS
+        window.injectWindguruWidget('3858', 'wglive_3858_nav_1710779222995', 2, widgetElements); // YAS
+        window.injectWindguruWidget('4065', 'wglive_4065_nav_1715855101032', 3, widgetElements); // DOSC
+        window.injectWindguruWidget('2014', 'wglive_2014_nav_1713422960240', 4, widgetElements); // SANDY
     }
 
     setupDragAndDrop() {
@@ -241,6 +190,10 @@ class SiteNav extends HTMLElement {
             if (typeof window.unloadSiteContent === 'function') {
                 window.unloadSiteContent();
             }
+            // Clear site-nav widget content when navigating away
+            this.querySelectorAll('widget-windguru.nav-widget').forEach(widget => {
+                widget.innerHTML = '';
+            });
         }
 
         if (currentPage === 'community' && page !== 'community') {
@@ -269,6 +222,10 @@ class SiteNav extends HTMLElement {
                 main.innerHTML = `<p>Error loading dashboard</p>`;
             };
             document.body.appendChild(script);
+            // Clear site-nav widget content
+            this.querySelectorAll('widget-windguru.nav-widget').forEach(widget => {
+                widget.innerHTML = '';
+            });
         } else if (page === 'community') {
             const existingScript = document.getElementById('site-community-script');
             if (existingScript) existingScript.remove();
@@ -289,11 +246,19 @@ class SiteNav extends HTMLElement {
                 main.innerHTML = `<p>Error loading community page</p>`;
             };
             document.body.appendChild(script);
+            // Clear site-nav widget content
+            this.querySelectorAll('widget-windguru.nav-widget').forEach(widget => {
+                widget.innerHTML = '';
+            });
         } else {
             const pageType = forecastPages.includes(page) ? 'forecast' : 'unknown';
             window.setSectionVisibility(pageType);
             nav.style.display = pageType === 'forecast' ? '' : 'none';
             this.resetNavLayout();
+            // Re-inject widgets when displaying site-nav
+            if (pageType === 'forecast') {
+                this.injectWindguruWidgets();
+            }
 
             const locationMap = {
                 'kbc': 'kbc',
@@ -387,7 +352,7 @@ class SiteNav extends HTMLElement {
             `;
         });
 
-        this.querySelectorAll('widget-windguru').forEach(widget => {
+        this.querySelectorAll('widget-windguru.nav-widget').forEach(widget => {
             widget.style.cssText = `
                 width: 20%;
                 aspect-ratio: 1 / 1;
@@ -397,11 +362,6 @@ class SiteNav extends HTMLElement {
                 z-index: 10;
             `;
         });
-
-        const contentWidth = Array.from(navContainer.querySelectorAll('.nav-card-wrapper'))
-            .reduce((total, wrapper) => total + wrapper.offsetWidth + 20, 0) - 20;
-        const containerWidth = navContainer.offsetWidth;
-        navContainer.style.justifyContent = contentWidth <= containerWidth ? 'center' : 'flex-start';
     }
 }
 
