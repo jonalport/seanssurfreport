@@ -174,16 +174,14 @@ class SiteHeader extends HTMLElement {
 
   initializeImageCache() {
     const cacheContainer = this.shadowRoot.querySelector('#image-cache');
-    console.log('Initializing image cache');
     Object.entries(this.imageCache).forEach(([location, data]) => {
+      console.log(`Initializing image cache for ${location}`);
       const img = document.createElement('img');
       img.dataset.location = location;
       img.src = data.url;
       img.onerror = () => {
-        console.error(`Failed to load image for ${location}: ${data.url}. Falling back to offline image.`);
         img.src = './img/offline.jpg';
       };
-      img.onload = () => console.log(`Successfully loaded image for ${location}: ${data.url}`);
       cacheContainer.appendChild(img);
       this.imageCache[location].element = img;
       if (data.url.startsWith('http')) {
@@ -199,33 +197,24 @@ class SiteHeader extends HTMLElement {
       let response = await fetch(url, { method: 'HEAD' });
       if (response.ok) {
         const timestamp = response.headers.get('X-Upload-Timestamp');
-        console.log(`Fetched metadata for ${location}: Timestamp = ${timestamp || 'none'}`);
         return timestamp || null;
       } else if (response.status === 405) {
         response = await fetch(url, { method: 'GET' });
         if (response.ok) {
           const timestamp = response.headers.get('X-Upload-Timestamp');
-          console.log(`Fetched metadata via GET for ${location}: Timestamp = ${timestamp || 'none'}`);
           return timestamp || null;
-        } else {
-          console.error(`GET request failed for ${location}: Status ${response.status}`);
         }
-      } else {
-        console.error(`HEAD request failed for ${location}: Status ${response.status}`);
       }
-    } catch (error) {
-      console.error(`Error fetching metadata for ${location}: ${error.message}`);
-    }
+    } catch (error) {}
     return null;
   }
 
   async checkImageMetadata() {
-    console.log('Checking image metadata for all locations');
     for (const [location, data] of Object.entries(this.imageCache)) {
       if (!data.url.startsWith('http')) continue;
       const newTimestamp = await this.fetchImageMetadata(location, data.url);
       if (newTimestamp && newTimestamp !== data.timestamp) {
-        console.log(`Image metadata changed for ${location}. Old timestamp: ${data.timestamp || 'none'}, New timestamp: ${newTimestamp}. Refreshing image.`);
+        console.log(`Image metadata changed for ${location} at ${new Date().toISOString()}. Reloading image.`);
         data.timestamp = newTimestamp;
         data.element.src = `${data.url}?t=${Date.now()}`;
       }
@@ -235,10 +224,8 @@ class SiteHeader extends HTMLElement {
   getLocationImage(location) {
     const data = this.imageCache[location];
     if (data && data.element) {
-      console.log(`Returning image URL for ${location}: ${data.element.src}`);
       return data.element.src;
     }
-    console.warn(`No image found for location: ${location}. Returning offline image.`);
     return './img/offline.jpg';
   }
 
@@ -268,7 +255,6 @@ class SiteHeader extends HTMLElement {
         if (shadowFooter) shadowFooter.style.display = "none";
         break;
       default:
-        console.warn(`Unknown page: ${page}, resetting to default visibility`);
         if (nav) nav.style.display = "";
         if (feed) feed.style.display = "";
         if (footer) footer.style.display = "";
@@ -353,12 +339,9 @@ class SiteHeader extends HTMLElement {
       ) {
         window.loadDashContent(main);
         this.setSectionVisibility('dashboard');
-      } else {
-        console.error("loadDashContent function not found");
       }
     };
     script.onerror = () => {
-      console.error("Failed to load site-dash.js");
       main.innerHTML = "<p>Error loading dashboard</p>";
     };
     document.body.appendChild(script);
@@ -369,7 +352,6 @@ class SiteHeader extends HTMLElement {
     const main = document.querySelector("site-main");
     const nav = document.querySelector("site-nav");
     if (!nav || !main) {
-      console.error("site-nav or site-main not found");
       return;
     }
 
@@ -381,7 +363,6 @@ class SiteHeader extends HTMLElement {
       nav.loadPage("kbc");
       this.setSectionVisibility('forecast');
     } else {
-      console.error("nav.loadPage is not a function, loading site-forecast.js manually");
       const existingScript = document.getElementById('site-forecast-script');
       if (existingScript) existingScript.remove();
 
@@ -393,12 +374,10 @@ class SiteHeader extends HTMLElement {
           window.loadSiteContent(main, "kbc");
           this.setSectionVisibility('forecast');
         } else {
-          console.error("loadSiteContent function not found");
           main.innerHTML = "<p>Error loading forecast page</p>";
         }
       };
       script.onerror = () => {
-        console.error("Failed to load site-forecast.js");
         main.innerHTML = "<p>Error loading forecast page</p>";
       };
       document.body.appendChild(script);
@@ -423,12 +402,9 @@ class SiteHeader extends HTMLElement {
       ) {
         window.loadCommunityContent(main);
         this.setSectionVisibility('community');
-      } else {
-        console.error("loadCommunityContent function not found");
       }
     };
     script.onerror = () => {
-      console.error("Failed to load site-community.js");
       main.innerHTML = "<p>Error loading community page</p>";
     };
     document.body.appendChild(script);
@@ -445,8 +421,6 @@ window.setSectionVisibility = function(page) {
   const header = document.querySelector("site-header");
   if (header && header.setSectionVisibility) {
     header.setSectionVisibility(page);
-  } else {
-    console.error("setSectionVisibility not available in site-header");
   }
 };
 
@@ -454,8 +428,6 @@ window.injectWindguruWidget = function(spot, uid, index, widgetElements) {
   const header = document.querySelector("site-header");
   if (header && header.injectWindguruWidget) {
     header.injectWindguruWidget(spot, uid, index, widgetElements);
-  } else {
-    console.error("injectWindguruWidget not available in site-header");
   }
 };
 
@@ -463,8 +435,6 @@ window.getLocationImage = function(location) {
   const header = document.querySelector("site-header");
   if (header && header.getLocationImage) {
     return header.getLocationImage(location);
-  } else {
-    console.error("getLocationImage not available in site-header");
-    return './img/offline.jpg';
   }
+  return './img/offline.jpg';
 };

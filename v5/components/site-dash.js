@@ -173,19 +173,14 @@ window.loadDashContent = function(main) {
         const widgetElements = document.querySelectorAll('.dash-card widget-windguru.dash-widget');
   
         if (widgetElements.length !== 5 && retryCount < maxRetries) {
-          console.warn(`Expected 5 dashboard widget elements, found ${widgetElements.length}, retrying in 1000ms (attempt ${retryCount + 1}/${maxRetries})`);
           initializeWidgets(retryCount + 1, maxRetries);
           return;
         }
   
         if (widgetElements.length !== 5) {
-          console.error(`Incorrect number of dashboard widget elements (${widgetElements.length}), falling back to generic selector`);
           const fallbackElements = document.querySelectorAll('widget-windguru.dash-widget');
           if (fallbackElements.length === 5) {
             injectWindguruWidgets(fallbackElements);
-          } else {
-            console.error('Insufficient widget elements for dashboard, aborting widget initialization');
-            return;
           }
         } else {
           injectWindguruWidgets(widgetElements);
@@ -210,8 +205,6 @@ window.loadDashContent = function(main) {
           const navComponent = document.querySelector('site-nav');
           if (navComponent && typeof navComponent.loadPage === 'function') {
             navComponent.loadPage(page);
-          } else {
-            console.error('navComponent.loadPage is not available');
           }
         });
       });
@@ -236,9 +229,6 @@ window.loadDashContent = function(main) {
       { image: window.getLocationImage('sandy'), text: 'Sandy Beach Hotel, Dibba', page: 'sandy' },
       { image: window.getLocationImage('mikoko'), text: 'Mikoko, Umm Al Quwain', page: 'mikoko' }
     ];
-    locations.forEach(loc => {
-      console.log(`Dashboard card image for ${loc.page}: ${loc.image}`);
-    });
     return locations.map(loc => `
       <a href="#${loc.page}" class="dash-card-link">
         <div class="dash-card-wrapper">

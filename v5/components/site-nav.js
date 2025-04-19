@@ -9,9 +9,6 @@ class SiteNav extends HTMLElement {
       { page: 'sandy', text: 'Sandy Beach Hotel, Dibba', image: window.getLocationImage('sandy') },
       { page: 'mikoko', text: 'Mikoko, UAQ', image: window.getLocationImage('mikoko') }
     ];
-    locations.forEach(loc => {
-      console.log(`Nav card image for ${loc.page}: ${loc.image}`);
-    });
     this.innerHTML = `
       <div class="nav-container">
         ${locations.map(loc => `
@@ -220,12 +217,9 @@ class SiteNav extends HTMLElement {
         if (typeof window.loadDashContent === 'function') {
           window.loadDashContent(main);
           window.setSectionVisibility('dashboard');
-        } else {
-          console.error('loadDashContent function not found');
         }
       };
       script.onerror = () => {
-        console.error('Failed to load site-dash.js');
         main.innerHTML = `<p>Error loading dashboard</p>`;
       };
       document.body.appendChild(script);
@@ -243,12 +237,9 @@ class SiteNav extends HTMLElement {
         if (typeof window.loadCommunityContent === 'function') {
           window.loadCommunityContent(main);
           window.setSectionVisibility('community');
-        } else {
-          console.error('loadCommunityContent function not found');
         }
       };
       script.onerror = () => {
-        console.error('Failed to load site-community.js');
         main.innerHTML = `<p>Error loading community page</p>`;
       };
       document.body.appendChild(script);
@@ -282,19 +273,15 @@ class SiteNav extends HTMLElement {
         script.onload = () => {
           if (typeof window.loadSiteContent === 'function') {
             window.loadSiteContent(main, locationId);
-          } else {
-            console.error('loadSiteContent function not found');
           }
         };
         script.onerror = () => {
-          console.error('Failed to load site-forecast.js');
           main.innerHTML = `<p>Error loading content for ${page}</p>`;
         };
         document.body.appendChild(script);
       } else if (typeof window.loadSiteContent === 'function') {
         window.loadSiteContent(main, locationId);
       } else {
-        console.error('loadSiteContent function not available yet');
         main.innerHTML = `<p>Loading content for ${page}, please wait...</p>`;
       }
     }
