@@ -12,7 +12,7 @@ window.loadCommunityContent = function (main) {
   const iframe = main.querySelector("iframe");
   let heightTimeout;
   let lastHeight = 0;
-  const maxHeight = 4000; // Strict cap
+  const maxHeight = 3200; // Match Discourse cap
 
   function setIframeHeight(height) {
     // Ignore minor changes or excessive heights
