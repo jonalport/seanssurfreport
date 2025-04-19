@@ -4,171 +4,151 @@ class SiteHeader extends HTMLElement {
     this.attachShadow({ mode: "open" });
 
     this.shadowRoot.innerHTML = `
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-                  integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
-                  crossorigin="anonymous">
-            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" 
-                  rel="stylesheet">
-
-            <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-                    crossorigin="anonymous"></script>
-
-            <style>
-                :host {
-                    display: block;
-                    height: 70px;
-                    width: 100%;
-                    background-color: #141414;
-                }
-
-                .logo-group {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100%;
-                    width: auto;
-                    margin: 0;
-                    padding: 0;
-                    gap: 20px;
-                }
-
-                .logo-site {
-                    display: flex;
-                    align-items: center;
-                    height: 100%;
-                    margin: 0;
-                    padding: 0 20px 0 0;
-                }
-
-                .logo-site img {
-                    height: 100%;
-                    width: auto;
-                    max-width: 100%;
-                    object-fit: contain;
-                    padding: 17px 0;
-                }
-
-                .icon-dash {
-                    display: flex;
-                    align-items: center;
-                    height: 100%;
-                    margin: 0;
-                    padding: 14px 0;
-                }
-
-                .icon-dash img {
-                    height: 100%;
-                    width: auto;
-                    max-width: 100%;
-                    opacity: 65%;
-                    transition: opacity .25s ease-in-out;
-                    object-fit: contain;
-                }
-
-                .icon-dash img:hover {
-                    opacity: 100%;
-                }
-
-                .icon-forecast {
-                    display: flex;
-                    align-items: center;
-                    height: 100%;
-                    margin: 0;
-                    padding: 14px 0;
-                }
-
-                .icon-forecast img {
-                    height: 100%;
-                    width: auto;
-                    max-width: 100%;
-                    opacity: 65%;
-                    transition: opacity .25s ease-in-out;
-                    object-fit: contain;
-                }
-
-                .icon-forecast img:hover {
-                    opacity: 100%;
-                }
-
-                .icon-community {
-                    display: flex;
-                    align-items: center;
-                    height: 100%;
-                    margin: 0;
-                    padding: 14px 0;
-                }
-
-                .icon-community img {
-                    height: 100%;
-                    width: auto;
-                    max-width: 100%;
-                    opacity: 65%;
-                    transition: opacity .25s ease-in-out;
-                    object-fit: contain;
-                }
-
-                .icon-community img:hover {
-                    opacity: 100%;
-                }
-
-                @media (max-width: 640px) {
-                    .logo-group {
-                        gap: 15px;
-                        padding: 0 10px;
-                    }
-
-                    .logo-site {
-                        padding: 20px 0;
-                    }
-
-                    .logo-site img {
-                        padding: 0;
-                    }
-
-                    .icon-dash {
-                        padding: 13px 0px;
-                    }
-
-                    .icon-dash img {
-                        padding: 0;
-                    }
-
-                    .icon-forecast {
-                        padding: 13px 0px;
-                    }
-
-                    .icon-forecast img {
-                        padding: 0;
-                    }
-
-                    .icon-community {
-                        padding: 13px 0px;
-                    }
-
-                    .icon-community img {
-                        padding: 0;
-                    }
-                }
-            </style>
-
-            <div class="logo-group">
-                <a class="logo-site" href="/v5/">
-                    <img src="./img/logo.png" alt="Sean's surf report">
-                </a>
-                <a class="icon-dash" href="#dashboard">
-                    <img src="./img/icon_01_dash.png" alt="Dashboard">
-                </a>
-                <a class="icon-forecast" href="#kbc">
-                    <img src="./img/icon_02_forecast.png" alt="Forecast">
-                </a>
-                <a class="icon-community" href="#community">
-                    <img src="./img/icon_03_community.png" alt="Community">
-                </a>
-            </div>
-        `;
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
+            crossorigin="anonymous">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" 
+            rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+              crossorigin="anonymous"></script>
+      <style>
+        :host {
+          display: block;
+          height: 70px;
+          width: 100%;
+          background-color: #141414;
+        }
+        .logo-group {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: auto;
+          margin: 0;
+          padding: 0;
+          gap: 20px;
+        }
+        .logo-site {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          margin: 0;
+          padding: 0 20px 0 0;
+        }
+        .logo-site img {
+          height: 100%;
+          width: auto;
+          max-width: 100%;
+          object-fit: contain;
+          padding: 17px 0;
+        }
+        .icon-dash {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          margin: 0;
+          padding: 14px 0;
+        }
+        .icon-dash img {
+          height: 100%;
+          width: auto;
+          max-width: 100%;
+          opacity: 65%;
+          transition: opacity .25s ease-in-out;
+          object-fit: contain;
+        }
+        .icon-dash img:hover {
+          opacity: 100%;
+        }
+        .icon-forecast {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          margin: 0;
+          padding: 14px 0;
+        }
+        .icon-forecast img {
+          height: 100%;
+          width: auto;
+          max-width: 100%;
+          opacity: 65%;
+          transition: opacity .25s ease-in-out;
+          object-fit: contain;
+        }
+        .icon-forecast img:hover {
+          opacity: 100%;
+        }
+        .icon-community {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          margin: 0;
+          padding: 14px 0;
+        }
+        .icon-community img {
+          height: 100%;
+          width: auto;
+          max-width: 100%;
+          opacity: 65%;
+          transition: opacity .25s ease-in-out;
+          object-fit: contain;
+        }
+        .icon-community img:hover {
+          opacity: 100%;
+        }
+        #image-cache {
+          display: none;
+        }
+        @media (max-width: 640px) {
+          .logo-group {
+            gap: 15px;
+            padding: 0 10px;
+          }
+          .logo-site {
+            padding: 20px 0;
+          }
+          .logo-site img {
+            padding: 0;
+          }
+          .icon-dash {
+            padding: 13px 0px;
+          }
+          .icon-dash img {
+            padding: 0;
+          }
+          .icon-forecast {
+            padding: 13px 0px;
+          }
+          .icon-forecast img {
+            padding: 0;
+          }
+          .icon-community {
+            padding: 13px 0px;
+          }
+          .icon-community img {
+            padding: 0;
+          }
+        }
+      </style>
+      <div class="logo-group">
+        <a class="logo-site" href="/v5/">
+          <img src="./img/logo.png" alt="Sean's surf report">
+        </a>
+        <a class="icon-dash" href="#dashboard">
+          <img src="./img/icon_01_dash.png" alt="Dashboard">
+        </a>
+        <a class="icon-forecast" href="#kbc">
+          <img src="./img/icon_02_forecast.png" alt="Forecast">
+        </a>
+        <a class="icon-community" href="#community">
+          <img src="./img/icon_03_community.png" alt="Community">
+        </a>
+      </div>
+      <div id="image-cache"></div>
+    `;
 
     this.shadowRoot
       .querySelector(".icon-dash")
@@ -179,6 +159,71 @@ class SiteHeader extends HTMLElement {
     this.shadowRoot
       .querySelector(".icon-community")
       .addEventListener("click", this.handleCommunityClick.bind(this));
+
+    // Initialize image cache
+    this.imageCache = {
+      kbc: { url: 'https://worker.seanssurfreport.com/kbc', timestamp: null, element: null },
+      bos: { url: 'https://worker.seanssurfreport.com/bos', timestamp: null, element: null },
+      yas: { url: 'https://worker.seanssurfreport.com/yas', timestamp: null, element: null },
+      dosc: { url: 'https://worker.seanssurfreport.com/dosc', timestamp: null, element: null },
+      sandy: { url: 'https://worker.seanssurfreport.com/sandy', timestamp: null, element: null },
+      mikoko: { url: './img/offline.jpg', timestamp: 'static', element: null }
+    };
+
+    this.initializeImageCache();
+  }
+
+  initializeImageCache() {
+    const cacheContainer = this.shadowRoot.querySelector('#image-cache');
+    Object.entries(this.imageCache).forEach(([location, data]) => {
+      const img = document.createElement('img');
+      img.dataset.location = location;
+      img.src = data.url;
+      cacheContainer.appendChild(img);
+      this.imageCache[location].element = img;
+      // Initial metadata fetch for non-static images
+      if (data.url.startsWith('http')) {
+        this.fetchImageMetadata(location, data.url);
+      }
+    });
+
+    // Start metadata check interval
+    this.metadataInterval = setInterval(() => this.checkImageMetadata(), 60000);
+  }
+
+  async fetchImageMetadata(location, url) {
+    try {
+      const response = await fetch(url, { method: 'HEAD' });
+      if (response.ok) {
+        const timestamp = response.headers.get('X-Upload-Timestamp');
+        return timestamp || null;
+      }
+    } catch (error) {
+      console.error(`Error fetching metadata for ${location}:`, error);
+    }
+    return null;
+  }
+
+  async checkImageMetadata() {
+    console.log('Checking image metadata for all locations');
+    for (const [location, data] of Object.entries(this.imageCache)) {
+      if (!data.url.startsWith('http')) continue; // Skip static images (mikoko)
+      const newTimestamp = await this.fetchImageMetadata(location, data.url);
+      if (newTimestamp && newTimestamp !== data.timestamp) {
+        console.log(`Image metadata changed for ${location}. Old timestamp: ${data.timestamp || 'none'}, New timestamp: ${newTimestamp}. Refreshing image.`);
+        data.timestamp = newTimestamp;
+        data.element.src = `${data.url}?t=${Date.now()}`; // Force refresh
+      }
+    }
+  }
+
+  getLocationImage(location) {
+    const data = this.imageCache[location];
+    if (data && data.element) {
+      return data.element.src;
+    }
+    console.warn(`No image found for location: ${location}`);
+    return './img/offline.jpg';
   }
 
   setSectionVisibility(page) {
@@ -353,11 +398,15 @@ class SiteHeader extends HTMLElement {
     };
     document.body.appendChild(script);
   }
+
+  disconnectedCallback() {
+    clearInterval(this.metadataInterval);
+  }
 }
 
 customElements.define("site-header", SiteHeader);
 
-// Expose setSectionVisibility and injectWindguruWidget globally
+// Expose setSectionVisibility, injectWindguruWidget, and getLocationImage globally
 window.setSectionVisibility = function(page) {
   const header = document.querySelector("site-header");
   if (header && header.setSectionVisibility) {
@@ -373,5 +422,15 @@ window.injectWindguruWidget = function(spot, uid, index, widgetElements) {
     header.injectWindguruWidget(spot, uid, index, widgetElements);
   } else {
     console.error("injectWindguruWidget not available in site-header");
+  }
+};
+
+window.getLocationImage = function(location) {
+  const header = document.querySelector("site-header");
+  if (header && header.getLocationImage) {
+    return header.getLocationImage(location);
+  } else {
+    console.error("getLocationImage not available in site-header");
+    return './img/offline.jpg';
   }
 };
