@@ -215,8 +215,6 @@ constructor() {
     mutations.forEach((mutation) => {
       if (mutation.attributeName === "image-url") {
         this.updateImage();
-        // DEBUG: Log attribute change
-        console.log(`DEBUG: CameraPhoto image-url attribute changed to ${this.getAttribute("image-url")} at ${new Date().toISOString()}`);
       }
     });
   });
@@ -229,15 +227,11 @@ updateImage() {
   if (imgElement.src !== imageUrl) {
     imgElement.src = imageUrl;
     imgElement.onload = (e) => this.handleImageLoad(e);
-    // DEBUG: Log image update
-    console.log(`DEBUG: Updated CameraPhoto image to ${imageUrl} at ${new Date().toISOString()}`);
   }
 }
 
 handleImageLoad(e) {
   e.target.classList.add("loaded", "slide-in-blurred-top");
-  // DEBUG: Log image load
-  console.log(`DEBUG: Image loaded for CameraPhoto at ${new Date().toISOString()}`);
 }
 
 handleImageClick() {
@@ -247,8 +241,6 @@ handleImageClick() {
   if (emitData) {
     const customEvent = new CustomEvent("cardClick", { detail: emitData });
     window.dispatchEvent(customEvent);
-    // DEBUG: Log card click
-    console.log(`DEBUG: CameraPhoto card clicked, emitData=${emitData} at ${new Date().toISOString()}`);
   }
   if (
     this.imageClickCallback &&
@@ -265,8 +257,6 @@ handleCardClick() {
 
 disconnectedCallback() {
   this.attributeObserver.disconnect();
-  // DEBUG: Log cleanup
-  console.log(`DEBUG: CameraPhoto disconnected at ${new Date().toISOString()}`);
 }
 }
 
@@ -276,8 +266,6 @@ window.loadSiteContent = function(main, locationId) {
 const location = locations[locationId];
 if (!location) {
   main.innerHTML = '<p>Location not found.</p>';
-  // DEBUG: Log location not found
-  console.error(`DEBUG: Location ${locationId} not found at ${new Date().toISOString()}`);
   return;
 }
 
@@ -349,9 +337,6 @@ main.innerHTML = `
   </section>
 `;
 
-// DEBUG: Log content load
-console.log(`DEBUG: Loaded forecast content for ${locationId} at ${new Date().toISOString()}`);
-
 // Add event listener for image cache updates
 const updateCameraImage = (event) => {
   const { location, url } = event.detail;
@@ -359,8 +344,6 @@ const updateCameraImage = (event) => {
     const cameraPhoto = main.querySelector('camera-photo');
     if (cameraPhoto) {
       cameraPhoto.setAttribute('image-url', url);
-      // DEBUG: Log image update
-      console.log(`DEBUG: Updated image for ${location} on forecast page to ${url} at ${new Date().toISOString()}`);
     }
   }
 };
@@ -371,8 +354,6 @@ window.addEventListener('imageCacheUpdated', updateCameraImage);
 main.__cleanup = main.__cleanup || [];
 main.__cleanup.push(() => {
   window.removeEventListener('imageCacheUpdated', updateCameraImage);
-  // DEBUG: Log cleanup
-  console.log(`DEBUG: Cleaned up imageCacheUpdated listener for ${locationId} at ${new Date().toISOString()}`);
 });
 
 // Add toggle functionality for locations with video
@@ -414,23 +395,17 @@ if (hasVideo) {
               videoToggle.checked = false;
               videoToggle.dispatchEvent(new Event('change'));
             }, 120 * 1000);
-            // DEBUG: Log video play
-            console.log(`DEBUG: Video started playing for ${locationId} at ${new Date().toISOString()}`);
           };
           videoElement.addEventListener('play', onPlay);
           videoElement.play().catch(() => {
             cameraPhotoElement.style.display = 'block';
             videoElement.style.display = 'none';
             videoElement.removeEventListener('play', onPlay);
-            // DEBUG: Log video play error
-            console.error(`DEBUG: Error playing video for ${locationId}`);
           });
         });
         hls.on(Hls.Events.ERROR, () => {
           cameraPhotoElement.style.display = 'block';
           videoElement.style.display = 'none';
-          // DEBUG: Log HLS error
-          console.error(`DEBUG: HLS error for ${locationId}`);
         });
       } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
         videoElement.src = videoSrc;
@@ -442,8 +417,6 @@ if (hasVideo) {
             videoToggle.checked = false;
             videoToggle.dispatchEvent(new Event('change'));
           }, 120 * 1000);
-          // DEBUG: Log native video play
-          console.log(`DEBUG: Native video started playing for ${locationId} at ${new Date().toISOString()}`);
         };
         videoElement.addEventListener('play', onPlay, { once: true });
         videoElement.addEventListener('loadedmetadata', () => {
@@ -451,21 +424,15 @@ if (hasVideo) {
             cameraPhotoElement.style.display = 'block';
             videoElement.style.display = 'none';
             videoElement.removeEventListener('play', onPlay);
-            // DEBUG: Log video play error
-            console.error(`DEBUG: Error playing native video for ${locationId}`);
           });
         }, { once: true });
         videoElement.addEventListener('error', () => {
           cameraPhotoElement.style.display = 'block';
           videoElement.style.display = 'none';
-          // DEBUG: Log video error
-          console.error(`DEBUG: Video error for ${locationId}`);
         }, { once: true });
       } else {
         cameraPhotoElement.style.display = 'block';
         videoElement.style.display = 'none';
-        // DEBUG: Log video fallback
-        console.log(`DEBUG: Video not supported, falling back to image for ${locationId}`);
       }
     } else {
       cameraPhotoElement.style.display = 'block';
@@ -477,8 +444,6 @@ if (hasVideo) {
       videoElement.pause();
       videoElement.src = '';
       videoElement.currentTime = 0;
-      // DEBUG: Log video stop
-      console.log(`DEBUG: Video stopped for ${locationId} at ${new Date().toISOString()}`);
     }
   });
 }
@@ -641,8 +606,6 @@ if (!document.querySelector('style#site-forecast-styles')) {
     }
   `;
   document.head.appendChild(style);
-  // DEBUG: Log styles added
-  console.log(`DEBUG: Added site-forecast-styles at ${new Date().toISOString()}`);
 }
 };
 
@@ -662,7 +625,5 @@ const main = document.querySelector('site-main');
 if (main && main.__cleanup) {
   main.__cleanup.forEach(cleanup => cleanup());
   main.__cleanup = [];
-  // DEBUG: Log cleanup
-  console.log(`DEBUG: Unloaded site content and cleaned up listeners at ${new Date().toISOString()}`);
 }
 };
