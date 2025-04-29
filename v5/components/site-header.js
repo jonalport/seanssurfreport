@@ -170,55 +170,109 @@ class SiteHeader extends HTMLElement {
     };
 
     this.initializeImageCache();
+
+    // Add visibilitychange listener to check metadata on tab focus
+    let lastActive = Date.now();
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        // DEBUG: Log when tab becomes visible
+        console.log(`DEBUG: Tab became visible at ${new Date().toISOString()}, checking image metadata...`);
+        this.checkImageMetadata().catch(error => {
+          // DEBUG: Log any errors during metadata check
+          console.error(`DEBUG: Error checking metadata on visibility change: ${error.message}`);
+        });
+        // Fallback: Reload page after 8 hours of inactivity
+        if (Date.now() - lastActive > 8 * 60 * 60 * 1000) { // 8 hours
+          // DEBUG: Log page reload due to long inactivity
+          console.log(`DEBUG: Long inactivity detected at ${new Date().toISOString()}, reloading page...`);
+          window.location.reload();
+        }
+        lastActive = Date.now();
+      }
+    });
   }
 
   initializeImageCache() {
     const cacheContainer = this.shadowRoot.querySelector('#image-cache');
     Object.entries(this.imageCache).forEach(([location, data]) => {
-      console.log(`Initializing image cache for ${location}`);
+      // DEBUG: Log initialization of image cache
+      console.log(`DEBUG: Initializing image cache for ${location} at ${new Date().toISOString()}`);
       const img = document.createElement('img');
       img.dataset.location = location;
       img.src = data.url;
       img.onerror = () => {
         img.src = './img/offline.jpg';
+        // DEBUG: Log image load error
+        console.log(`DEBUG: Error loading image for ${location}, falling back to offline.jpg`);
       };
       cacheContainer.appendChild(img);
       this.imageCache[location].element = img;
       if (data.url.startsWith('http')) {
-        this.fetchImageMetadata(location, data.url);
+        this.fetchImageMetadata(location, data.url).then(timestamp => {
+          // DEBUG: Log initial metadata fetch result
+          console.log(`DEBUG: Initial metadata fetch for ${location}: timestamp=${timestamp}`);
+        });
       }
     });
 
     this.metadataInterval = setInterval(() => {
-      this.checkImageMetadata().catch(() => {});
+      this.checkImageMetadata().catch(error => {
+        // DEBUG: Log interval error
+        console.error(`DEBUG: Error in metadata interval check: ${error.message}`);
+      });
     }, 60000);
   }
 
-  async fetchImageMetadata(location, url) {
-    try {
-      let response = await fetch(url, { method: 'HEAD' });
-      if (response.ok) {
-        const timestamp = response.headers.get('X-Upload-Timestamp');
-        return timestamp || null;
-      } else if (response.status === 405) {
-        response = await fetch(url, { method: 'GET' });
+  async fetchImageMetadata(location, url, retries = 3) {
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        // DEBUG: Log metadata fetch attempt
+        console.log(`DEBUG: Fetching metadata for ${location}, attempt ${attempt} at ${new Date().toISOString()}`);
+        let response = await fetch(url, { method: 'HEAD', cache: 'no-store' });
         if (response.ok) {
           const timestamp = response.headers.get('X-Upload-Timestamp');
+          // DEBUG: Log successful metadata fetch
+          console.log(`DEBUG: Metadata fetch successful for ${location}: timestamp=${timestamp}`);
           return timestamp || null;
+        } else if (response.status === 405) {
+          response = await fetch(url, { method: 'GET', cache: 'no-store' });
+          if (response.ok) {
+            const timestamp = response.headers.get('X-Upload-Timestamp');
+            // DEBUG: Log successful GET fallback
+            console.log(`DEBUG: GET fallback successful for ${location}: timestamp=${timestamp}`);
+            return timestamp || null;
+          }
         }
+      } catch (error) {
+        // DEBUG: Log fetch error
+        console.warn(`DEBUG: Attempt ${attempt} failed for ${location}: ${error.message}`);
+        if (attempt === retries) {
+          // DEBUG: Log final failure
+          console.error(`DEBUG: Failed to fetch metadata for ${location} after ${retries} attempts`);
+          return null;
+        }
+        await new Promise(resolve => setTimeout(resolve, 2000 * attempt)); // Exponential backoff
       }
-    } catch (error) {}
+    }
     return null;
   }
 
   async checkImageMetadata() {
+    // DEBUG: Log start of metadata check
+    console.log(`DEBUG: Checking image metadata at ${new Date().toISOString()}`);
     for (const [location, data] of Object.entries(this.imageCache)) {
       if (!data.url.startsWith('http')) continue;
       const newTimestamp = await this.fetchImageMetadata(location, data.url);
       if (newTimestamp && newTimestamp !== data.timestamp) {
-        console.log(`Image metadata changed for ${location} at ${new Date().toISOString()}. Reloading image.`);
+        // DEBUG: Log metadata change
+        console.log(`DEBUG: Image metadata changed for ${location} at ${new Date().toISOString()}. Reloading image.`);
         data.timestamp = newTimestamp;
         data.element.src = `${data.url}?t=${Date.now()}`;
+        // Dispatch event to notify other components
+        window.dispatchEvent(new CustomEvent('imageCacheUpdated', { detail: { location, url: data.element.src } }));
+      } else {
+        // DEBUG: Log no metadata change
+        console.log(`DEBUG: No metadata change for ${location} at ${new Date().toISOString()}`);
       }
     }
   }
@@ -226,8 +280,12 @@ class SiteHeader extends HTMLElement {
   getLocationImage(location) {
     const data = this.imageCache[location];
     if (data && data.element) {
+      // DEBUG: Log image retrieval
+      console.log(`DEBUG: Retrieving image for ${location}: ${data.element.src}`);
       return data.element.src;
     }
+    // DEBUG: Log fallback to offline image
+    console.log(`DEBUG: No image found for ${location}, using offline.jpg`);
     return './img/offline.jpg';
   }
 
@@ -262,6 +320,8 @@ class SiteHeader extends HTMLElement {
         if (footer) footer.style.display = "";
         if (shadowFooter) shadowFooter.style.display = "";
     }
+    // DEBUG: Log section visibility change
+    console.log(`DEBUG: Set section visibility to ${page} at ${new Date().toISOString()}`);
   }
 
   injectWindguruWidget(spot, uid, index, widgetElements = document.querySelectorAll('widget-windguru')) {
@@ -307,9 +367,14 @@ class SiteHeader extends HTMLElement {
               }
             }
           }
+          // DEBUG: Log widget injection
+          console.log(`DEBUG: Windguru widget injected for spot ${spot}, uid ${uid} at ${new Date().toISOString()}`);
         };
 
-        script.onerror = function () {};
+        script.onerror = function () {
+          // DEBUG: Log widget error
+          console.error(`DEBUG: Error loading Windguru widget for spot ${spot}, uid ${uid}`);
+        };
       };
       if (document.readyState === 'complete') {
         loader();
@@ -341,12 +406,18 @@ class SiteHeader extends HTMLElement {
       ) {
         window.loadDashContent(main);
         this.setSectionVisibility('dashboard');
+        // DEBUG: Log dashboard load
+        console.log(`DEBUG: Dashboard loaded at ${new Date().toISOString()}`);
       } else {
         main.innerHTML = "<p>Error loading dashboard</p>";
+        // DEBUG: Log dashboard load error
+        console.error(`DEBUG: Error loading dashboard script`);
       }
     };
     script.onerror = () => {
       main.innerHTML = "<p>Error loading dashboard</p>";
+      // DEBUG: Log script error
+      console.error(`DEBUG: Error loading site-dash.js`);
     };
     document.body.appendChild(script);
   }
@@ -364,6 +435,8 @@ class SiteHeader extends HTMLElement {
     if (typeof nav.loadPage === "function") {
       nav.loadPage("kbc");
       this.setSectionVisibility('forecast');
+      // DEBUG: Log forecast navigation
+      console.log(`DEBUG: Navigated to forecast page (kbc) at ${new Date().toISOString()}`);
     } else {
       const existingScript = document.getElementById('site-forecast-script');
       if (existingScript) existingScript.remove();
@@ -375,12 +448,18 @@ class SiteHeader extends HTMLElement {
         if (typeof window.loadSiteContent === "function") {
           window.loadSiteContent(main, "kbc");
           this.setSectionVisibility('forecast');
+          // DEBUG: Log forecast load
+          console.log(`DEBUG: Forecast page loaded for kbc at ${new Date().toISOString()}`);
         } else {
           main.innerHTML = "<p>Error loading forecast page</p>";
+          // DEBUG: Log forecast load error
+          console.error(`DEBUG: Error loading forecast page`);
         }
       };
       script.onerror = () => {
         main.innerHTML = "<p>Error loading forecast page</p>";
+        // DEBUG: Log script error
+        console.error(`DEBUG: Error loading site-forecast.js`);
       };
       document.body.appendChild(script);
     }
@@ -404,18 +483,26 @@ class SiteHeader extends HTMLElement {
       ) {
         window.loadCommunityContent(main);
         this.setSectionVisibility('community');
+        // DEBUG: Log community load
+        console.log(`DEBUG: Community page loaded at ${new Date().toISOString()}`);
       } else {
         main.innerHTML = "<p>Error loading community page</p>";
+        // DEBUG: Log community load error
+        console.error(`DEBUG: Error loading community page`);
       }
     };
     script.onerror = () => {
       main.innerHTML = "<p>Error loading community page</p>";
+      // DEBUG: Log script error
+      console.error(`DEBUG: Error loading site-community.js`);
     };
     document.body.appendChild(script);
   }
 
   disconnectedCallback() {
     clearInterval(this.metadataInterval);
+    // DEBUG: Log cleanup
+    console.log(`DEBUG: SiteHeader disconnected, cleared metadata interval at ${new Date().toISOString()}`);
   }
 }
 

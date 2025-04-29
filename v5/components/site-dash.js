@@ -12,6 +12,9 @@ window.loadDashContent = function(main) {
     </section>
   `;
 
+  // DEBUG: Log dashboard content load
+  console.log(`DEBUG: Loaded dashboard content at ${new Date().toISOString()}`);
+
   const applyDashCardStyles = () => {
     const dashCards = main.querySelectorAll('.dash-card');
     dashCards.forEach(card => {
@@ -143,6 +146,8 @@ window.loadDashContent = function(main) {
     }
   `;
   document.head.appendChild(style);
+  // DEBUG: Log styles added
+  console.log(`DEBUG: Added dashboard-layout-style at ${new Date().toISOString()}`);
 
   const nav = document.querySelector('site-nav');
   if (nav) {
@@ -153,6 +158,30 @@ window.loadDashContent = function(main) {
   }
 
   history.pushState({ page: 'dashboard' }, 'Dashboard', '#dashboard');
+
+  // Add event listener for image cache updates
+  const updateDashImages = (event) => {
+    const { location, url } = event.detail;
+    const dashCards = main.querySelectorAll('.dash-card');
+    dashCards.forEach(card => {
+      const link = card.closest('.dash-card-link');
+      if (link && link.getAttribute('href') === `#${location}`) {
+        card.style.backgroundImage = `url('${url}')`;
+        // DEBUG: Log image update
+        console.log(`DEBUG: Updated image for ${location} on dashboard to ${url} at ${new Date().toISOString()}`);
+      }
+    });
+  };
+
+  window.addEventListener('imageCacheUpdated', updateDashImages);
+
+  // Clean up listener when unloading content
+  main.__cleanup = main.__cleanup || [];
+  main.__cleanup.push(() => {
+    window.removeEventListener('imageCacheUpdated', updateDashImages);
+    // DEBUG: Log cleanup
+    console.log(`DEBUG: Cleaned up imageCacheUpdated listener for dashboard at ${new Date().toISOString()}`);
+  });
 
   let widgetInitializationTimeout = null;
 
@@ -174,6 +203,8 @@ window.loadDashContent = function(main) {
 
       if (widgetElements.length !== 5 && retryCount < maxRetries) {
         initializeWidgets(retryCount + 1, maxRetries);
+        // DEBUG: Log widget retry
+        console.log(`DEBUG: Retrying widget initialization (attempt ${retryCount + 1}) at ${new Date().toISOString()}`);
         return;
       }
 
@@ -181,6 +212,8 @@ window.loadDashContent = function(main) {
         const fallbackElements = document.querySelectorAll('widget-windguru.dash-widget');
         if (fallbackElements.length === 5) {
           injectWindguruWidgets(fallbackElements);
+          // DEBUG: Log fallback widget injection
+          console.log(`DEBUG: Used fallback widget elements at ${new Date().toISOString()}`);
         }
       } else {
         injectWindguruWidgets(widgetElements);
@@ -193,6 +226,8 @@ window.loadDashContent = function(main) {
   } else {
     document.addEventListener('DOMContentLoaded', () => {
       initializeWidgets();
+      // DEBUG: Log DOMContentLoaded
+      console.log(`DEBUG: DOMContentLoaded, initializing widgets at ${new Date().toISOString()}`);
     }, { once: true });
   }
 
@@ -205,13 +240,30 @@ window.loadDashContent = function(main) {
         const navComponent = document.querySelector('site-nav');
         if (navComponent && typeof navComponent.loadPage === 'function') {
           navComponent.loadPage(page);
+          // DEBUG: Log navigation
+          console.log(`DEBUG: Navigated to ${page} from dashboard at ${new Date().toISOString()}`);
         } else {
           main.innerHTML = `<p>Error navigating to ${page}</p>`;
+          // DEBUG: Log navigation error
+          console.error(`DEBUG: Error navigating to ${page} from dashboard`);
         }
       });
     });
   };
   attachClickListeners();
+};
+
+window.unloadDashContent = function() {
+  const main = document.querySelector('site-main');
+  if (main && main.__cleanup) {
+    main.__cleanup.forEach(cleanup => cleanup());
+    main.__cleanup = [];
+    // DEBUG: Log cleanup
+    console.log(`DEBUG: Unloaded dashboard content and cleaned up listeners at ${new Date().toISOString()}`);
+  }
+  const style = document.getElementById('dashboard-layout-style');
+  if (style) style.remove();
+  document.querySelectorAll('script[id^="wglive_"]').forEach(script => script.remove());
 };
 
 function injectWindguruWidgets(widgetElements) {
@@ -220,6 +272,8 @@ function injectWindguruWidgets(widgetElements) {
   window.injectWindguruWidget('3858', 'wglive_3858_1710779222995', 2, widgetElements);
   window.injectWindguruWidget('4065', 'wglive_4065_1715855101032', 3, widgetElements);
   window.injectWindguruWidget('2014', 'wglive_2014_1713422960240', 4, widgetElements);
+  // DEBUG: Log widget injection
+  console.log(`DEBUG: Injected Windguru widgets at ${new Date().toISOString()}`);
 }
 
 function getDashboardCards() {
