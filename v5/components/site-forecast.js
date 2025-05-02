@@ -1,4 +1,3 @@
-// Configure location specific data here
 const locations = {
   'kbc': {
       name: 'Kitesurf Beach Center, UAQ',
@@ -457,6 +456,11 @@ if (existingWindScript) existingWindScript.remove();
 if (existingForecastScript) existingForecastScript.remove();
 
 // Add the Windguru live wind script
+windGraph.innerHTML = `
+  <div class="non-interactive-graph">
+    <div id="windguru-live-container"></div>
+  </div>
+`;
 const windScript = document.createElement('script');
 windScript.id = location.windScriptId;
 windScript.textContent = `
@@ -464,9 +468,9 @@ windScript.textContent = `
     var loader = function () {
       var arg = ${JSON.stringify(location.windArgs)};
       var script = document.createElement("script");
-      var tag = document.getElementsByTagName("script")[0];
+      var tag = document.getElementById("windguru-live-container");
       script.src = "https://www.windguru.cz/js/wglive.php?" + (arg.join("&"));
-      tag.parentNode.insertBefore(script, tag);
+      tag.appendChild(script);
     };
     loader();
   })(window, document);
@@ -506,6 +510,11 @@ if (!document.querySelector('style#site-forecast-styles')) {
     #wind-graph { width: 100%; margin: 0 auto; }
     #wind-graph iframe { border: 0 solid #000 !important; }
     #forecast-graph { width: 100%; margin: 0 auto; }
+    .non-interactive-graph {
+      pointer-events: none;
+      user-select: none;
+      overflow: hidden;
+    }
     .links-block {
       display: flex;
       justify-content: center;
