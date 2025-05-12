@@ -1,19 +1,10 @@
 window.loadCommunityContent = function (main) {
-  // Check for a deep link in the URL hash (e.g., #community?t=/t/topic-slug/123)
-  let iframeSrc = "https://community.seanssurfreport.com";
-  const hash = window.location.hash;
-  if (hash.startsWith("#community?t=")) {
-    const path = hash.split("?t=")[1];
-    iframeSrc = `https://community.seanssurfreport.com${path}`;
-  }
-
   main.innerHTML = `
         <iframe 
-            src="${iframeSrc}" 
+            src="https://community.seanssurfreport.com" 
             style="width: 100%; border: none; overflow: hidden;" 
             title="Sean's Surf Report Community"
             scrolling="no"
-            allow="clipboard-write"
         ></iframe>
     `;
 
@@ -36,11 +27,6 @@ window.loadCommunityContent = function (main) {
     if (event.origin !== "https://community.seanssurfreport.com") return;
     if (event.data.type === "iframeHeight") {
       setIframeHeight(event.data.height);
-    } else if (event.data.type === "discourseNavigation") {
-      // Update parent URL when navigating within the iframe
-      const newPath = event.data.path;
-      const newUrl = `https://www.seanssurfreport.com/v5#community?t=${newPath}`;
-      window.history.pushState({}, '', newUrl);
     }
   };
 
