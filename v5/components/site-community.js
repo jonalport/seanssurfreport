@@ -22,9 +22,6 @@ window.loadCommunityContent = function (main) {
   let lastHeight = 0;
   const maxHeight = 3200;
 
-  // Debug: Log iframe permissions
-  console.log('Iframe allow attribute:', iframe.getAttribute('allow'));
-
   function setIframeHeight(height) {
     if (Math.abs(height - lastHeight) < 30 || height > maxHeight) return;
     clearTimeout(heightTimeout);
@@ -43,7 +40,7 @@ window.loadCommunityContent = function (main) {
       // Update parent URL when navigating within the iframe
       const newPath = event.data.path;
       const newUrl = `https://www.seanssurfreport.com/v5#community?t=${newPath}`;
-      window.history.push Newsletter({}, '', newUrl);
+      window.history.pushState({}, '', newUrl);
     }
   };
 
