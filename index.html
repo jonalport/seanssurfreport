@@ -23,14 +23,68 @@
   <script type="module" src="./components/location-card.js"> </script>
   <script type="module" src="./components/page-hit-counter.js"> </script>
   <script type="module" src="./components/footer-pagecount.js"> </script>
+  <script>
+    $(document).ready(function () {
+      const apiUrl = "https://community.seanssurfreport.com/latest.json";
+      // Using a CORS proxy
+      const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+
+      $.ajax({
+        url: proxyUrl + apiUrl,
+        type: "GET",
+        headers: {
+          "Authorization": "Bearer cd0d5885a0c4c2399c2550a3798dc18dfea18b9677857c12808612d14ffc2330"
+        },
+        success: function (data) {
+          if (data && data.topic_list && data.topic_list.topics) {
+            // Get topics 1-5 (skipping the first one)
+            const topicsToDisplay = data.topic_list.topics.slice(1, 6);
+
+            // Create HTML for the topics
+            let topicsHtml = '<h4 class="mb-3">Recent Community Discussions</h4><div class="list-group mb-4">';
+
+            topicsToDisplay.forEach(topic => {
+              // Format the date
+              const createdDate = new Date(topic.created_at);
+              const formattedDate = createdDate.toLocaleDateString();
+
+              topicsHtml += `
+                <a href="https://community.seanssurfreport.com/t/${topic.slug}/${topic.id}"
+                   class="list-group-item list-group-item-action" target="_blank">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">${topic.title}</h5>
+                    <small>${formattedDate}</small>
+                  </div>
+                  <small class="text-muted">Replies: ${topic.reply_count}</small>
+                </a>
+              `;
+            });
+
+            topicsHtml += '</div>';
+
+            // Add the HTML to the recent-posts div
+            $("#recent-posts").html(topicsHtml);
+          } else {
+            $("#recent-posts").html("<p>No recent discussions available.</p>");
+          }
+        },
+        error: function (error) {
+          console.error("Error fetching forum topics:", error);
+          $("#recent-posts").html("<p>Unable to load recent posts. Please try again later.</p>");
+        }
+      });
+    });
+  </script>
 </head>
 
 <body>
-
-
   <logo-header></logo-header>
-  <main style="position: relative;">
 
+  <div style="background-color: #eee;">
+    <div class="container" id="recent-posts" style="padding-top: 20px; ">Recent posts</div>
+  </div>
+
+  <main style="position: relative;">
 
     <!--<section class="area">
       <div class="text-center">
