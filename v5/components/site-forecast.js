@@ -52,6 +52,7 @@ const locations = {
   'sandy': {
       name: 'Sandy Beach Hotel, Dibba',
       description: 'On the east coast in Fujairah is a little town called Dibba, which is home to arguably the best surf spot in the country (when it works). It\'s a quiet place with an impressive mountain range and a different ocean which is mostly protected - but depending on certain distant storms - can deliver a good SE swell which hits Tim\'s Reef perfectly.',
+      url_video: 'https://video-sandy.seanssurfreport.com/memfs/daea4ec4-d1c0-45a0-b488-c292d9090487.m3u8',
       windScriptId: 'wglive_2014_1617178111305',
       windArgs: ["spot=2014", "uid=wglive_2014_1617178111305", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=250", "msize=300", "m=3", "show=n,g,c"],
       forecastScriptId: 'wg_fwdg_875305_3_1617178214856',
@@ -269,7 +270,7 @@ if (!location) {
 }
 
 // Determine if this is a location with video support
-const hasVideo = ['kbc', 'dosc'].includes(locationId);
+const hasVideo = ['kbc', 'dosc', 'sandy'].includes(locationId);
 
 // Define the video stream HTML
 const videoHtml = hasVideo ? `
