@@ -381,71 +381,110 @@ if (hasVideo) {
       cameraPhotoElement.style.display = 'block';
       videoElement.style.display = 'none';
 
-      const videoSrc = location.url_video;
-      if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-        hls = new Hls();
-        hls.loadSource(videoSrc);
-        hls.attachMedia(videoElement);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          const onPlay = () => {
-            cameraPhotoElement.style.display = 'none';
-            videoElement.style.display = 'block';
-            videoElement.removeEventListener('play', onPlay);
-            autoToggleTimer = setTimeout(() => {
-              videoToggle.checked = false;
-              videoToggle.dispatchEvent(new Event('change'));
-            }, 120 * 1000);
-          };
-          videoElement.addEventListener('play', onPlay);
+const videoSrc = location.url_video;
+if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+  hls = new Hls({
+    maxBufferLength: 30, // Buffer up to 30 seconds
+    maxMaxBufferLength: 60, // Allow up to 60 seconds if needed
+    liveSyncDurationCount: 3, // Keep 3 segments in sync
+    liveMaxLatencyDurationCount: 6, // Allow up to 6 segments of latency
+  });
+  hls.loadSource(videoSrc);
+  hls.attachMedia(videoElement);
+  hls.on(Hls.Events.MANIFEST_PARSED, () => {
+    const onPlay = () => {
+      cameraPhotoElement.style.display = 'none';
+      videoElement.style.display = 'block';
+      videoElement.removeEventListener('play', onPlay);
+      autoToggleTimer = setTimeout(() => {
+        videoToggle.checked = false;
+        videoToggle.dispatchEvent(new Event('change'));
+      }, 120 * 1000);
+    };
+    const onWaiting = () => {
+      console.log('Video stalled, attempting to resume...');
+      setTimeout(() => {
+        if (videoElement.paused && !videoElement.ended) {
           videoElement.play().catch(() => {
+            console.log('Failed to resume video after 15 seconds, reverting to photo');
             cameraPhotoElement.style.display = 'block';
             videoElement.style.display = 'none';
             videoElement.removeEventListener('play', onPlay);
+            videoElement.removeEventListener('waiting', onWaiting);
           });
-        });
-        hls.on(Hls.Events.ERROR, () => {
-          cameraPhotoElement.style.display = 'block';
-          videoElement.style.display = 'none';
-        });
-      } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-        videoElement.src = videoSrc;
-        const onPlay = () => {
-          cameraPhotoElement.style.display = 'none';
-          videoElement.style.display = 'block';
-          videoElement.removeEventListener('play', onPlay);
-          autoToggleTimer = setTimeout(() => {
-            videoToggle.checked = false;
-            videoToggle.dispatchEvent(new Event('change'));
-          }, 120 * 1000);
-        };
-        videoElement.addEventListener('play', onPlay, { once: true });
-        videoElement.addEventListener('loadedmetadata', () => {
-          videoElement.play().catch(() => {
-            cameraPhotoElement.style.display = 'block';
-            videoElement.style.display = 'none';
-            videoElement.removeEventListener('play', onPlay);
-          });
-        }, { once: true });
-        videoElement.addEventListener('error', () => {
-          cameraPhotoElement.style.display = 'block';
-          videoElement.style.display = 'none';
-        }, { once: true });
-      } else {
-        cameraPhotoElement.style.display = 'block';
-        videoElement.style.display = 'none';
-      }
-    } else {
+        }
+      }, 15000); // Wait 15 seconds before retrying
+    };
+    videoElement.addEventListener('play', onPlay);
+    videoElement.addEventListener('waiting', onWaiting);
+    videoElement.play().catch(() => {
       cameraPhotoElement.style.display = 'block';
       videoElement.style.display = 'none';
-      if (hls) {
-        hls.destroy();
-        hls = null;
-      }
-      videoElement.pause();
-      videoElement.src = '';
-      videoElement.currentTime = 0;
-    }
+      videoElement.removeEventListener('play', onPlay);
+      videoElement.removeEventListener('waiting', onWaiting);
+    });
   });
+  hls.on(Hls.Events.ERROR, (event, data) => {
+    console.error('HLS.js Error:', data.type, data.details, data.fatal);
+    cameraPhotoElement.style.display = 'block';
+    videoElement.style.display = 'none';
+  });
+} else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+  videoElement.src = videoSrc;
+  const onPlay = () => {
+    cameraPhotoElement.style.display = 'none';
+    videoElement.style.display = 'block';
+    videoElement.removeEventListener('play', onPlay);
+    autoToggleTimer = setTimeout(() => {
+      videoToggle.checked = false;
+      videoToggle.dispatchEvent(new Event('change'));
+    }, 120 * 1000);
+  };
+  const onWaiting = () => {
+    console.log('Video stalled, attempting to resume...');
+    setTimeout(() => {
+      if (videoElement.paused && !videoElement.ended) {
+        videoElement.play().catch(() => {
+          console.log('Failed to resume video after 15 seconds, reverting to photo');
+          cameraPhotoElement.style.display = 'block';
+          videoElement.style.display = 'none';
+          videoElement.removeEventListener('play', onPlay);
+          videoElement.removeEventListener('waiting', onWaiting);
+        });
+      }
+    }, 15000); // Wait 15 seconds before retrying
+  };
+  videoElement.addEventListener('play', onPlay, { once: true });
+  videoElement.addEventListener('waiting', onWaiting, { once: true });
+  videoElement.addEventListener('loadedmetadata', () => {
+    videoElement.play().catch(() => {
+      cameraPhotoElement.style.display = 'block';
+      videoElement.style.display = 'none';
+      videoElement.removeEventListener('play', onPlay);
+      videoElement.removeEventListener('waiting', onWaiting);
+    });
+  }, { once: true });
+  videoElement.addEventListener('error', () => {
+    console.log('Native HLS error, reverting to photo');
+    cameraPhotoElement.style.display = 'block';
+    videoElement.style.display = 'none';
+  }, { once: true });
+} else {
+  cameraPhotoElement.style.display = 'block';
+  videoElement.style.display = 'none';
+}
+} else {
+  cameraPhotoElement.style.display = 'block';
+  videoElement.style.display = 'none';
+  if (hls) {
+    hls.destroy();
+    hls = null;
+  }
+  videoElement.pause();
+  videoElement.src = '';
+  videoElement.currentTime = 0;
+}
+});
 }
 
 // Clean up previous Windguru scripts
