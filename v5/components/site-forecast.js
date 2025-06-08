@@ -2,7 +2,7 @@ const locations = {
   'kbc': {
       name: 'Kitesurf Beach Center, UAQ',
       description: 'Located an hour NE of Dubai in the emirate of Umm Al Quwain, KBC is well located to receive good wind and swell when the conditions align. You will also find a nice community of local riders and some incredible food on the restaurants menu.',
-      url_video: 'https://video-kbc.seanssurfreport.com/memfs/ee84899f-5b53-46f7-a684-9ad94c49774e.m3u8',
+      url_video: 'https://video-kbc.seanssurfreport.com/memfs/7be6e2f5-5c8b-45fe-93cb-4b1466fc47a0.m3u8',
       windScriptId: 'wglive_2146_1617178001640',
       windArgs: ["spot=2146", "uid=wglive_2146_1617178001640", "direct=1", "wj=knots", "tj=c", "avg_min=0", "gsize=300", "msize=300", "m=3", "show=n,g,c"],
       forecastScriptId: 'wg_fwdg_687932_100_1617177954510',
