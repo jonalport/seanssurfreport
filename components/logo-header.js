@@ -126,7 +126,7 @@ class LogoHeader extends HTMLElement {
           </a>
 
           <!-- Added v3 site testing note and link -->
-          <a class="v3-note" href="https://v3-seanssurfreport.com/" target="_blank">
+          <a class="v3-note" href="https://v3.seanssurfreport.com/" target="_blank">
             Test the new v3 interface!
           </a>
         </header>
