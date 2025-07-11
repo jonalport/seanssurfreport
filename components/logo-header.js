@@ -9,14 +9,12 @@ class LogoHeader extends HTMLElement {
             integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
           <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
-
           <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
           crossorigin="anonymous"></script>
 
           <style>
-
           @media (min-width: 480px) {
             .logo--link {
               width: 55%;
@@ -97,6 +95,25 @@ class LogoHeader extends HTMLElement {
             margin: 0 auto;
           }
 
+          .v3-note {
+            margin-left: 2vw;
+            color: #87b280;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+            text-decoration: none;
+            transition: color 200ms ease-in-out;
+          }
+
+          .v3-note:hover {
+            color: #ffffff;
+            text-decoration: underline;
+          }
+
+          @media (max-width: 780px) {
+            .v3-note {
+              font-size: 0.9rem;
+            }
+          }
           </style>
 
         <header>
@@ -106,7 +123,12 @@ class LogoHeader extends HTMLElement {
 
           <a class="main-nav-link" href="https://community.seanssurfreport.com/">
             <img src="/img/community_320.png" alt="Classifieds" />
-          </>
+          </a>
+
+          <!-- Added v3 site testing note and link -->
+          <a class="v3-note" href="https://v3-seanssurfreport.com/" target="_blank">
+            Test the new v3 interface!
+          </a>
         </header>
         `;
   }
